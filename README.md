@@ -28,14 +28,7 @@ Version 1.0 was created for course MEDI 504A, delivered on 2021 W.
 
 Feel free to [reach out](https://ehsank.com/) for any comments, corrections, suggestions.
 
-## Contributor list 
-
-|||
-|---|---|
-| [Ehsan Karim](https://ehsank.com/) (SPPH, UBC) |  
-
-## License {-}
-
+## License 
 
 The online version of this book is licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) International License. You may share, adapt the content and may distribute your contributions under the same license (CC BY-NC-SA 4.0), but you have to give appropriate credit, and cannot use material for the commercial purposes.
 
