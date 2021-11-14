@@ -47,3 +47,4 @@ brier-score
 cross-validation-using-caret
 final-words
 section
+prediction-from-binary-outcome

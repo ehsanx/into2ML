@@ -1,53 +1,48 @@
-# R Guide for TMLE in Medical Research
+# Introduction to Machine Learning
 
-## Background 
+# Preface {-}
 
-In comparative effectiveness studies, researchers typically use propensity score methods. However, propensity score methods have known limitations in real-world scenarios, when the true data generating mechanism is unknown. **Targeted maximum likelihood estimation** (TMLE) is an alternative estimation method with a number of desirable statistical properties. It is a doubly robust method, making use of both the outcome model and propensity score model to generate an unbiased estimate as long as at least one of the models is correctly specified. TMLE also enables the integration of machine learning approaches. Despite the fact that this method has been shown to perform better than propensity score methods in a variety of scenarios, it is not widely used in medical research as the technical details of this approach are generally not well understood. 
+This document is a very basic introduction to machine learning.
 
-## Goal 
+## Goal  {-}
 
-In this workshop we will present an introductory tutorial explaining an overview of 
+- Basic Machine Learning Terminologies (pre-reading)
+- Supervised vs. Unsupervised Learning Algorithms
+  - Concepts
+  - Examples
+- Over-Fitting, Measuring Performance and Model Tuning
+  - Overall steps
 
-- TMLE and 
-- some of the relevant methods 
-  - G-computation and 
-  - IPW 
+## Pre-requisites {-}
 
-using one real epidemiological data, 
+The prerequisites are knowledge of multiple regression analysis and basic probability. Software demonstrations and codes will be provided in R, although proficiency in R is not required for understanding the concepts.
 
-- the steps to use the methods in R, and 
-- a demonstration of relevant R packages. 
+## Key references {-}
 
-## Philosophy 
+- Kuhn, Max, and Kjell Johnson. Applied predictive modeling. New York: Springer, 2013.
+- James, G., Witten, D., Hastie, T., & Tibshirani, R. (2021). An introduction to statistical learning (2nd ed.). New York: springer.
 
-Code-first philosophy is adopted for this workshop; demonstrating the analyses through one real data analysis problem used in the literature. 
+## Version history {-}
 
-- This workshop is not theory-focused, nor utilizes simulated data to explain the ideas. Given the focus on implementation, theory is beyond the scope of this workshop. 
-- At the end of the workshop, we will provide key references where the theories are well explained.
+Version 1.0 was created for course MEDI 504A, delivered on 2021 W.
 
-## Pre-requisites
+Feel free to [reach out](https://ehsank.com/) for any comments, corrections, suggestions.
 
-- Basic understanding of *R* language is required. 
-- A general understanding of *multiple regression* is expected. 
-- Familiarity with *machine learning* and *epidemiological* core concepts would be helpful, but not required. 
-- Deep understanding of *causal inference* or *advanced statistical inference* knowledge is not expected. 
-
-## Version history 
-
-The workshop was first developed for [R/Medicine
-Virtual Conference](https://r-medicine.org/schedule/) 2021, August 24th; title: An Introductory R Guide for Targeted Maximum Likelihood Estimation in Medical Research.
-
-## Contributor list 
+## Contributor list {-}
 
 |||
 |---|---|
-| [Hanna Frank](https://www.linkedin.com/in/hanna-f-940813b9/) (SPPH, UBC) | [Ehsan Karim](https://ehsank.com/) (SPPH, UBC) |  
+| [Ehsan Karim](https://ehsank.com/) (SPPH, UBC) |  
 
-## License 
+## License {-}
+
+```{r, echo=FALSE, out.width="25%"}
+knitr::include_graphics("images/by-nc-sa.png")
+```
 
 The online version of this book is licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) International License. You may share, adapt the content and may distribute your contributions under the same license (CC BY-NC-SA 4.0), but you have to give appropriate credit, and cannot use material for the commercial purposes.
 
+## How to cite {-}
 
-## How to cite
+Karim, ME (2021) "Introduction to Machine Learning", URL: [ehsanx.github.io/intro2ML/](https://ehsanx.github.io/intro2ML/), (v1.1). 
 
-Karim, ME and Frank, H (2021) "R Guide for TMLE in Medical Research", URL: [ehsanx.github.io/TMLEworkshop/](https://ehsanx.github.io/TMLEworkshop/), (v1.1). Zenodo. https://doi.org/10.5281/zenodo.5246085
