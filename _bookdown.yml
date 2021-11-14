@@ -1,0 +1,5 @@
+book_filename: "Intro2ML"
+language:
+  ui:
+    chapter_name: "Chapter "
+delete_merged_file: true

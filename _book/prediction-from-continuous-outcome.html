@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Prediction from continuous outcome | Introduction to Machine Learning</title>
+  <meta name="description" content="Intro to R." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Prediction from continuous outcome | Introduction to Machine Learning" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Intro to R." />
+  <meta name="github-repo" content="ehsanx/intro2ML" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Prediction from continuous outcome | Introduction to Machine Learning" />
+  
+  <meta name="twitter:description" content="Intro to R." />
+  
+
+<meta name="author" content="Ehsan Karim" />
+
+
+<meta name="date" content="2021-11-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="rhc-data-description.html"/>
+<link rel="next" href="data-spliting.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script type="text/javascript">
+
+// toggle visibility of R source blocks in R Markdown output
+function toggle_R() {
+  var x = document.getElementsByClassName('r');
+  if (x.length == 0) return;
+  function toggle_vis(o) {
+    var d = o.style.display;
+    o.style.display = (d == 'block' || d == '') ? 'none':'block';
+  }
+
+  for (i = 0; i < x.length; i++) {
+    var y = x[i];
+    if (y.tagName.toLowerCase() === 'pre') toggle_vis(y);
+  }
+
+    var elem = document.getElementById("myButton1");
+    if (elem.value === "Hide Global") elem.value = "Show Global";
+    else elem.value = "Hide Global";
+}
+
+document.write('<input onclick="toggle_R();" type="button" value="Hide Global" id="myButton1" style="position: absolute; top: 10%; right: 2%; z-index: 200"></input>')
+
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Introduction to Machine Learning</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#goal"><i class="fa fa-check"></i>Goal</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#pre-requisites"><i class="fa fa-check"></i>Pre-requisites</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#key-references"><i class="fa fa-check"></i>Key references</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#version-history"><i class="fa fa-check"></i>Version history</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributor-list"><i class="fa fa-check"></i>Contributor list</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="rhc-data-description.html"><a href="rhc-data-description.html"><i class="fa fa-check"></i><b>1</b> RHC data description</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="rhc-data-description.html"><a href="rhc-data-description.html#data-download"><i class="fa fa-check"></i><b>1.1</b> Data download</a></li>
+<li class="chapter" data-level="1.2" data-path="rhc-data-description.html"><a href="rhc-data-description.html#creating-analytic-data"><i class="fa fa-check"></i><b>1.2</b> Creating Analytic data</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="rhc-data-description.html"><a href="rhc-data-description.html#add-column-for-outcome-length-of-stay"><i class="fa fa-check"></i><b>1.2.1</b> Add column for outcome: length of stay</a></li>
+<li class="chapter" data-level="1.2.2" data-path="rhc-data-description.html"><a href="rhc-data-description.html#recoding-column-for-outcome-death"><i class="fa fa-check"></i><b>1.2.2</b> Recoding column for outcome: death</a></li>
+<li class="chapter" data-level="1.2.3" data-path="rhc-data-description.html"><a href="rhc-data-description.html#remove-unnecessary-outcomes"><i class="fa fa-check"></i><b>1.2.3</b> Remove unnecessary outcomes</a></li>
+<li class="chapter" data-level="1.2.4" data-path="rhc-data-description.html"><a href="rhc-data-description.html#remove-unnecessary-and-problematic-variables"><i class="fa fa-check"></i><b>1.2.4</b> Remove unnecessary and problematic variables</a></li>
+<li class="chapter" data-level="1.2.5" data-path="rhc-data-description.html"><a href="rhc-data-description.html#basic-data-cleanup"><i class="fa fa-check"></i><b>1.2.5</b> Basic data cleanup</a></li>
+<li class="chapter" data-level="1.2.6" data-path="rhc-data-description.html"><a href="rhc-data-description.html#rename-variables"><i class="fa fa-check"></i><b>1.2.6</b> Rename variables</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="rhc-data-description.html"><a href="rhc-data-description.html#notations"><i class="fa fa-check"></i><b>1.3</b> Notations</a></li>
+<li class="chapter" data-level="1.4" data-path="rhc-data-description.html"><a href="rhc-data-description.html#basic-data-exploration"><i class="fa fa-check"></i><b>1.4</b> Basic data exploration</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="rhc-data-description.html"><a href="rhc-data-description.html#dimension-and-summary"><i class="fa fa-check"></i><b>1.4.1</b> Dimension and summary</a></li>
+<li class="chapter" data-level="1.4.2" data-path="rhc-data-description.html"><a href="rhc-data-description.html#more-comprehensive-summary"><i class="fa fa-check"></i><b>1.4.2</b> More comprehensive summary</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html"><i class="fa fa-check"></i><b>2</b> Prediction from continuous outcome</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#read-previously-saved-data"><i class="fa fa-check"></i><b>2.1</b> Read previously saved data</a></li>
+<li class="chapter" data-level="2.2" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#prediction-for-length-of-stay"><i class="fa fa-check"></i><b>2.2</b> Prediction for length of stay</a></li>
+<li class="chapter" data-level="2.3" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#variables"><i class="fa fa-check"></i><b>2.3</b> Variables</a></li>
+<li class="chapter" data-level="2.4" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#model"><i class="fa fa-check"></i><b>2.4</b> Model</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#design-matrix"><i class="fa fa-check"></i><b>2.4.1</b> Design Matrix</a></li>
+<li class="chapter" data-level="2.4.2" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#obtain-prediction"><i class="fa fa-check"></i><b>2.4.2</b> Obtain prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#measuring-prediction-error"><i class="fa fa-check"></i><b>2.5</b> Measuring prediction error</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#r2"><i class="fa fa-check"></i><b>2.5.1</b> R2</a></li>
+<li class="chapter" data-level="2.5.2" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#rmse"><i class="fa fa-check"></i><b>2.5.2</b> RMSE</a></li>
+<li class="chapter" data-level="2.5.3" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#adj-r2"><i class="fa fa-check"></i><b>2.5.3</b> Adj R2</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-spliting.html"><a href="data-spliting.html"><i class="fa fa-check"></i><b>3</b> Data spliting</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-spliting.html"><a href="data-spliting.html#read-previously-saved-data-1"><i class="fa fa-check"></i><b>3.1</b> Read previously saved data</a></li>
+<li class="chapter" data-level="3.2" data-path="data-spliting.html"><a href="data-spliting.html#split-the-data"><i class="fa fa-check"></i><b>3.2</b> Split the data</a></li>
+<li class="chapter" data-level="3.3" data-path="data-spliting.html"><a href="data-spliting.html#train-the-model"><i class="fa fa-check"></i><b>3.3</b> Train the model</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="data-spliting.html"><a href="data-spliting.html#function-that-gives-performance-measures"><i class="fa fa-check"></i><b>3.3.1</b> Function that gives performance measures</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="data-spliting.html"><a href="data-spliting.html#extract-performance-measures"><i class="fa fa-check"></i><b>3.4</b> Extract performance measures</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cross-validation.html"><a href="cross-validation.html"><i class="fa fa-check"></i><b>4</b> Cross-validation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="cross-validation.html"><a href="cross-validation.html#read-previously-saved-data-2"><i class="fa fa-check"></i><b>4.1</b> Read previously saved data</a></li>
+<li class="chapter" data-level="4.2" data-path="cross-validation.html"><a href="cross-validation.html#k-fold-cross-vaildation"><i class="fa fa-check"></i><b>4.2</b> k-fold cross-vaildation</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="cross-validation.html"><a href="cross-validation.html#calculation-for-fold-1"><i class="fa fa-check"></i><b>4.2.1</b> Calculation for Fold 1</a></li>
+<li class="chapter" data-level="4.2.2" data-path="cross-validation.html"><a href="cross-validation.html#calculation-for-fold-2"><i class="fa fa-check"></i><b>4.2.2</b> Calculation for Fold 2</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="cross-validation.html"><a href="cross-validation.html#using-caret-package-to-automate"><i class="fa fa-check"></i><b>4.3</b> Using caret package to automate</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="prediction-from-continuous-outcome-1.html"><a href="prediction-from-continuous-outcome-1.html"><i class="fa fa-check"></i><b>5</b> Prediction from continuous outcome</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="prediction-from-continuous-outcome-1.html"><a href="prediction-from-continuous-outcome-1.html#read-previously-saved-data-3"><i class="fa fa-check"></i><b>5.1</b> Read previously saved data</a></li>
+<li class="chapter" data-level="5.2" data-path="prediction-from-continuous-outcome-1.html"><a href="prediction-from-continuous-outcome-1.html#outcome-levels-factor"><i class="fa fa-check"></i><b>5.2</b> Outcome levels (factor)</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="prediction-from-continuous-outcome-1.html"><a href="prediction-from-continuous-outcome-1.html#prediction-for-death"><i class="fa fa-check"></i><b>5.2.1</b> Prediction for death</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="prediction-from-continuous-outcome-1.html"><a href="prediction-from-continuous-outcome-1.html#variables-1"><i class="fa fa-check"></i><b>5.3</b> Variables</a></li>
+<li class="chapter" data-level="5.4" data-path="prediction-from-continuous-outcome-1.html"><a href="prediction-from-continuous-outcome-1.html#model-1"><i class="fa fa-check"></i><b>5.4</b> Model</a></li>
+<li class="chapter" data-level="5.5" data-path="prediction-from-continuous-outcome-1.html"><a href="prediction-from-continuous-outcome-1.html#measuring-prediction-error-1"><i class="fa fa-check"></i><b>5.5</b> Measuring prediction error</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="prediction-from-continuous-outcome-1.html"><a href="prediction-from-continuous-outcome-1.html#auc"><i class="fa fa-check"></i><b>5.5.1</b> AUC</a></li>
+<li class="chapter" data-level="5.5.2" data-path="prediction-from-continuous-outcome-1.html"><a href="prediction-from-continuous-outcome-1.html#brier-score"><i class="fa fa-check"></i><b>5.5.2</b> Brier Score</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="prediction-from-continuous-outcome-1.html"><a href="prediction-from-continuous-outcome-1.html#cross-validation-using-caret"><i class="fa fa-check"></i><b>5.6</b> Cross-validation using caret</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="final-words.html"><a href="final-words.html#section"><i class="fa fa-check"></i><b>6.1</b> Section</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://ehsank.com/" target="blank">Contact</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Machine Learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="prediction-from-continuous-outcome" class="section level1" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Prediction from continuous outcome</h1>
+<div id="read-previously-saved-data" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Read previously saved data</h2>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="prediction-from-continuous-outcome.html#cb16-1" aria-hidden="true" tabindex="-1"></a>ObsData <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/rhcAnalytic.RDS&quot;</span>)</span></code></pre></div>
+</div>
+<div id="prediction-for-length-of-stay" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Prediction for length of stay</h2>
+<div class="rmdcomment">
+<p>
+In this section, we show the regression fitting when outcome is continuous (length of stay).
+</p>
+</div>
+</div>
+<div id="variables" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Variables</h2>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="prediction-from-continuous-outcome.html#cb17-1" aria-hidden="true" tabindex="-1"></a>baselinevars <span class="ot">&lt;-</span> <span class="fu">names</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(ObsData, </span>
+<span id="cb17-2"><a href="prediction-from-continuous-outcome.html#cb17-2" aria-hidden="true" tabindex="-1"></a>                         <span class="sc">!</span><span class="fu">c</span>(Length.of.Stay,Death)))</span>
+<span id="cb17-3"><a href="prediction-from-continuous-outcome.html#cb17-3" aria-hidden="true" tabindex="-1"></a>baselinevars</span></code></pre></div>
+<pre><code>##  [1] &quot;Disease.category&quot;      &quot;Cancer&quot;                &quot;Cardiovascular&quot;       
+##  [4] &quot;Congestive.HF&quot;         &quot;Dementia&quot;              &quot;Psychiatric&quot;          
+##  [7] &quot;Pulmonary&quot;             &quot;Renal&quot;                 &quot;Hepatic&quot;              
+## [10] &quot;GI.Bleed&quot;              &quot;Tumor&quot;                 &quot;Immunosupperssion&quot;    
+## [13] &quot;Transfer.hx&quot;           &quot;MI&quot;                    &quot;age&quot;                  
+## [16] &quot;sex&quot;                   &quot;edu&quot;                   &quot;DASIndex&quot;             
+## [19] &quot;APACHE.score&quot;          &quot;Glasgow.Coma.Score&quot;    &quot;blood.pressure&quot;       
+## [22] &quot;WBC&quot;                   &quot;Heart.rate&quot;            &quot;Respiratory.rate&quot;     
+## [25] &quot;Temperature&quot;           &quot;PaO2vs.FIO2&quot;           &quot;Albumin&quot;              
+## [28] &quot;Hematocrit&quot;            &quot;Bilirubin&quot;             &quot;Creatinine&quot;           
+## [31] &quot;Sodium&quot;                &quot;Potassium&quot;             &quot;PaCo2&quot;                
+## [34] &quot;PH&quot;                    &quot;Weight&quot;                &quot;DNR.status&quot;           
+## [37] &quot;Medical.insurance&quot;     &quot;Respiratory.Diag&quot;      &quot;Cardiovascular.Diag&quot;  
+## [40] &quot;Neurological.Diag&quot;     &quot;Gastrointestinal.Diag&quot; &quot;Renal.Diag&quot;           
+## [43] &quot;Metabolic.Diag&quot;        &quot;Hematologic.Diag&quot;      &quot;Sepsis.Diag&quot;          
+## [46] &quot;Trauma.Diag&quot;           &quot;Orthopedic.Diag&quot;       &quot;race&quot;                 
+## [49] &quot;income&quot;                &quot;RHC.use&quot;</code></pre>
+</div>
+<div id="model" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Model</h2>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="prediction-from-continuous-outcome.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># adjust covariates</span></span>
+<span id="cb19-2"><a href="prediction-from-continuous-outcome.html#cb19-2" aria-hidden="true" tabindex="-1"></a>out.formula1 <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste</span>(<span class="st">&quot;Length.of.Stay~ &quot;</span>, </span>
+<span id="cb19-3"><a href="prediction-from-continuous-outcome.html#cb19-3" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste</span>(baselinevars, </span>
+<span id="cb19-4"><a href="prediction-from-continuous-outcome.html#cb19-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">collapse =</span> <span class="st">&quot;+&quot;</span>)))</span>
+<span id="cb19-5"><a href="prediction-from-continuous-outcome.html#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(out.formula1, <span class="at">file =</span> <span class="st">&quot;data/form1.RDS&quot;</span>)</span>
+<span id="cb19-6"><a href="prediction-from-continuous-outcome.html#cb19-6" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(out.formula1, <span class="at">data =</span> ObsData)</span>
+<span id="cb19-7"><a href="prediction-from-continuous-outcome.html#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(Publish)</span>
+<span id="cb19-8"><a href="prediction-from-continuous-outcome.html#cb19-8" aria-hidden="true" tabindex="-1"></a>adj.fit1 <span class="ot">&lt;-</span> <span class="fu">publish</span>(fit1, <span class="at">digits=</span><span class="dv">1</span>)<span class="sc">$</span>regressionTable</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="prediction-from-continuous-outcome.html#cb20-1" aria-hidden="true" tabindex="-1"></a>out.formula1</span></code></pre></div>
+<pre><code>## Length.of.Stay ~ Disease.category + Cancer + Cardiovascular + 
+##     Congestive.HF + Dementia + Psychiatric + Pulmonary + Renal + 
+##     Hepatic + GI.Bleed + Tumor + Immunosupperssion + Transfer.hx + 
+##     MI + age + sex + edu + DASIndex + APACHE.score + Glasgow.Coma.Score + 
+##     blood.pressure + WBC + Heart.rate + Respiratory.rate + Temperature + 
+##     PaO2vs.FIO2 + Albumin + Hematocrit + Bilirubin + Creatinine + 
+##     Sodium + Potassium + PaCo2 + PH + Weight + DNR.status + Medical.insurance + 
+##     Respiratory.Diag + Cardiovascular.Diag + Neurological.Diag + 
+##     Gastrointestinal.Diag + Renal.Diag + Metabolic.Diag + Hematologic.Diag + 
+##     Sepsis.Diag + Trauma.Diag + Orthopedic.Diag + race + income + 
+##     RHC.use</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="prediction-from-continuous-outcome.html#cb22-1" aria-hidden="true" tabindex="-1"></a>adj.fit1</span></code></pre></div>
+<pre><code>##                 Variable               Units Coefficient          CI.95 p-value
+## 1            (Intercept)                           -76.8 [-139.4;-14.2]    &lt;0.1
+## 2       Disease.category                 ARF         Ref                       
+## 3                                        CHF        -5.6    [-9.0;-2.2]    &lt;0.1
+## 4                                      Other        -4.4    [-6.5;-2.3]    &lt;0.1
+## 5                                       MOSF         2.9      [1.1;4.7]    &lt;0.1
+## 6                 Cancer                None         Ref                       
+## 7                            Localized (Yes)        -7.8    [-15.7;0.1]    &lt;0.1
+## 8                                 Metastatic       -10.6   [-19.1;-2.1]    &lt;0.1
+## 9         Cardiovascular                   0         Ref                       
+## 10                                         1         0.7     [-1.3;2.7]     0.5
+## 11         Congestive.HF                   0         Ref                       
+## 12                                         1        -1.8     [-3.9;0.4]     0.1
+## 13              Dementia                   0         Ref                       
+## 14                                         1        -1.3     [-3.6;1.1]     0.3
+## 15           Psychiatric                   0         Ref                       
+## 16                                         1        -0.5     [-3.1;2.2]     0.7
+## 17             Pulmonary                   0         Ref                       
+## 18                                         1         2.1      [0.1;4.0]    &lt;0.1
+## 19                 Renal                   0         Ref                       
+## 20                                         1        -6.9   [-10.8;-3.1]    &lt;0.1
+## 21               Hepatic                   0         Ref                       
+## 22                                         1        -1.5     [-5.1;2.1]     0.4
+## 23              GI.Bleed                   0         Ref                       
+## 24                                         1        -5.1    [-9.7;-0.5]    &lt;0.1
+## 25                 Tumor                   0         Ref                       
+## 26                                         1         4.6    [-3.4;12.6]     0.3
+## 27     Immunosupperssion                   0         Ref                       
+## 28                                         1         0.1     [-1.4;1.7]     0.9
+## 29           Transfer.hx                   0         Ref                       
+## 30                                         1         1.2     [-0.9;3.2]     0.3
+## 31                    MI                   0         Ref                       
+## 32                                         1        -1.7     [-5.3;2.0]     0.4
+## 33                   age           [-Inf,50)         Ref                       
+## 34                                   [50,60)         0.1     [-2.0;2.3]     0.9
+## 35                                   [60,70)        -0.4     [-2.5;1.7]     0.7
+## 36                                   [70,80)        -1.1     [-3.6;1.4]     0.4
+## 37                                 [80, Inf)        -2.8     [-5.7;0.2]    &lt;0.1
+## 38                   sex                Male         Ref                       
+## 39                                    Female         0.8     [-0.6;2.2]     0.2
+## 40                   edu                             0.0     [-0.2;0.3]     0.7
+## 41              DASIndex                            -0.1     [-0.2;0.1]     0.4
+## 42          APACHE.score                            -0.1    [-0.1;-0.0]    &lt;0.1
+## 43    Glasgow.Coma.Score                             0.0     [-0.0;0.0]     0.2
+## 44        blood.pressure                            -0.0     [-0.0;0.0]     0.2
+## 45                   WBC                             0.0     [-0.0;0.1]     0.2
+## 46            Heart.rate                             0.0      [0.0;0.0]    &lt;0.1
+## 47      Respiratory.rate                            -0.0     [-0.1;0.1]     1.0
+## 48           Temperature                             0.5      [0.1;0.9]    &lt;0.1
+## 49           PaO2vs.FIO2                            -0.0    [-0.0;-0.0]    &lt;0.1
+## 50               Albumin                            -2.6    [-3.5;-1.6]    &lt;0.1
+## 51            Hematocrit                            -0.2    [-0.3;-0.1]    &lt;0.1
+## 52             Bilirubin                            -0.1     [-0.3;0.1]     0.2
+## 53            Creatinine                             0.5      [0.1;1.0]    &lt;0.1
+## 54                Sodium                             0.1      [0.0;0.2]    &lt;0.1
+## 55             Potassium                             0.3     [-0.3;1.0]     0.3
+## 56                 PaCo2                             0.1      [0.0;0.2]    &lt;0.1
+## 57                    PH                            10.1     [2.2;17.9]    &lt;0.1
+## 58                Weight                             0.0     [-0.0;0.0]     1.0
+## 59            DNR.status                  No         Ref                       
+## 60                                       Yes        -8.0   [-10.1;-5.8]    &lt;0.1
+## 61     Medical.insurance            Medicaid         Ref                       
+## 62                                  Medicare        -0.5     [-3.2;2.2]     0.7
+## 63                       Medicare &amp; Medicaid        -2.4     [-5.8;0.9]     0.2
+## 64                              No insurance        -1.8     [-5.2;1.6]     0.3
+## 65                                   Private        -2.1     [-4.6;0.4]     0.1
+## 66                        Private &amp; Medicare        -2.0     [-4.8;0.8]     0.2
+## 67      Respiratory.Diag                  No         Ref                       
+## 68                                       Yes         0.3     [-1.4;2.0]     0.7
+## 69   Cardiovascular.Diag                  No         Ref                       
+## 70                                       Yes         0.4     [-1.4;2.1]     0.7
+## 71     Neurological.Diag                  No         Ref                       
+## 72                                       Yes         3.5      [1.1;6.0]    &lt;0.1
+## 73 Gastrointestinal.Diag                  No         Ref                       
+## 74                                       Yes         2.6      [0.3;4.8]    &lt;0.1
+## 75            Renal.Diag                  No         Ref                       
+## 76                                       Yes         1.8     [-1.4;5.0]     0.3
+## 77        Metabolic.Diag                  No         Ref                       
+## 78                                       Yes        -1.2     [-4.3;2.0]     0.5
+## 79      Hematologic.Diag                  No         Ref                       
+## 80                                       Yes        -3.9    [-6.8;-0.9]    &lt;0.1
+## 81           Sepsis.Diag                  No         Ref                       
+## 82                                       Yes         0.0     [-2.0;2.0]     1.0
+## 83           Trauma.Diag                  No         Ref                       
+## 84                                       Yes         1.1     [-5.9;8.2]     0.8
+## 85       Orthopedic.Diag                  No         Ref                       
+## 86                                       Yes         3.5   [-15.1;22.2]     0.7
+## 87                  race               white         Ref                       
+## 88                                     black        -1.1     [-3.1;0.8]     0.2
+## 89                                     other         0.2     [-2.5;3.0]     0.9
+## 90                income            $11-$25k         Ref                       
+## 91                                  $25-$50k         2.5      [0.2;4.7]    &lt;0.1
+## 92                                    &gt; $50k         0.4     [-2.4;3.3]     0.8
+## 93                                Under $11k        -0.4     [-2.2;1.4]     0.6
+## 94               RHC.use                             2.9      [1.4;4.4]    &lt;0.1</code></pre>
+<div id="design-matrix" class="section level3" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Design Matrix</h3>
+<p>Expands factors to a set of dummy variables.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="prediction-from-continuous-outcome.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ObsData)</span></code></pre></div>
+<pre><code>## [1] 5735   52</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="prediction-from-continuous-outcome.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">attr</span>(<span class="fu">terms</span>(out.formula1), <span class="st">&quot;term.labels&quot;</span>))</span></code></pre></div>
+<pre><code>## [1] 50</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="prediction-from-continuous-outcome.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">model.matrix</span>(fit1))</span></code></pre></div>
+<pre><code>##   (Intercept) Disease.categoryCHF Disease.categoryOther Disease.categoryMOSF
+## 1           1                   0                     1                    0
+## 2           1                   0                     0                    1
+## 3           1                   0                     0                    1
+## 4           1                   0                     0                    0
+## 5           1                   0                     0                    1
+## 6           1                   0                     1                    0
+##   CancerLocalized (Yes) CancerMetastatic Cardiovascular1 Congestive.HF1
+## 1                     1                0               0              0
+## 2                     0                0               1              1
+## 3                     1                0               0              0
+## 4                     0                0               0              0
+## 5                     0                0               0              0
+## 6                     0                0               0              1
+##   Dementia1 Psychiatric1 Pulmonary1 Renal1 Hepatic1 GI.Bleed1 Tumor1
+## 1         0            0          1      0        0         0      1
+## 2         0            0          0      0        0         0      0
+## 3         0            0          0      0        0         0      1
+## 4         0            0          0      0        0         0      0
+## 5         0            0          0      0        0         0      0
+## 6         0            0          1      0        0         0      0
+##   Immunosupperssion1 Transfer.hx1 MI1 age[50,60) age[60,70) age[70,80)
+## 1                  0            0   0          0          0          1
+## 2                  1            1   0          0          0          1
+## 3                  1            0   0          0          0          0
+## 4                  1            0   0          0          0          1
+## 5                  0            0   0          0          1          0
+## 6                  0            0   0          0          0          0
+##   age[80, Inf) sexFemale       edu DASIndex APACHE.score Glasgow.Coma.Score
+## 1            0         0 12.000000 23.50000           46                  0
+## 2            0         1 12.000000 14.75195           50                  0
+## 3            0         1 14.069916 18.13672           82                  0
+## 4            0         1  9.000000 22.92969           48                  0
+## 5            0         0  9.945259 21.05078           72                 41
+## 6            1         1  8.000000 17.50000           38                  0
+##   blood.pressure         WBC Heart.rate Respiratory.rate Temperature
+## 1             41 22.09765620        124               10    38.69531
+## 2             63 28.89843750        137               38    38.89844
+## 3             57  0.04999542        130               40    36.39844
+## 4             55 23.29687500         58               26    35.79688
+## 5             65 29.69921880        125               27    34.79688
+## 6            115 18.00000000        134               36    39.19531
+##   PaO2vs.FIO2  Albumin Hematocrit Bilirubin Creatinine Sodium Potassium PaCo2
+## 1     68.0000 3.500000   58.00000 1.0097656  1.1999512    145  4.000000    40
+## 2    218.3125 2.599609   32.50000 0.6999512  0.5999756    137  3.299805    34
+## 3    275.5000 3.500000   21.09766 1.0097656  2.5996094    146  2.899902    16
+## 4    156.6562 3.500000   26.29688 0.3999634  1.6999512    117  5.799805    30
+## 5    478.0000 3.500000   24.00000 1.0097656  3.5996094    126  5.799805    17
+## 6    184.1875 3.099609   30.50000 1.0097656  1.3999023    138  5.399414    68
+##         PH   Weight DNR.statusYes Medical.insuranceMedicare
+## 1 7.359375 64.69995             0                         1
+## 2 7.329102 45.69998             0                         0
+## 3 7.359375  0.00000             0                         0
+## 4 7.459961 54.59998             0                         0
+## 5 7.229492 78.39996             1                         1
+## 6 7.299805 54.89999             0                         1
+##   Medical.insuranceMedicare &amp; Medicaid Medical.insuranceNo insurance
+## 1                                    0                             0
+## 2                                    0                             0
+## 3                                    0                             0
+## 4                                    0                             0
+## 5                                    0                             0
+## 6                                    0                             0
+##   Medical.insurancePrivate Medical.insurancePrivate &amp; Medicare
+## 1                        0                                   0
+## 2                        0                                   1
+## 3                        1                                   0
+## 4                        0                                   1
+## 5                        0                                   0
+## 6                        0                                   0
+##   Respiratory.DiagYes Cardiovascular.DiagYes Neurological.DiagYes
+## 1                   1                      1                    0
+## 2                   0                      0                    0
+## 3                   0                      1                    0
+## 4                   1                      0                    0
+## 5                   0                      1                    0
+## 6                   1                      0                    0
+##   Gastrointestinal.DiagYes Renal.DiagYes Metabolic.DiagYes Hematologic.DiagYes
+## 1                        0             0                 0                   0
+## 2                        0             0                 0                   0
+## 3                        0             0                 0                   0
+## 4                        0             0                 0                   0
+## 5                        0             0                 0                   0
+## 6                        0             0                 0                   0
+##   Sepsis.DiagYes Trauma.DiagYes Orthopedic.DiagYes raceblack raceother
+## 1              0              0                  0         0         0
+## 2              1              0                  0         0         0
+## 3              0              0                  0         0         0
+## 4              0              0                  0         0         0
+## 5              0              0                  0         0         0
+## 6              0              0                  0         0         0
+##   income$25-$50k income&gt; $50k incomeUnder $11k RHC.use
+## 1              0            0                1       0
+## 2              0            0                1       1
+## 3              1            0                0       1
+## 4              0            0                0       0
+## 5              0            0                1       1
+## 6              0            0                1       0</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="prediction-from-continuous-outcome.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(<span class="fu">model.matrix</span>(fit1))</span></code></pre></div>
+<pre><code>## [1] 5735   64</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="prediction-from-continuous-outcome.html#cb32-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">dim</span>(<span class="fu">model.matrix</span>(fit1))[<span class="dv">2</span>] <span class="co"># intercept + slopes</span></span>
+<span id="cb32-2"><a href="prediction-from-continuous-outcome.html#cb32-2" aria-hidden="true" tabindex="-1"></a>p</span></code></pre></div>
+<pre><code>## [1] 64</code></pre>
+</div>
+<div id="obtain-prediction" class="section level3" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Obtain prediction</h3>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="prediction-from-continuous-outcome.html#cb34-1" aria-hidden="true" tabindex="-1"></a>obs.y <span class="ot">&lt;-</span> ObsData<span class="sc">$</span>Length.of.Stay</span>
+<span id="cb34-2"><a href="prediction-from-continuous-outcome.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(obs.y)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    2.00    7.00   14.00   21.56   25.00  394.00</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="prediction-from-continuous-outcome.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict the above fit on ObsData data</span></span>
+<span id="cb36-2"><a href="prediction-from-continuous-outcome.html#cb36-2" aria-hidden="true" tabindex="-1"></a>pred.y1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit1, ObsData)</span>
+<span id="cb36-3"><a href="prediction-from-continuous-outcome.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pred.y1)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  -32.76   16.62   21.96   21.56   26.73   42.67</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="prediction-from-continuous-outcome.html#cb38-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(pred.y1)</span>
+<span id="cb38-2"><a href="prediction-from-continuous-outcome.html#cb38-2" aria-hidden="true" tabindex="-1"></a>n</span></code></pre></div>
+<pre><code>## [1] 5735</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="prediction-from-continuous-outcome.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(obs.y,pred.y1)</span>
+<span id="cb40-2"><a href="prediction-from-continuous-outcome.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(obs.y,pred.y1), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="Intro2ML_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+</div>
+</div>
+<div id="measuring-prediction-error" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Measuring prediction error</h2>
+<div id="r2" class="section level3" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> R2</h3>
+<p><a href="https://en.wikipedia.org/wiki/Coefficient_of_determination">ref</a></p>
+<p><img src="images/r2.png" width="90%" /></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="prediction-from-continuous-outcome.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find SSE</span></span>
+<span id="cb41-2"><a href="prediction-from-continuous-outcome.html#cb41-2" aria-hidden="true" tabindex="-1"></a>SSE <span class="ot">&lt;-</span> <span class="fu">sum</span>( (obs.y <span class="sc">-</span> pred.y1)<span class="sc">^</span><span class="dv">2</span> )</span>
+<span id="cb41-3"><a href="prediction-from-continuous-outcome.html#cb41-3" aria-hidden="true" tabindex="-1"></a>SSE</span></code></pre></div>
+<pre><code>## [1] 3536398</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="prediction-from-continuous-outcome.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find SST</span></span>
+<span id="cb43-2"><a href="prediction-from-continuous-outcome.html#cb43-2" aria-hidden="true" tabindex="-1"></a>mean.obs.y <span class="ot">&lt;-</span> <span class="fu">mean</span>(obs.y)</span>
+<span id="cb43-3"><a href="prediction-from-continuous-outcome.html#cb43-3" aria-hidden="true" tabindex="-1"></a>SST <span class="ot">&lt;-</span> <span class="fu">sum</span>( (obs.y <span class="sc">-</span> mean.obs.y)<span class="sc">^</span><span class="dv">2</span> )</span>
+<span id="cb43-4"><a href="prediction-from-continuous-outcome.html#cb43-4" aria-hidden="true" tabindex="-1"></a>SST</span></code></pre></div>
+<pre><code>## [1] 3836690</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="prediction-from-continuous-outcome.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find R2</span></span>
+<span id="cb45-2"><a href="prediction-from-continuous-outcome.html#cb45-2" aria-hidden="true" tabindex="-1"></a>R<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span> SSE<span class="sc">/</span>SST</span>
+<span id="cb45-3"><a href="prediction-from-continuous-outcome.html#cb45-3" aria-hidden="true" tabindex="-1"></a>R<span class="fl">.2</span></span></code></pre></div>
+<pre><code>## [1] 0.07826832</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="prediction-from-continuous-outcome.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(caret)</span>
+<span id="cb47-2"><a href="prediction-from-continuous-outcome.html#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">R2</span>(pred.y1, obs.y)</span></code></pre></div>
+<pre><code>## [1] 0.07826832</code></pre>
+</div>
+<div id="rmse" class="section level3" number="2.5.2">
+<h3><span class="header-section-number">2.5.2</span> RMSE</h3>
+<p><a href="https://en.wikipedia.org/wiki/One-way_analysis_of_variance">ref</a></p>
+<p><img src="images/rmse.png" width="90%" /></p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="prediction-from-continuous-outcome.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find RMSE</span></span>
+<span id="cb49-2"><a href="prediction-from-continuous-outcome.html#cb49-2" aria-hidden="true" tabindex="-1"></a>Rmse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(SSE<span class="sc">/</span>(n<span class="sc">-</span>p)) </span>
+<span id="cb49-3"><a href="prediction-from-continuous-outcome.html#cb49-3" aria-hidden="true" tabindex="-1"></a>Rmse</span></code></pre></div>
+<pre><code>## [1] 24.97185</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="prediction-from-continuous-outcome.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">RMSE</span>(pred.y1, obs.y)</span></code></pre></div>
+<pre><code>## [1] 24.83212</code></pre>
+</div>
+<div id="adj-r2" class="section level3" number="2.5.3">
+<h3><span class="header-section-number">2.5.3</span> Adj R2</h3>
+<p><a href="https://en.wikipedia.org/wiki/Coefficient_of_determination#Adjusted_R2">ref</a></p>
+<p><img src="images/r2a.png" width="30%" /></p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="prediction-from-continuous-outcome.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find adj R2</span></span>
+<span id="cb53-2"><a href="prediction-from-continuous-outcome.html#cb53-2" aria-hidden="true" tabindex="-1"></a>adjR2 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span>(<span class="dv">1</span><span class="sc">-</span>R<span class="fl">.2</span>)<span class="sc">*</span>((n<span class="dv">-1</span>)<span class="sc">/</span>(n<span class="sc">-</span>p))</span>
+<span id="cb53-3"><a href="prediction-from-continuous-outcome.html#cb53-3" aria-hidden="true" tabindex="-1"></a>adjR2</span></code></pre></div>
+<pre><code>## [1] 0.06802866</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="rhc-data-description.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-spliting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ehsanx/into2ML/edit/master/2continuous.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Intro2ML.pdf", "Intro2ML.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

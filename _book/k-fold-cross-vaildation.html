@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 k-fold cross-vaildation | Introduction to Machine Learning</title>
+  <meta name="description" content="Intro to R." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 k-fold cross-vaildation | Introduction to Machine Learning" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Intro to R." />
+  <meta name="github-repo" content="ehsanx/intro2ML" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 k-fold cross-vaildation | Introduction to Machine Learning" />
+  
+  <meta name="twitter:description" content="Intro to R." />
+  
+
+<meta name="author" content="Ehsan Karim" />
+
+
+<meta name="date" content="2021-11-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="cross-validation.html"/>
+<link rel="next" href="prediction-from-continuous-outcome-1.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script type="text/javascript">
+
+// toggle visibility of R source blocks in R Markdown output
+function toggle_R() {
+  var x = document.getElementsByClassName('r');
+  if (x.length == 0) return;
+  function toggle_vis(o) {
+    var d = o.style.display;
+    o.style.display = (d == 'block' || d == '') ? 'none':'block';
+  }
+
+  for (i = 0; i < x.length; i++) {
+    var y = x[i];
+    if (y.tagName.toLowerCase() === 'pre') toggle_vis(y);
+  }
+
+    var elem = document.getElementById("myButton1");
+    if (elem.value === "Hide Global") elem.value = "Show Global";
+    else elem.value = "Hide Global";
+}
+
+document.write('<input onclick="toggle_R();" type="button" value="Hide Global" id="myButton1" style="position: absolute; top: 10%; right: 2%; z-index: 200"></input>')
+
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Introduction to Machine Learning</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#goal"><i class="fa fa-check"></i>Goal</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#pre-requisites"><i class="fa fa-check"></i>Pre-requisites</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#key-references"><i class="fa fa-check"></i>Key references</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#version-history"><i class="fa fa-check"></i>Version history</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributor-list"><i class="fa fa-check"></i>Contributor list</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="rhc-data-description.html"><a href="rhc-data-description.html"><i class="fa fa-check"></i><b>1</b> RHC data description</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="rhc-data-description.html"><a href="rhc-data-description.html#data-download"><i class="fa fa-check"></i><b>1.1</b> Data download</a></li>
+<li class="chapter" data-level="1.2" data-path="rhc-data-description.html"><a href="rhc-data-description.html#creating-analytic-data"><i class="fa fa-check"></i><b>1.2</b> Creating Analytic data</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="rhc-data-description.html"><a href="rhc-data-description.html#add-column-for-outcome-length-of-stay"><i class="fa fa-check"></i><b>1.2.1</b> Add column for outcome: length of stay</a></li>
+<li class="chapter" data-level="1.2.2" data-path="rhc-data-description.html"><a href="rhc-data-description.html#recoding-column-for-outcome-death"><i class="fa fa-check"></i><b>1.2.2</b> Recoding column for outcome: death</a></li>
+<li class="chapter" data-level="1.2.3" data-path="rhc-data-description.html"><a href="rhc-data-description.html#remove-unnecessary-outcomes"><i class="fa fa-check"></i><b>1.2.3</b> Remove unnecessary outcomes</a></li>
+<li class="chapter" data-level="1.2.4" data-path="rhc-data-description.html"><a href="rhc-data-description.html#remove-unnecessary-and-problematic-variables"><i class="fa fa-check"></i><b>1.2.4</b> Remove unnecessary and problematic variables</a></li>
+<li class="chapter" data-level="1.2.5" data-path="rhc-data-description.html"><a href="rhc-data-description.html#basic-data-cleanup"><i class="fa fa-check"></i><b>1.2.5</b> Basic data cleanup</a></li>
+<li class="chapter" data-level="1.2.6" data-path="rhc-data-description.html"><a href="rhc-data-description.html#rename-variables"><i class="fa fa-check"></i><b>1.2.6</b> Rename variables</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="rhc-data-description.html"><a href="rhc-data-description.html#notations"><i class="fa fa-check"></i><b>1.3</b> Notations</a></li>
+<li class="chapter" data-level="1.4" data-path="rhc-data-description.html"><a href="rhc-data-description.html#basic-data-exploration"><i class="fa fa-check"></i><b>1.4</b> Basic data exploration</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="rhc-data-description.html"><a href="rhc-data-description.html#dimension-and-summary"><i class="fa fa-check"></i><b>1.4.1</b> Dimension and summary</a></li>
+<li class="chapter" data-level="1.4.2" data-path="rhc-data-description.html"><a href="rhc-data-description.html#more-comprehensive-summary"><i class="fa fa-check"></i><b>1.4.2</b> More comprehensive summary</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html"><i class="fa fa-check"></i><b>2</b> Prediction from continuous outcome</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#read-previously-saved-data"><i class="fa fa-check"></i><b>2.1</b> Read previously saved data</a></li>
+<li class="chapter" data-level="2.2" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#prediction-for-length-of-stay"><i class="fa fa-check"></i><b>2.2</b> Prediction for length of stay</a></li>
+<li class="chapter" data-level="2.3" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#variables"><i class="fa fa-check"></i><b>2.3</b> Variables</a></li>
+<li class="chapter" data-level="2.4" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#model"><i class="fa fa-check"></i><b>2.4</b> Model</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#design-matrix"><i class="fa fa-check"></i><b>2.4.1</b> Design Matrix</a></li>
+<li class="chapter" data-level="2.4.2" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#obtain-prediction"><i class="fa fa-check"></i><b>2.4.2</b> Obtain prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#measuring-prediction-error"><i class="fa fa-check"></i><b>2.5</b> Measuring prediction error</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#r2"><i class="fa fa-check"></i><b>2.5.1</b> R2</a></li>
+<li class="chapter" data-level="2.5.2" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#rmse"><i class="fa fa-check"></i><b>2.5.2</b> RMSE</a></li>
+<li class="chapter" data-level="2.5.3" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#adj-r2"><i class="fa fa-check"></i><b>2.5.3</b> Adj R2</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-spliting.html"><a href="data-spliting.html"><i class="fa fa-check"></i><b>3</b> Data spliting</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-spliting.html"><a href="data-spliting.html#read-previously-saved-data-1"><i class="fa fa-check"></i><b>3.1</b> Read previously saved data</a></li>
+<li class="chapter" data-level="3.2" data-path="data-spliting.html"><a href="data-spliting.html#split-the-data"><i class="fa fa-check"></i><b>3.2</b> Split the data</a></li>
+<li class="chapter" data-level="3.3" data-path="data-spliting.html"><a href="data-spliting.html#train-the-model"><i class="fa fa-check"></i><b>3.3</b> Train the model</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="data-spliting.html"><a href="data-spliting.html#function-that-gives-performance-measures"><i class="fa fa-check"></i><b>3.3.1</b> Function that gives performance measures</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="data-spliting.html"><a href="data-spliting.html#extract-performance-measures"><i class="fa fa-check"></i><b>3.4</b> Extract performance measures</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cross-validation.html"><a href="cross-validation.html"><i class="fa fa-check"></i><b>4</b> Cross-validation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="cross-validation.html"><a href="cross-validation.html#read-previously-saved-data-2"><i class="fa fa-check"></i><b>4.1</b> Read previously saved data</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="k-fold-cross-vaildation.html"><a href="k-fold-cross-vaildation.html"><i class="fa fa-check"></i><b>5</b> k-fold cross-vaildation</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="k-fold-cross-vaildation.html"><a href="k-fold-cross-vaildation.html#calculation-for-fold-1"><i class="fa fa-check"></i><b>5.1</b> Calculation for Fold 1</a></li>
+<li class="chapter" data-level="5.2" data-path="k-fold-cross-vaildation.html"><a href="k-fold-cross-vaildation.html#calculation-for-fold-2"><i class="fa fa-check"></i><b>5.2</b> Calculation for Fold 2</a></li>
+<li class="chapter" data-level="5.3" data-path="k-fold-cross-vaildation.html"><a href="k-fold-cross-vaildation.html#using-caret-package-to-automate"><i class="fa fa-check"></i><b>5.3</b> Using caret package to automate</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="prediction-from-continuous-outcome-1.html"><a href="prediction-from-continuous-outcome-1.html"><i class="fa fa-check"></i><b>6</b> Prediction from continuous outcome</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="prediction-from-continuous-outcome-1.html"><a href="prediction-from-continuous-outcome-1.html#read-previously-saved-data-3"><i class="fa fa-check"></i><b>6.1</b> Read previously saved data</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="prediction-from-continuous-outcome-1.html"><a href="prediction-from-continuous-outcome-1.html#prediction-for-death"><i class="fa fa-check"></i><b>6.1.1</b> Prediction for death</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="prediction-from-continuous-outcome-1.html"><a href="prediction-from-continuous-outcome-1.html#variables-1"><i class="fa fa-check"></i><b>6.2</b> Variables</a></li>
+<li class="chapter" data-level="6.3" data-path="prediction-from-continuous-outcome-1.html"><a href="prediction-from-continuous-outcome-1.html#model-1"><i class="fa fa-check"></i><b>6.3</b> Model</a></li>
+<li class="chapter" data-level="6.4" data-path="prediction-from-continuous-outcome-1.html"><a href="prediction-from-continuous-outcome-1.html#measuring-prediction-error-1"><i class="fa fa-check"></i><b>6.4</b> Measuring prediction error</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="prediction-from-continuous-outcome-1.html"><a href="prediction-from-continuous-outcome-1.html#auc"><i class="fa fa-check"></i><b>6.4.1</b> AUC</a></li>
+<li class="chapter" data-level="6.4.2" data-path="prediction-from-continuous-outcome-1.html"><a href="prediction-from-continuous-outcome-1.html#brier-score"><i class="fa fa-check"></i><b>6.4.2</b> Brier Score</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>7</b> Final Words</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="final-words.html"><a href="final-words.html#section"><i class="fa fa-check"></i><b>7.1</b> Section</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://ehsank.com/" target="blank">Contact</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Machine Learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="k-fold-cross-vaildation" class="section level1" number="5">
+<h1><span class="header-section-number">Chapter 5</span> k-fold cross-vaildation</h1>
+<p><a href="https://en.wikipedia.org/wiki/Cross-validation_(statistics)">ref</a></p>
+<p><img src="images/kf.png" width="90%" /></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="k-fold-cross-vaildation.html#cb2-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">=</span> <span class="dv">5</span></span>
+<span id="cb2-2"><a href="k-fold-cross-vaildation.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ObsData)</span></code></pre></div>
+<pre><code>## [1] 5735   52</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="k-fold-cross-vaildation.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">567</span>)</span>
+<span id="cb4-2"><a href="k-fold-cross-vaildation.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create folds (based on outcome)</span></span>
+<span id="cb4-3"><a href="k-fold-cross-vaildation.html#cb4-3" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">createFolds</span>(ObsData<span class="sc">$</span>Length.of.Stay, <span class="at">k =</span> k, </span>
+<span id="cb4-4"><a href="k-fold-cross-vaildation.html#cb4-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">list =</span> <span class="cn">TRUE</span>, <span class="at">returnTrain =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-5"><a href="k-fold-cross-vaildation.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mode</span>(folds)</span></code></pre></div>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="k-fold-cross-vaildation.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ObsData)<span class="sc">*</span><span class="dv">4</span><span class="sc">/</span><span class="dv">5</span> <span class="co"># approximate training data size</span></span></code></pre></div>
+<pre><code>## [1] 4588.0   41.6</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="k-fold-cross-vaildation.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ObsData)<span class="sc">/</span><span class="dv">5</span>  <span class="co"># approximate test data size</span></span></code></pre></div>
+<pre><code>## [1] 1147.0   10.4</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="k-fold-cross-vaildation.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(folds[[<span class="dv">1</span>]])</span></code></pre></div>
+<pre><code>## [1] 4588</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="k-fold-cross-vaildation.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(folds[[<span class="dv">2</span>]])</span></code></pre></div>
+<pre><code>## [1] 4588</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="k-fold-cross-vaildation.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(folds[[<span class="dv">3</span>]])</span></code></pre></div>
+<pre><code>## [1] 4589</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="k-fold-cross-vaildation.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(folds[[<span class="dv">4</span>]])</span></code></pre></div>
+<pre><code>## [1] 4588</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="k-fold-cross-vaildation.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(folds[[<span class="dv">5</span>]])</span></code></pre></div>
+<pre><code>## [1] 4587</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="k-fold-cross-vaildation.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(folds[[<span class="dv">1</span>]])</span></code></pre></div>
+<pre><code>##  int [1:4588] 1 2 4 6 7 8 9 10 11 13 ...</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="k-fold-cross-vaildation.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(folds[[<span class="dv">2</span>]])</span></code></pre></div>
+<pre><code>##  int [1:4588] 2 3 4 5 6 7 8 9 10 11 ...</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="k-fold-cross-vaildation.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(folds[[<span class="dv">3</span>]])</span></code></pre></div>
+<pre><code>##  int [1:4589] 1 2 3 4 5 6 8 9 11 12 ...</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="k-fold-cross-vaildation.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(folds[[<span class="dv">4</span>]])</span></code></pre></div>
+<pre><code>##  int [1:4588] 1 2 3 4 5 7 9 10 12 13 ...</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="k-fold-cross-vaildation.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(folds[[<span class="dv">5</span>]])</span></code></pre></div>
+<pre><code>##  int [1:4587] 1 3 5 6 7 8 10 11 12 13 ...</code></pre>
+<div id="calculation-for-fold-1" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Calculation for Fold 1</h2>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="k-fold-cross-vaildation.html#cb30-1" aria-hidden="true" tabindex="-1"></a>fold.index <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb30-2"><a href="k-fold-cross-vaildation.html#cb30-2" aria-hidden="true" tabindex="-1"></a>fold1.train.ids <span class="ot">&lt;-</span> folds[[fold.index]]</span>
+<span id="cb30-3"><a href="k-fold-cross-vaildation.html#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(fold1.train.ids)</span></code></pre></div>
+<pre><code>## [1] 1 2 4 6 7 8</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="k-fold-cross-vaildation.html#cb32-1" aria-hidden="true" tabindex="-1"></a>fold1.train <span class="ot">&lt;-</span> ObsData[fold1.train.ids,]</span>
+<span id="cb32-2"><a href="k-fold-cross-vaildation.html#cb32-2" aria-hidden="true" tabindex="-1"></a>fold1.test <span class="ot">&lt;-</span> ObsData[<span class="sc">-</span>fold1.train.ids,]</span>
+<span id="cb32-3"><a href="k-fold-cross-vaildation.html#cb32-3" aria-hidden="true" tabindex="-1"></a>out.formula1</span></code></pre></div>
+<pre><code>## Length.of.Stay ~ Disease.category + Cancer + Cardiovascular + 
+##     Congestive.HF + Dementia + Psychiatric + Pulmonary + Renal + 
+##     Hepatic + GI.Bleed + Tumor + Immunosupperssion + Transfer.hx + 
+##     MI + age + sex + edu + DASIndex + APACHE.score + Glasgow.Coma.Score + 
+##     blood.pressure + WBC + Heart.rate + Respiratory.rate + Temperature + 
+##     PaO2vs.FIO2 + Albumin + Hematocrit + Bilirubin + Creatinine + 
+##     Sodium + Potassium + PaCo2 + PH + Weight + DNR.status + Medical.insurance + 
+##     Respiratory.Diag + Cardiovascular.Diag + Neurological.Diag + 
+##     Gastrointestinal.Diag + Renal.Diag + Metabolic.Diag + Hematologic.Diag + 
+##     Sepsis.Diag + Trauma.Diag + Orthopedic.Diag + race + income + 
+##     RHC.use</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="k-fold-cross-vaildation.html#cb34-1" aria-hidden="true" tabindex="-1"></a>model.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(out.formula1, <span class="at">data =</span> fold1.train)</span>
+<span id="cb34-2"><a href="k-fold-cross-vaildation.html#cb34-2" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model.fit, </span>
+<span id="cb34-3"><a href="k-fold-cross-vaildation.html#cb34-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">newdata =</span> fold1.test)</span>
+<span id="cb34-4"><a href="k-fold-cross-vaildation.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">perform</span>(<span class="at">new.data=</span>fold1.test,</span>
+<span id="cb34-5"><a href="k-fold-cross-vaildation.html#cb34-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">y.name =</span> <span class="st">&quot;Length.of.Stay&quot;</span>,</span>
+<span id="cb34-6"><a href="k-fold-cross-vaildation.html#cb34-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">model.fit=</span>model.fit)</span></code></pre></div>
+<pre><code>##         n  p    R2  adjR2  RMSE
+## [1,] 1147 64 0.051 -0.004 24.86</code></pre>
+</div>
+<div id="calculation-for-fold-2" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Calculation for Fold 2</h2>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="k-fold-cross-vaildation.html#cb36-1" aria-hidden="true" tabindex="-1"></a>fold.index <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb36-2"><a href="k-fold-cross-vaildation.html#cb36-2" aria-hidden="true" tabindex="-1"></a>fold1.train.ids <span class="ot">&lt;-</span> folds[[fold.index]]</span>
+<span id="cb36-3"><a href="k-fold-cross-vaildation.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(fold1.train.ids)</span></code></pre></div>
+<pre><code>## [1] 2 3 4 5 6 7</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="k-fold-cross-vaildation.html#cb38-1" aria-hidden="true" tabindex="-1"></a>fold1.train <span class="ot">&lt;-</span> ObsData[fold1.train.ids,]</span>
+<span id="cb38-2"><a href="k-fold-cross-vaildation.html#cb38-2" aria-hidden="true" tabindex="-1"></a>fold1.test <span class="ot">&lt;-</span> ObsData[<span class="sc">-</span>fold1.train.ids,]</span>
+<span id="cb38-3"><a href="k-fold-cross-vaildation.html#cb38-3" aria-hidden="true" tabindex="-1"></a>model.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(out.formula1, <span class="at">data =</span> fold1.train)</span>
+<span id="cb38-4"><a href="k-fold-cross-vaildation.html#cb38-4" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model.fit, </span>
+<span id="cb38-5"><a href="k-fold-cross-vaildation.html#cb38-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">newdata =</span> fold1.test)</span>
+<span id="cb38-6"><a href="k-fold-cross-vaildation.html#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="fu">perform</span>(<span class="at">new.data=</span>fold1.test,</span>
+<span id="cb38-7"><a href="k-fold-cross-vaildation.html#cb38-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">y.name =</span> <span class="st">&quot;Length.of.Stay&quot;</span>,</span>
+<span id="cb38-8"><a href="k-fold-cross-vaildation.html#cb38-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">model.fit=</span>model.fit)</span></code></pre></div>
+<pre><code>##         n  p    R2 adjR2   RMSE
+## [1,] 1147 64 0.066 0.011 24.714</code></pre>
+</div>
+<div id="using-caret-package-to-automate" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Using caret package to automate</h2>
+<p><a href="https://topepo.github.io/caret/model-training-and-tuning.html">ref</a></p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="k-fold-cross-vaildation.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using Caret package</span></span>
+<span id="cb40-2"><a href="k-fold-cross-vaildation.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">567</span>)</span>
+<span id="cb40-3"><a href="k-fold-cross-vaildation.html#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># make a 5-fold CV</span></span>
+<span id="cb40-4"><a href="k-fold-cross-vaildation.html#cb40-4" aria-hidden="true" tabindex="-1"></a>ctrl<span class="ot">&lt;-</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>,<span class="at">number =</span> <span class="dv">5</span>)</span>
+<span id="cb40-5"><a href="k-fold-cross-vaildation.html#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model with formula = out.formula1</span></span>
+<span id="cb40-6"><a href="k-fold-cross-vaildation.html#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="co"># use training method lm</span></span>
+<span id="cb40-7"><a href="k-fold-cross-vaildation.html#cb40-7" aria-hidden="true" tabindex="-1"></a>fit4.cv<span class="ot">&lt;-</span><span class="fu">train</span>(out.formula1, <span class="at">trControl =</span> ctrl,</span>
+<span id="cb40-8"><a href="k-fold-cross-vaildation.html#cb40-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> ObsData, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>)</span>
+<span id="cb40-9"><a href="k-fold-cross-vaildation.html#cb40-9" aria-hidden="true" tabindex="-1"></a>fit4.cv</span></code></pre></div>
+<pre><code>## Linear Regression 
+## 
+## 5735 samples
+##   50 predictor
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 4589, 4587, 4589, 4588, 4587 
+## Resampling results:
+## 
+##   RMSE      Rsquared    MAE     
+##   25.12573  0.05683633  15.22251
+## 
+## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="k-fold-cross-vaildation.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract results from each test data </span></span>
+<span id="cb42-2"><a href="k-fold-cross-vaildation.html#cb42-2" aria-hidden="true" tabindex="-1"></a>summary.res <span class="ot">&lt;-</span> fit4.cv<span class="sc">$</span>resample</span>
+<span id="cb42-3"><a href="k-fold-cross-vaildation.html#cb42-3" aria-hidden="true" tabindex="-1"></a>summary.res</span></code></pre></div>
+<pre><code>##       RMSE   Rsquared      MAE Resample
+## 1 25.34259 0.04448920 15.77370    Fold1
+## 2 23.72593 0.05831634 14.95736    Fold2
+## 3 24.70509 0.07222866 14.78607    Fold3
+## 4 24.27994 0.05787441 15.31590    Fold4
+## 5 27.57509 0.05127304 15.27954    Fold5</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="k-fold-cross-vaildation.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(fit4.cv<span class="sc">$</span>resample<span class="sc">$</span>Rsquared)</span></code></pre></div>
+<pre><code>## [1] 0.05683633</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="k-fold-cross-vaildation.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(fit4.cv<span class="sc">$</span>resample<span class="sc">$</span>Rsquared)</span></code></pre></div>
+<pre><code>## [1] 0.0102907</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="cross-validation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="prediction-from-continuous-outcome-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ehsanx/into2ML/edit/master/4cv.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Intro2ML.pdf", "Intro2ML.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

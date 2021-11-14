@@ -1,0 +1,99 @@
+# Prediction from binary outcome
+
+```{r setup05, include=FALSE}
+require(Publish)
+```
+
+## Read previously saved data
+
+```{r}
+ObsData <- readRDS(file = "data/rhcAnalytic.RDS")
+```
+
+## Outcome levels (factor) 
+
+```{r}
+levels(ObsData$Death)=c("No","Yes") # this is useful for caret
+# ref: https://tinyurl.com/caretbin
+class(ObsData$Death)
+table(ObsData$Death)
+```
+
+### Prediction for death
+
+```{block, type='rmdcomment'}
+In this section, we show the regression fitting when outcome is binary (death).
+```
+
+## Variables
+
+```{r vars, cache=TRUE, echo = TRUE}
+baselinevars <- names(dplyr::select(ObsData, 
+                         !c(Length.of.Stay,Death)))
+baselinevars
+```
+
+## Model
+
+```{r reg3, cache=TRUE, echo = TRUE, results='hide'}
+# adjust covariates
+out.formula2 <- as.formula(paste("Death~ ", 
+                               paste(baselinevars, 
+                                     collapse = "+")))
+fit2 <- glm(out.formula2, data = ObsData, 
+            family = binomial(link = "logit"))
+require(Publish)
+adj.fit2 <- publish(fit2, digits=1)$regressionTable
+```
+
+```{r reg3a, cache=TRUE, echo = TRUE}
+out.formula2
+adj.fit2
+```
+
+
+## Measuring prediction error
+
+### AUC
+
+```{r}
+require(pROC)
+obs.y2<-ObsData$Death
+pred.y2 <- predict(fit2, type = "response")
+rocobj <- roc(obs.y2, pred.y2)
+rocobj
+plot(rocobj)
+auc(rocobj)
+```
+
+### Brier Score
+
+```{r}
+require(DescTools)
+BrierScore(fit2)
+```
+
+
+## Cross-validation using caret
+
+```{r cvbin, cache= TRUE}
+# Using Caret package
+set.seed(504)
+# make a 5-fold CV
+require(caret)
+ctrl<-trainControl(method = "cv", number = 5, 
+                   classProbs = TRUE,
+                   summaryFunction = twoClassSummary)
+# fit the model with formula = out.formula2
+# use training method glm (have to specify family)
+fit.cv.bin<-train(out.formula2, trControl = ctrl,
+               data = ObsData, method = "glm",
+              family = binomial(),
+              metric="ROC")
+fit.cv.bin
+# extract results from each test data 
+summary.res <- fit.cv.bin$resample
+summary.res
+mean(fit.cv.bin$resample$ROC)
+sd(fit.cv.bin$resample$ROC)
+```
