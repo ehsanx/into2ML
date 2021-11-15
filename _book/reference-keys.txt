@@ -86,3 +86,4 @@ example-2
 example-with-many-variables
 optimal-number-of-clusters
 discussion
+ensemble-methods-type-ii

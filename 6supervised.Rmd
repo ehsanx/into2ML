@@ -275,7 +275,7 @@ fit.cv.bin
 plot(fit.cv.bin)
 ```
 
-## Ensemble methods (Type I)
+## Ensemble methods (Type II)
 
 ```{block, type='rmdcomment'}
 Training different models on the same data
