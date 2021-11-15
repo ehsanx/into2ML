@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Supervised Learning | Introduction to Machine Learning</title>
+  <meta name="description" content="Intro to R." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Supervised Learning | Introduction to Machine Learning" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Intro to R." />
+  <meta name="github-repo" content="ehsanx/intro2ML" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Supervised Learning | Introduction to Machine Learning" />
+  
+  <meta name="twitter:description" content="Intro to R." />
+  
+
+<meta name="author" content="Ehsan Karim" />
+
+
+<meta name="date" content="2021-11-14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="prediction-from-binary-outcome.html"/>
+<link rel="next" href="unsupervised-learning.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script type="text/javascript">
+
+// toggle visibility of R source blocks in R Markdown output
+function toggle_R() {
+  var x = document.getElementsByClassName('r');
+  if (x.length == 0) return;
+  function toggle_vis(o) {
+    var d = o.style.display;
+    o.style.display = (d == 'block' || d == '') ? 'none':'block';
+  }
+
+  for (i = 0; i < x.length; i++) {
+    var y = x[i];
+    if (y.tagName.toLowerCase() === 'pre') toggle_vis(y);
+  }
+
+    var elem = document.getElementById("myButton1");
+    if (elem.value === "Hide Global") elem.value = "Show Global";
+    else elem.value = "Hide Global";
+}
+
+document.write('<input onclick="toggle_R();" type="button" value="Hide Global" id="myButton1" style="position: absolute; top: 10%; right: 2%; z-index: 200"></input>')
+
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Introduction to Machine Learning</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#goal"><i class="fa fa-check"></i>Goal</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#pre-requisites"><i class="fa fa-check"></i>Pre-requisites</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#key-references"><i class="fa fa-check"></i>Key references</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#version-history"><i class="fa fa-check"></i>Version history</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributor-list"><i class="fa fa-check"></i>Contributor list</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="rhc-data-description.html"><a href="rhc-data-description.html"><i class="fa fa-check"></i><b>1</b> RHC data description</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="rhc-data-description.html"><a href="rhc-data-description.html#data-download"><i class="fa fa-check"></i><b>1.1</b> Data download</a></li>
+<li class="chapter" data-level="1.2" data-path="rhc-data-description.html"><a href="rhc-data-description.html#creating-analytic-data"><i class="fa fa-check"></i><b>1.2</b> Creating Analytic data</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="rhc-data-description.html"><a href="rhc-data-description.html#add-column-for-outcome-length-of-stay"><i class="fa fa-check"></i><b>1.2.1</b> Add column for outcome: length of stay</a></li>
+<li class="chapter" data-level="1.2.2" data-path="rhc-data-description.html"><a href="rhc-data-description.html#recoding-column-for-outcome-death"><i class="fa fa-check"></i><b>1.2.2</b> Recoding column for outcome: death</a></li>
+<li class="chapter" data-level="1.2.3" data-path="rhc-data-description.html"><a href="rhc-data-description.html#remove-unnecessary-outcomes"><i class="fa fa-check"></i><b>1.2.3</b> Remove unnecessary outcomes</a></li>
+<li class="chapter" data-level="1.2.4" data-path="rhc-data-description.html"><a href="rhc-data-description.html#remove-unnecessary-and-problematic-variables"><i class="fa fa-check"></i><b>1.2.4</b> Remove unnecessary and problematic variables</a></li>
+<li class="chapter" data-level="1.2.5" data-path="rhc-data-description.html"><a href="rhc-data-description.html#basic-data-cleanup"><i class="fa fa-check"></i><b>1.2.5</b> Basic data cleanup</a></li>
+<li class="chapter" data-level="1.2.6" data-path="rhc-data-description.html"><a href="rhc-data-description.html#rename-variables"><i class="fa fa-check"></i><b>1.2.6</b> Rename variables</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="rhc-data-description.html"><a href="rhc-data-description.html#notations"><i class="fa fa-check"></i><b>1.3</b> Notations</a></li>
+<li class="chapter" data-level="1.4" data-path="rhc-data-description.html"><a href="rhc-data-description.html#basic-data-exploration"><i class="fa fa-check"></i><b>1.4</b> Basic data exploration</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="rhc-data-description.html"><a href="rhc-data-description.html#dimension-and-summary"><i class="fa fa-check"></i><b>1.4.1</b> Dimension and summary</a></li>
+<li class="chapter" data-level="1.4.2" data-path="rhc-data-description.html"><a href="rhc-data-description.html#more-comprehensive-summary"><i class="fa fa-check"></i><b>1.4.2</b> More comprehensive summary</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="rhc-data-description.html"><a href="rhc-data-description.html#predictive-vs.-causal-models"><i class="fa fa-check"></i><b>1.5</b> Predictive vs. causal models</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html"><i class="fa fa-check"></i><b>2</b> Prediction from continuous outcome</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#read-previously-saved-data"><i class="fa fa-check"></i><b>2.1</b> Read previously saved data</a></li>
+<li class="chapter" data-level="2.2" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#prediction-for-length-of-stay"><i class="fa fa-check"></i><b>2.2</b> Prediction for length of stay</a></li>
+<li class="chapter" data-level="2.3" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#variables"><i class="fa fa-check"></i><b>2.3</b> Variables</a></li>
+<li class="chapter" data-level="2.4" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#model"><i class="fa fa-check"></i><b>2.4</b> Model</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#design-matrix"><i class="fa fa-check"></i><b>2.4.1</b> Design Matrix</a></li>
+<li class="chapter" data-level="2.4.2" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#obtain-prediction"><i class="fa fa-check"></i><b>2.4.2</b> Obtain prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#measuring-prediction-error"><i class="fa fa-check"></i><b>2.5</b> Measuring prediction error</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#r2"><i class="fa fa-check"></i><b>2.5.1</b> R2</a></li>
+<li class="chapter" data-level="2.5.2" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#rmse"><i class="fa fa-check"></i><b>2.5.2</b> RMSE</a></li>
+<li class="chapter" data-level="2.5.3" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#adj-r2"><i class="fa fa-check"></i><b>2.5.3</b> Adj R2</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#overfitting-and-optimism"><i class="fa fa-check"></i><b>2.6</b> Overfitting and Optimism</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#causes"><i class="fa fa-check"></i><b>2.6.1</b> Causes</a></li>
+<li class="chapter" data-level="2.6.2" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#consequences"><i class="fa fa-check"></i><b>2.6.2</b> Consequences</a></li>
+<li class="chapter" data-level="2.6.3" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#proposed-solutions"><i class="fa fa-check"></i><b>2.6.3</b> Proposed solutions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-spliting.html"><a href="data-spliting.html"><i class="fa fa-check"></i><b>3</b> Data spliting</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-spliting.html"><a href="data-spliting.html#read-previously-saved-data-1"><i class="fa fa-check"></i><b>3.1</b> Read previously saved data</a></li>
+<li class="chapter" data-level="3.2" data-path="data-spliting.html"><a href="data-spliting.html#split-the-data"><i class="fa fa-check"></i><b>3.2</b> Split the data</a></li>
+<li class="chapter" data-level="3.3" data-path="data-spliting.html"><a href="data-spliting.html#train-the-model"><i class="fa fa-check"></i><b>3.3</b> Train the model</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="data-spliting.html"><a href="data-spliting.html#function-that-gives-performance-measures"><i class="fa fa-check"></i><b>3.3.1</b> Function that gives performance measures</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="data-spliting.html"><a href="data-spliting.html#extract-performance-measures"><i class="fa fa-check"></i><b>3.4</b> Extract performance measures</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cross-validation.html"><a href="cross-validation.html"><i class="fa fa-check"></i><b>4</b> Cross-validation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="cross-validation.html"><a href="cross-validation.html#read-previously-saved-data-2"><i class="fa fa-check"></i><b>4.1</b> Read previously saved data</a></li>
+<li class="chapter" data-level="4.2" data-path="cross-validation.html"><a href="cross-validation.html#k-fold-cross-vaildation"><i class="fa fa-check"></i><b>4.2</b> k-fold cross-vaildation</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="cross-validation.html"><a href="cross-validation.html#calculation-for-fold-1"><i class="fa fa-check"></i><b>4.2.1</b> Calculation for Fold 1</a></li>
+<li class="chapter" data-level="4.2.2" data-path="cross-validation.html"><a href="cross-validation.html#calculation-for-fold-2"><i class="fa fa-check"></i><b>4.2.2</b> Calculation for Fold 2</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="cross-validation.html"><a href="cross-validation.html#using-caret-package-to-automate"><i class="fa fa-check"></i><b>4.3</b> Using caret package to automate</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html"><i class="fa fa-check"></i><b>5</b> Prediction from binary outcome</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#read-previously-saved-data-3"><i class="fa fa-check"></i><b>5.1</b> Read previously saved data</a></li>
+<li class="chapter" data-level="5.2" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#outcome-levels-factor"><i class="fa fa-check"></i><b>5.2</b> Outcome levels (factor)</a></li>
+<li class="chapter" data-level="5.3" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#measuring-prediction-error-1"><i class="fa fa-check"></i><b>5.3</b> Measuring prediction error</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#prediction-for-death"><i class="fa fa-check"></i><b>5.3.1</b> Prediction for death</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#variables-1"><i class="fa fa-check"></i><b>5.4</b> Variables</a></li>
+<li class="chapter" data-level="5.5" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#model-1"><i class="fa fa-check"></i><b>5.5</b> Model</a></li>
+<li class="chapter" data-level="5.6" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#measuring-prediction-error-2"><i class="fa fa-check"></i><b>5.6</b> Measuring prediction error</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#auc"><i class="fa fa-check"></i><b>5.6.1</b> AUC</a></li>
+<li class="chapter" data-level="5.6.2" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#brier-score"><i class="fa fa-check"></i><b>5.6.2</b> Brier Score</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#cross-validation-using-caret"><i class="fa fa-check"></i><b>5.7</b> Cross-validation using caret</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#basic-setup"><i class="fa fa-check"></i><b>5.7.1</b> Basic setup</a></li>
+<li class="chapter" data-level="5.7.2" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#extract-results-from-each-test-data"><i class="fa fa-check"></i><b>5.7.2</b> Extract results from each test data</a></li>
+<li class="chapter" data-level="5.7.3" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#more-options"><i class="fa fa-check"></i><b>5.7.3</b> More options</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#variable-selection"><i class="fa fa-check"></i><b>5.8</b> Variable selection</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="supervised-learning.html"><a href="supervised-learning.html"><i class="fa fa-check"></i><b>6</b> Supervised Learning</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="supervised-learning.html"><a href="supervised-learning.html#read-previously-saved-data-4"><i class="fa fa-check"></i><b>6.1</b> Read previously saved data</a></li>
+<li class="chapter" data-level="6.2" data-path="supervised-learning.html"><a href="supervised-learning.html#continuous-outcome"><i class="fa fa-check"></i><b>6.2</b> Continuous outcome</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="supervised-learning.html"><a href="supervised-learning.html#cross-validation-lasso"><i class="fa fa-check"></i><b>6.2.1</b> Cross-validation LASSO</a></li>
+<li class="chapter" data-level="6.2.2" data-path="supervised-learning.html"><a href="supervised-learning.html#cross-validation-ridge"><i class="fa fa-check"></i><b>6.2.2</b> Cross-validation Ridge</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="supervised-learning.html"><a href="supervised-learning.html#binary-outcome"><i class="fa fa-check"></i><b>6.3</b> Binary outcome</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="supervised-learning.html"><a href="supervised-learning.html#cross-validation-lasso-1"><i class="fa fa-check"></i><b>6.3.1</b> Cross-validation LASSO</a></li>
+<li class="chapter" data-level="6.3.2" data-path="supervised-learning.html"><a href="supervised-learning.html#cross-validation-ridge-1"><i class="fa fa-check"></i><b>6.3.2</b> Cross-validation Ridge</a></li>
+<li class="chapter" data-level="6.3.3" data-path="supervised-learning.html"><a href="supervised-learning.html#cross-validation-elastic-net"><i class="fa fa-check"></i><b>6.3.3</b> Cross-validation Elastic net</a></li>
+<li class="chapter" data-level="6.3.4" data-path="supervised-learning.html"><a href="supervised-learning.html#decision-tree"><i class="fa fa-check"></i><b>6.3.4</b> Decision tree</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="supervised-learning.html"><a href="supervised-learning.html#ensemble-methods-type-i"><i class="fa fa-check"></i><b>6.4</b> Ensemble methods (Type I)</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="supervised-learning.html"><a href="supervised-learning.html#cross-validation-bagging"><i class="fa fa-check"></i><b>6.4.1</b> Cross-validation bagging</a></li>
+<li class="chapter" data-level="6.4.2" data-path="supervised-learning.html"><a href="supervised-learning.html#cross-validation-boosting"><i class="fa fa-check"></i><b>6.4.2</b> Cross-validation boosting</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="supervised-learning.html"><a href="supervised-learning.html#ensemble-methods-type-i-1"><i class="fa fa-check"></i><b>6.5</b> Ensemble methods (Type I)</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="supervised-learning.html"><a href="supervised-learning.html#super-learner"><i class="fa fa-check"></i><b>6.5.1</b> Super Learner</a></li>
+<li class="chapter" data-level="6.5.2" data-path="supervised-learning.html"><a href="supervised-learning.html#steps"><i class="fa fa-check"></i><b>6.5.2</b> Steps</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html"><i class="fa fa-check"></i><b>7</b> Unsupervised Learning</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#k-means"><i class="fa fa-check"></i><b>7.1</b> K-means</a></li>
+<li class="chapter" data-level="7.2" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#read-previously-saved-data-5"><i class="fa fa-check"></i><b>7.2</b> Read previously saved data</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#example-1"><i class="fa fa-check"></i><b>7.2.1</b> Example 1</a></li>
+<li class="chapter" data-level="7.2.2" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#example-2"><i class="fa fa-check"></i><b>7.2.2</b> Example 2</a></li>
+<li class="chapter" data-level="7.2.3" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#example-with-many-variables"><i class="fa fa-check"></i><b>7.2.3</b> Example with many variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#optimal-number-of-clusters"><i class="fa fa-check"></i><b>7.3</b> Optimal number of clusters</a></li>
+<li class="chapter" data-level="7.4" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#discussion"><i class="fa fa-check"></i><b>7.4</b> Discussion</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://ehsank.com/" target="blank">Contact</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Machine Learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="supervised-learning" class="section level1" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Supervised Learning</h1>
+<div class="rmdcomment">
+<p>
+In this chapter, we will move beyond statistical regression, and introduce some of the popular machine learning methods.
+</p>
+</div>
+<div id="read-previously-saved-data-4" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Read previously saved data</h2>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="supervised-learning.html#cb151-1" aria-hidden="true" tabindex="-1"></a>ObsData <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/rhcAnalytic.RDS&quot;</span>)</span>
+<span id="cb151-2"><a href="supervised-learning.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ObsData<span class="sc">$</span>Death)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;No&quot;</span>,<span class="st">&quot;Yes&quot;</span>)</span>
+<span id="cb151-3"><a href="supervised-learning.html#cb151-3" aria-hidden="true" tabindex="-1"></a>out.formula1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/form1.RDS&quot;</span>)</span>
+<span id="cb151-4"><a href="supervised-learning.html#cb151-4" aria-hidden="true" tabindex="-1"></a>out.formula2 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/form2.RDS&quot;</span>)</span></code></pre></div>
+</div>
+<div id="continuous-outcome" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Continuous outcome</h2>
+<div id="cross-validation-lasso" class="section level3" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Cross-validation LASSO</h3>
+<p><img src="images/enet.png" width="818" /></p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="supervised-learning.html#cb152-1" aria-hidden="true" tabindex="-1"></a>ctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>)</span>
+<span id="cb152-2"><a href="supervised-learning.html#cb152-2" aria-hidden="true" tabindex="-1"></a>fit.cv.con <span class="ot">&lt;-</span> <span class="fu">train</span>(out.formula1, <span class="at">trControl =</span> ctrl,</span>
+<span id="cb152-3"><a href="supervised-learning.html#cb152-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> ObsData, <span class="at">method =</span> <span class="st">&quot;glmnet&quot;</span>,</span>
+<span id="cb152-4"><a href="supervised-learning.html#cb152-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">lambda=</span> <span class="dv">0</span>,</span>
+<span id="cb152-5"><a href="supervised-learning.html#cb152-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">alpha =</span> <span class="dv">1</span>,  </span>
+<span id="cb152-6"><a href="supervised-learning.html#cb152-6" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">lambda =</span> <span class="dv">0</span>),</span>
+<span id="cb152-7"><a href="supervised-learning.html#cb152-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb152-8"><a href="supervised-learning.html#cb152-8" aria-hidden="true" tabindex="-1"></a>fit.cv.con</span></code></pre></div>
+<pre><code>## glmnet 
+## 
+## 5735 samples
+##   50 predictor
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 4588, 4587, 4587, 4589, 4589 
+## Resampling results:
+## 
+##   RMSE      Rsquared    MAE     
+##   25.14179  0.05746966  15.20167
+## 
+## Tuning parameter &#39;alpha&#39; was held constant at a value of 1
+## Tuning
+##  parameter &#39;lambda&#39; was held constant at a value of 0</code></pre>
+</div>
+<div id="cross-validation-ridge" class="section level3" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> Cross-validation Ridge</h3>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="supervised-learning.html#cb154-1" aria-hidden="true" tabindex="-1"></a>ctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>)</span>
+<span id="cb154-2"><a href="supervised-learning.html#cb154-2" aria-hidden="true" tabindex="-1"></a>fit.cv.con <span class="ot">&lt;-</span><span class="fu">train</span>(out.formula1, <span class="at">trControl =</span> ctrl,</span>
+<span id="cb154-3"><a href="supervised-learning.html#cb154-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> ObsData, <span class="at">method =</span> <span class="st">&quot;glmnet&quot;</span>,</span>
+<span id="cb154-4"><a href="supervised-learning.html#cb154-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">lambda=</span> <span class="dv">0</span>,</span>
+<span id="cb154-5"><a href="supervised-learning.html#cb154-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">alpha =</span> <span class="dv">0</span>,  </span>
+<span id="cb154-6"><a href="supervised-learning.html#cb154-6" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">lambda =</span> <span class="dv">0</span>),</span>
+<span id="cb154-7"><a href="supervised-learning.html#cb154-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb154-8"><a href="supervised-learning.html#cb154-8" aria-hidden="true" tabindex="-1"></a>fit.cv.con</span></code></pre></div>
+<pre><code>## glmnet 
+## 
+## 5735 samples
+##   50 predictor
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 4588, 4589, 4587, 4588, 4588 
+## Resampling results:
+## 
+##   RMSE     Rsquared    MAE     
+##   25.0993  0.05746023  15.22744
+## 
+## Tuning parameter &#39;alpha&#39; was held constant at a value of 0
+## Tuning
+##  parameter &#39;lambda&#39; was held constant at a value of 0</code></pre>
+</div>
+</div>
+<div id="binary-outcome" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Binary outcome</h2>
+<div id="cross-validation-lasso-1" class="section level3" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Cross-validation LASSO</h3>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="supervised-learning.html#cb156-1" aria-hidden="true" tabindex="-1"></a>ctrl<span class="ot">&lt;-</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>,</span>
+<span id="cb156-2"><a href="supervised-learning.html#cb156-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">classProbs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb156-3"><a href="supervised-learning.html#cb156-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">summaryFunction =</span> twoClassSummary)</span>
+<span id="cb156-4"><a href="supervised-learning.html#cb156-4" aria-hidden="true" tabindex="-1"></a>fit.cv.bin<span class="ot">&lt;-</span><span class="fu">train</span>(out.formula2, <span class="at">trControl =</span> ctrl,</span>
+<span id="cb156-5"><a href="supervised-learning.html#cb156-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> ObsData, <span class="at">method =</span> <span class="st">&quot;glmnet&quot;</span>,</span>
+<span id="cb156-6"><a href="supervised-learning.html#cb156-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">lambda=</span> <span class="dv">0</span>,</span>
+<span id="cb156-7"><a href="supervised-learning.html#cb156-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">alpha =</span> <span class="dv">1</span>,  </span>
+<span id="cb156-8"><a href="supervised-learning.html#cb156-8" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">lambda =</span> <span class="dv">0</span>),</span>
+<span id="cb156-9"><a href="supervised-learning.html#cb156-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">verbose =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb156-10"><a href="supervised-learning.html#cb156-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">metric=</span><span class="st">&quot;ROC&quot;</span>)</span>
+<span id="cb156-11"><a href="supervised-learning.html#cb156-11" aria-hidden="true" tabindex="-1"></a>fit.cv.bin</span></code></pre></div>
+<pre><code>## glmnet 
+## 
+## 5735 samples
+##   50 predictor
+##    2 classes: &#39;No&#39;, &#39;Yes&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 4588, 4588, 4589, 4588, 4587 
+## Resampling results:
+## 
+##   ROC        Sens       Spec     
+##   0.7546214  0.4634742  0.8535823
+## 
+## Tuning parameter &#39;alpha&#39; was held constant at a value of 1
+## Tuning
+##  parameter &#39;lambda&#39; was held constant at a value of 0</code></pre>
+<div class="rmdcomment">
+<ul>
+<li>
+Not okay to select variables from a shrinkage model, and then use them in a regular regression
+</li>
+</ul>
+</div>
+</div>
+<div id="cross-validation-ridge-1" class="section level3" number="6.3.2">
+<h3><span class="header-section-number">6.3.2</span> Cross-validation Ridge</h3>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="supervised-learning.html#cb158-1" aria-hidden="true" tabindex="-1"></a>ctrl<span class="ot">&lt;-</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>,</span>
+<span id="cb158-2"><a href="supervised-learning.html#cb158-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">classProbs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb158-3"><a href="supervised-learning.html#cb158-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">summaryFunction =</span> twoClassSummary)</span>
+<span id="cb158-4"><a href="supervised-learning.html#cb158-4" aria-hidden="true" tabindex="-1"></a>fit.cv.bin<span class="ot">&lt;-</span><span class="fu">train</span>(out.formula2, <span class="at">trControl =</span> ctrl,</span>
+<span id="cb158-5"><a href="supervised-learning.html#cb158-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> ObsData, <span class="at">method =</span> <span class="st">&quot;glmnet&quot;</span>,</span>
+<span id="cb158-6"><a href="supervised-learning.html#cb158-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">lambda=</span> <span class="dv">0</span>,</span>
+<span id="cb158-7"><a href="supervised-learning.html#cb158-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">alpha =</span> <span class="dv">0</span>,  </span>
+<span id="cb158-8"><a href="supervised-learning.html#cb158-8" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">lambda =</span> <span class="dv">0</span>),</span>
+<span id="cb158-9"><a href="supervised-learning.html#cb158-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">verbose =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb158-10"><a href="supervised-learning.html#cb158-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">metric=</span><span class="st">&quot;ROC&quot;</span>)</span>
+<span id="cb158-11"><a href="supervised-learning.html#cb158-11" aria-hidden="true" tabindex="-1"></a>fit.cv.bin</span></code></pre></div>
+<pre><code>## glmnet 
+## 
+## 5735 samples
+##   50 predictor
+##    2 classes: &#39;No&#39;, &#39;Yes&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 4588, 4589, 4588, 4587, 4588 
+## Resampling results:
+## 
+##   ROC        Sens       Spec     
+##   0.7528764  0.4610002  0.8524987
+## 
+## Tuning parameter &#39;alpha&#39; was held constant at a value of 0
+## Tuning
+##  parameter &#39;lambda&#39; was held constant at a value of 0</code></pre>
+</div>
+<div id="cross-validation-elastic-net" class="section level3" number="6.3.3">
+<h3><span class="header-section-number">6.3.3</span> Cross-validation Elastic net</h3>
+<div class="rmdcomment">
+<ul>
+<li>
+Alpha = mixing parameter
+</li>
+<li>
+Lambda = regularization or tuning parameter
+</li>
+<li>
+We can use <code>expand.grid</code> for model tuning
+</li>
+</ul>
+</div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="supervised-learning.html#cb160-1" aria-hidden="true" tabindex="-1"></a>ctrl<span class="ot">&lt;-</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>,</span>
+<span id="cb160-2"><a href="supervised-learning.html#cb160-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">classProbs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb160-3"><a href="supervised-learning.html#cb160-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">summaryFunction =</span> twoClassSummary)</span>
+<span id="cb160-4"><a href="supervised-learning.html#cb160-4" aria-hidden="true" tabindex="-1"></a>fit.cv.bin<span class="ot">&lt;-</span><span class="fu">train</span>(out.formula2, <span class="at">trControl =</span> ctrl,</span>
+<span id="cb160-5"><a href="supervised-learning.html#cb160-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> ObsData, <span class="at">method =</span> <span class="st">&quot;glmnet&quot;</span>,</span>
+<span id="cb160-6"><a href="supervised-learning.html#cb160-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">alpha =</span> <span class="fu">seq</span>(<span class="fl">0.1</span>,.<span class="dv">2</span>,<span class="at">by =</span> <span class="fl">0.05</span>),  </span>
+<span id="cb160-7"><a href="supervised-learning.html#cb160-7" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">lambda =</span> <span class="fu">seq</span>(<span class="fl">0.05</span>,<span class="fl">0.3</span>,<span class="at">by =</span> <span class="fl">0.05</span>)),</span>
+<span id="cb160-8"><a href="supervised-learning.html#cb160-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">verbose =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb160-9"><a href="supervised-learning.html#cb160-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">metric=</span><span class="st">&quot;ROC&quot;</span>)</span>
+<span id="cb160-10"><a href="supervised-learning.html#cb160-10" aria-hidden="true" tabindex="-1"></a>fit.cv.bin</span></code></pre></div>
+<pre><code>## glmnet 
+## 
+## 5735 samples
+##   50 predictor
+##    2 classes: &#39;No&#39;, &#39;Yes&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 4587, 4588, 4588, 4588, 4589 
+## Resampling results across tuning parameters:
+## 
+##   alpha  lambda  ROC        Sens          Spec     
+##   0.10   0.05    0.7530058  0.3695986568  0.8965624
+##   0.10   0.10    0.7493765  0.2742170043  0.9336408
+##   0.10   0.15    0.7445050  0.1748601904  0.9677600
+##   0.10   0.20    0.7388230  0.0894189104  0.9871036
+##   0.10   0.25    0.7322015  0.0253323951  0.9959703
+##   0.10   0.30    0.7254256  0.0019863462  0.9997315
+##   0.15   0.05    0.7519700  0.3537017148  0.9035477
+##   0.15   0.10    0.7453497  0.2200659235  0.9529844
+##   0.15   0.15    0.7356439  0.1023307779  0.9849553
+##   0.15   0.20    0.7247385  0.0178820538  0.9959695
+##   0.15   0.25    0.7170856  0.0004962779  0.9997315
+##   0.15   0.30    0.7107273  0.0000000000  1.0000000
+##   0.20   0.05    0.7507079  0.3328284138  0.9140258
+##   0.20   0.10    0.7394339  0.1693974297  0.9674904
+##   0.20   0.15    0.7242395  0.0372492377  0.9919405
+##   0.20   0.20    0.7140885  0.0014900683  0.9997315
+##   0.20   0.25    0.7069905  0.0000000000  1.0000000
+##   0.20   0.30    0.6971477  0.0000000000  1.0000000
+## 
+## ROC was used to select the optimal model using the largest value.
+## The final values used for the model were alpha = 0.1 and lambda = 0.05.</code></pre>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="supervised-learning.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.cv.bin)</span></code></pre></div>
+<p><img src="Intro2ML_files/figure-html/cvbinenet-1.png" width="672" /></p>
+</div>
+<div id="decision-tree" class="section level3" number="6.3.4">
+<h3><span class="header-section-number">6.3.4</span> Decision tree</h3>
+<div class="rmdcomment">
+<ul>
+<li>
+Decision tree
+<ul>
+<li>
+Referred to as Classification and regression trees or CART
+</li>
+<li>
+Covers
+<ul>
+<li>
+Classification (categorical outcome)
+</li>
+<li>
+Regression (continuous outcome)
+</li>
+</ul>
+</li>
+<li>
+Flexible to incorporate non-linear effects automatically
+<ul>
+<li>
+No need to specify higher order terms / interactions
+</li>
+</ul>
+</li>
+<li>
+Unstable, prone to overfitting, suffers from high variance
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="simple-cart" class="section level4" number="6.3.4.1">
+<h4><span class="header-section-number">6.3.4.1</span> Simple CART</h4>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="supervised-learning.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(rpart)</span>
+<span id="cb163-2"><a href="supervised-learning.html#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ObsData<span class="sc">$</span>DASIndex) <span class="co"># Duke Activity Status Index</span></span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   11.00   16.06   19.75   20.50   23.43   33.00</code></pre>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="supervised-learning.html#cb165-1" aria-hidden="true" tabindex="-1"></a>cart.fit <span class="ot">&lt;-</span> <span class="fu">rpart</span>(Death<span class="sc">~</span>DASIndex, <span class="at">data =</span> ObsData)</span>
+<span id="cb165-2"><a href="supervised-learning.html#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">xpd =</span> <span class="cn">NA</span>)</span>
+<span id="cb165-3"><a href="supervised-learning.html#cb165-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cart.fit)</span>
+<span id="cb165-4"><a href="supervised-learning.html#cb165-4" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(cart.fit, <span class="at">use.n =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="Intro2ML_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="supervised-learning.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cart.fit)</span></code></pre></div>
+<pre><code>## n= 5735 
+## 
+## node), split, n, loss, yval, (yprob)
+##       * denotes terminal node
+## 
+## 1) root 5735 2013 Yes (0.3510026 0.6489974)  
+##   2) DASIndex&gt;=24.92383 1143  514 No (0.5503062 0.4496938)  
+##     4) DASIndex&gt;=29.14648 561  199 No (0.6452763 0.3547237) *
+##     5) DASIndex&lt; 29.14648 582  267 Yes (0.4587629 0.5412371) *
+##   3) DASIndex&lt; 24.92383 4592 1384 Yes (0.3013937 0.6986063) *</code></pre>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="supervised-learning.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(rattle)</span>
+<span id="cb168-2"><a href="supervised-learning.html#cb168-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(rpart.plot)</span>
+<span id="cb168-3"><a href="supervised-learning.html#cb168-3" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(RColorBrewer)</span>
+<span id="cb168-4"><a href="supervised-learning.html#cb168-4" aria-hidden="true" tabindex="-1"></a><span class="fu">fancyRpartPlot</span>(cart.fit, <span class="at">caption =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+<p><img src="Intro2ML_files/figure-html/unnamed-chunk-49-2.png" width="672" /></p>
+<div id="auc-1" class="section level5" number="6.3.4.1.1">
+<h5><span class="header-section-number">6.3.4.1.1</span> AUC</h5>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="supervised-learning.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(pROC)</span>
+<span id="cb169-2"><a href="supervised-learning.html#cb169-2" aria-hidden="true" tabindex="-1"></a>obs.y2<span class="ot">&lt;-</span>ObsData<span class="sc">$</span>Death</span>
+<span id="cb169-3"><a href="supervised-learning.html#cb169-3" aria-hidden="true" tabindex="-1"></a>pred.y2 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">predict</span>(cart.fit, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)[, <span class="dv">2</span>])</span>
+<span id="cb169-4"><a href="supervised-learning.html#cb169-4" aria-hidden="true" tabindex="-1"></a>rocobj <span class="ot">&lt;-</span> <span class="fu">roc</span>(obs.y2, pred.y2)</span></code></pre></div>
+<pre><code>## Setting levels: control = No, case = Yes</code></pre>
+<pre><code>## Setting direction: controls &lt; cases</code></pre>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="supervised-learning.html#cb172-1" aria-hidden="true" tabindex="-1"></a>rocobj</span></code></pre></div>
+<pre><code>## 
+## Call:
+## roc.default(response = obs.y2, predictor = pred.y2)
+## 
+## Data: pred.y2 in 2013 controls (obs.y2 No) &lt; 3722 cases (obs.y2 Yes).
+## Area under the curve: 0.5912</code></pre>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="supervised-learning.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rocobj)</span></code></pre></div>
+<p><img src="Intro2ML_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="supervised-learning.html#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="fu">auc</span>(rocobj)</span></code></pre></div>
+<pre><code>## Area under the curve: 0.5912</code></pre>
+</div>
+</div>
+<div id="complex-cart" class="section level4" number="6.3.4.2">
+<h4><span class="header-section-number">6.3.4.2</span> Complex CART</h4>
+<p>More variables</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="supervised-learning.html#cb177-1" aria-hidden="true" tabindex="-1"></a>out.formula2</span></code></pre></div>
+<pre><code>## Death ~ Disease.category + Cancer + Cardiovascular + Congestive.HF + 
+##     Dementia + Psychiatric + Pulmonary + Renal + Hepatic + GI.Bleed + 
+##     Tumor + Immunosupperssion + Transfer.hx + MI + age + sex + 
+##     edu + DASIndex + APACHE.score + Glasgow.Coma.Score + blood.pressure + 
+##     WBC + Heart.rate + Respiratory.rate + Temperature + PaO2vs.FIO2 + 
+##     Albumin + Hematocrit + Bilirubin + Creatinine + Sodium + 
+##     Potassium + PaCo2 + PH + Weight + DNR.status + Medical.insurance + 
+##     Respiratory.Diag + Cardiovascular.Diag + Neurological.Diag + 
+##     Gastrointestinal.Diag + Renal.Diag + Metabolic.Diag + Hematologic.Diag + 
+##     Sepsis.Diag + Trauma.Diag + Orthopedic.Diag + race + income + 
+##     RHC.use</code></pre>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="supervised-learning.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(rpart)</span>
+<span id="cb179-2"><a href="supervised-learning.html#cb179-2" aria-hidden="true" tabindex="-1"></a>cart.fit <span class="ot">&lt;-</span> <span class="fu">rpart</span>(out.formula2, <span class="at">data =</span> ObsData)</span></code></pre></div>
+<div id="cart-variable-importance" class="section level5" number="6.3.4.2.1">
+<h5><span class="header-section-number">6.3.4.2.1</span> CART Variable importance</h5>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="supervised-learning.html#cb180-1" aria-hidden="true" tabindex="-1"></a>cart.fit<span class="sc">$</span>variable.importance</span></code></pre></div>
+<pre><code>##            DASIndex              Cancer               Tumor                 age 
+##         123.2102455          33.4559400          32.5418433          24.0804860 
+##   Medical.insurance                 WBC                 edu Cardiovascular.Diag 
+##          14.5199953           5.6673997           3.7441554           3.6449371 
+##          Heart.rate      Cardiovascular         Trauma.Diag               PaCo2 
+##           3.4059248           3.1669125           0.5953098           0.2420672 
+##           Potassium              Sodium             Albumin 
+##           0.2420672           0.2420672           0.1984366</code></pre>
+</div>
+<div id="auc-2" class="section level5" number="6.3.4.2.2">
+<h5><span class="header-section-number">6.3.4.2.2</span> AUC</h5>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="supervised-learning.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(pROC)</span>
+<span id="cb182-2"><a href="supervised-learning.html#cb182-2" aria-hidden="true" tabindex="-1"></a>obs.y2<span class="ot">&lt;-</span>ObsData<span class="sc">$</span>Death</span>
+<span id="cb182-3"><a href="supervised-learning.html#cb182-3" aria-hidden="true" tabindex="-1"></a>pred.y2 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">predict</span>(cart.fit, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)[, <span class="dv">2</span>])</span>
+<span id="cb182-4"><a href="supervised-learning.html#cb182-4" aria-hidden="true" tabindex="-1"></a>rocobj <span class="ot">&lt;-</span> <span class="fu">roc</span>(obs.y2, pred.y2)</span></code></pre></div>
+<pre><code>## Setting levels: control = No, case = Yes</code></pre>
+<pre><code>## Setting direction: controls &lt; cases</code></pre>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="supervised-learning.html#cb185-1" aria-hidden="true" tabindex="-1"></a>rocobj</span></code></pre></div>
+<pre><code>## 
+## Call:
+## roc.default(response = obs.y2, predictor = pred.y2)
+## 
+## Data: pred.y2 in 2013 controls (obs.y2 No) &lt; 3722 cases (obs.y2 Yes).
+## Area under the curve: 0.5981</code></pre>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="supervised-learning.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rocobj)</span></code></pre></div>
+<p><img src="Intro2ML_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="supervised-learning.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="fu">auc</span>(rocobj)</span></code></pre></div>
+<pre><code>## Area under the curve: 0.5981</code></pre>
+</div>
+</div>
+<div id="cross-validation-cart" class="section level4" number="6.3.4.3">
+<h4><span class="header-section-number">6.3.4.3</span> Cross-validation CART</h4>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="supervised-learning.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">504</span>)</span>
+<span id="cb190-2"><a href="supervised-learning.html#cb190-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(caret)</span>
+<span id="cb190-3"><a href="supervised-learning.html#cb190-3" aria-hidden="true" tabindex="-1"></a>ctrl<span class="ot">&lt;-</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>, </span>
+<span id="cb190-4"><a href="supervised-learning.html#cb190-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">classProbs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb190-5"><a href="supervised-learning.html#cb190-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">summaryFunction =</span> twoClassSummary)</span>
+<span id="cb190-6"><a href="supervised-learning.html#cb190-6" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model with formula = out.formula2</span></span>
+<span id="cb190-7"><a href="supervised-learning.html#cb190-7" aria-hidden="true" tabindex="-1"></a>fit.cv.bin<span class="ot">&lt;-</span><span class="fu">train</span>(out.formula2, <span class="at">trControl =</span> ctrl,</span>
+<span id="cb190-8"><a href="supervised-learning.html#cb190-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> ObsData, <span class="at">method =</span> <span class="st">&quot;rpart&quot;</span>,</span>
+<span id="cb190-9"><a href="supervised-learning.html#cb190-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">metric=</span><span class="st">&quot;ROC&quot;</span>)</span>
+<span id="cb190-10"><a href="supervised-learning.html#cb190-10" aria-hidden="true" tabindex="-1"></a>fit.cv.bin</span></code></pre></div>
+<pre><code>## CART 
+## 
+## 5735 samples
+##   50 predictor
+##    2 classes: &#39;No&#39;, &#39;Yes&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 4587, 4589, 4587, 4589, 4588 
+## Resampling results across tuning parameters:
+## 
+##   cp           ROC        Sens       Spec     
+##   0.007203179  0.6304911  0.2816488  0.9086574
+##   0.039741679  0.5725283  0.2488649  0.8981807
+##   0.057128664  0.5380544  0.1287804  0.9473284
+## 
+## ROC was used to select the optimal model using the largest value.
+## The final value used for the model was cp = 0.007203179.</code></pre>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="supervised-learning.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract results from each test data </span></span>
+<span id="cb192-2"><a href="supervised-learning.html#cb192-2" aria-hidden="true" tabindex="-1"></a>summary.res <span class="ot">&lt;-</span> fit.cv.bin<span class="sc">$</span>resample</span>
+<span id="cb192-3"><a href="supervised-learning.html#cb192-3" aria-hidden="true" tabindex="-1"></a>summary.res</span></code></pre></div>
+<pre><code>##         ROC      Sens      Spec Resample
+## 1 0.6847220 0.3746898 0.8590604    Fold1
+## 2 0.6729625 0.2985075 0.8924731    Fold2
+## 3 0.6076153 0.2754342 0.9287634    Fold5
+## 4 0.5873154 0.2238806 0.9274194    Fold4
+## 5 0.5998401 0.2357320 0.9355705    Fold3</code></pre>
+</div>
+</div>
+</div>
+<div id="ensemble-methods-type-i" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> Ensemble methods (Type I)</h2>
+<div class="rmdcomment">
+<p>
+Training same model to different samples (of the same data)
+</p>
+</div>
+<div id="cross-validation-bagging" class="section level3" number="6.4.1">
+<h3><span class="header-section-number">6.4.1</span> Cross-validation bagging</h3>
+<ul>
+<li>Bagging or bootstrap aggregation
+<ul>
+<li>independent bootstrap samples (sampling with replacement, B times),</li>
+<li>applies CART on each i (no prunning)</li>
+<li>Average the resulting predictions</li>
+<li>Reduces variance as a result of using bootstrap</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="supervised-learning.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">504</span>)</span>
+<span id="cb194-2"><a href="supervised-learning.html#cb194-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(caret)</span>
+<span id="cb194-3"><a href="supervised-learning.html#cb194-3" aria-hidden="true" tabindex="-1"></a>ctrl<span class="ot">&lt;-</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>,</span>
+<span id="cb194-4"><a href="supervised-learning.html#cb194-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">classProbs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb194-5"><a href="supervised-learning.html#cb194-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">summaryFunction =</span> twoClassSummary)</span>
+<span id="cb194-6"><a href="supervised-learning.html#cb194-6" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model with formula = out.formula2</span></span>
+<span id="cb194-7"><a href="supervised-learning.html#cb194-7" aria-hidden="true" tabindex="-1"></a>fit.cv.bin<span class="ot">&lt;-</span><span class="fu">train</span>(out.formula2, <span class="at">trControl =</span> ctrl,</span>
+<span id="cb194-8"><a href="supervised-learning.html#cb194-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> ObsData, <span class="at">method =</span> <span class="st">&quot;bag&quot;</span>,</span>
+<span id="cb194-9"><a href="supervised-learning.html#cb194-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">bagControl =</span> <span class="fu">bagControl</span>(<span class="at">fit =</span> ldaBag<span class="sc">$</span>fit, </span>
+<span id="cb194-10"><a href="supervised-learning.html#cb194-10" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">predict =</span> ldaBag<span class="sc">$</span>pred, </span>
+<span id="cb194-11"><a href="supervised-learning.html#cb194-11" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">aggregate =</span> ldaBag<span class="sc">$</span>aggregate),</span>
+<span id="cb194-12"><a href="supervised-learning.html#cb194-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">metric=</span><span class="st">&quot;ROC&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: executing %dopar% sequentially: no parallel backend registered</code></pre>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="supervised-learning.html#cb196-1" aria-hidden="true" tabindex="-1"></a>fit.cv.bin</span></code></pre></div>
+<pre><code>## Bagged Model 
+## 
+## 5735 samples
+##   50 predictor
+##    2 classes: &#39;No&#39;, &#39;Yes&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 4587, 4589, 4587, 4589, 4588 
+## Resampling results:
+## 
+##   ROC        Sens       Spec     
+##   0.7506666  0.4485809  0.8602811
+## 
+## Tuning parameter &#39;vars&#39; was held constant at a value of 63</code></pre>
+<div class="rmdcomment">
+<ul>
+<li>
+bagging improves prediction accuracy
+<ul>
+<li>
+over prediction using a single tree
+</li>
+</ul>
+</li>
+<li>
+Looses interpretability
+<ul>
+<li>
+as this is an average of many diagrams now
+</li>
+</ul>
+</li>
+<li>
+But we can get a summary of the importance of each variable
+</li>
+</ul>
+</div>
+<div id="bagging-variable-importance" class="section level4" number="6.4.1.1">
+<h4><span class="header-section-number">6.4.1.1</span> Bagging Variable importance</h4>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="supervised-learning.html#cb198-1" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">varImp</span>(fit.cv.bin, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## ROC curve variable importance
+## 
+##   only 20 most important variables shown (out of 50)
+## 
+##                    Importance
+## age                    0.6159
+## APACHE.score           0.6140
+## DASIndex               0.5962
+## Cancer                 0.5878
+## Creatinine             0.5835
+## Tumor                  0.5807
+## blood.pressure         0.5697
+## Glasgow.Coma.Score     0.5656
+## Disease.category       0.5641
+## Temperature            0.5584
+## DNR.status             0.5572
+## Hematocrit             0.5525
+## Weight                 0.5424
+## Bilirubin              0.5397
+## income                 0.5319
+## Immunosupperssion      0.5278
+## RHC.use                0.5263
+## Dementia               0.5252
+## Congestive.HF          0.5250
+## Hematologic.Diag       0.5250</code></pre>
+</div>
+</div>
+<div id="cross-validation-boosting" class="section level3" number="6.4.2">
+<h3><span class="header-section-number">6.4.2</span> Cross-validation boosting</h3>
+<ul>
+<li>Boosting
+<ul>
+<li>sequentially updated/weighted bootstrap based on previous learning</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="supervised-learning.html#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">504</span>)</span>
+<span id="cb200-2"><a href="supervised-learning.html#cb200-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(caret)</span>
+<span id="cb200-3"><a href="supervised-learning.html#cb200-3" aria-hidden="true" tabindex="-1"></a>ctrl<span class="ot">&lt;-</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>,</span>
+<span id="cb200-4"><a href="supervised-learning.html#cb200-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">classProbs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb200-5"><a href="supervised-learning.html#cb200-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">summaryFunction =</span> twoClassSummary)</span>
+<span id="cb200-6"><a href="supervised-learning.html#cb200-6" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model with formula = out.formula2</span></span>
+<span id="cb200-7"><a href="supervised-learning.html#cb200-7" aria-hidden="true" tabindex="-1"></a>fit.cv.bin<span class="ot">&lt;-</span><span class="fu">train</span>(out.formula2, <span class="at">trControl =</span> ctrl,</span>
+<span id="cb200-8"><a href="supervised-learning.html#cb200-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> ObsData, <span class="at">method =</span> <span class="st">&quot;gbm&quot;</span>,</span>
+<span id="cb200-9"><a href="supervised-learning.html#cb200-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">verbose =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb200-10"><a href="supervised-learning.html#cb200-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">metric=</span><span class="st">&quot;ROC&quot;</span>)</span>
+<span id="cb200-11"><a href="supervised-learning.html#cb200-11" aria-hidden="true" tabindex="-1"></a>fit.cv.bin</span></code></pre></div>
+<pre><code>## Stochastic Gradient Boosting 
+## 
+## 5735 samples
+##   50 predictor
+##    2 classes: &#39;No&#39;, &#39;Yes&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 4587, 4589, 4587, 4589, 4588 
+## Resampling results across tuning parameters:
+## 
+##   interaction.depth  n.trees  ROC        Sens       Spec     
+##   1                   50      0.7218938  0.2145970  0.9505647
+##   1                  100      0.7410292  0.2980581  0.9234228
+##   1                  150      0.7483014  0.3487142  0.9030028
+##   2                   50      0.7414513  0.2960631  0.9263816
+##   2                  100      0.7534264  0.3869684  0.8917212
+##   2                  150      0.7575826  0.4187512  0.8777477
+##   3                   50      0.7496078  0.3626125  0.9070358
+##   3                  100      0.7579645  0.4078244  0.8764076
+##   3                  150      0.7637074  0.4445909  0.8702298
+## 
+## Tuning parameter &#39;shrinkage&#39; was held constant at a value of 0.1
+## 
+## Tuning parameter &#39;n.minobsinnode&#39; was held constant at a value of 10
+## ROC was used to select the optimal model using the largest value.
+## The final values used for the model were n.trees = 150, interaction.depth =
+##  3, shrinkage = 0.1 and n.minobsinnode = 10.</code></pre>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="supervised-learning.html#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.cv.bin)</span></code></pre></div>
+<p><img src="Intro2ML_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+</div>
+</div>
+<div id="ensemble-methods-type-i-1" class="section level2" number="6.5">
+<h2><span class="header-section-number">6.5</span> Ensemble methods (Type I)</h2>
+<div class="rmdcomment">
+<p>
+Training different models on the same data
+</p>
+</div>
+<div id="super-learner" class="section level3" number="6.5.1">
+<h3><span class="header-section-number">6.5.1</span> Super Learner</h3>
+<ul>
+<li>Large number of candidate learners (CL) with different strengths
+<ul>
+<li>Parametric (logistic)</li>
+<li>Non-parametric (CART)</li>
+</ul></li>
+<li>Cross-validation: CL applied on training data, prediction made on test data</li>
+<li>Final prediction uses a weighted version of all predictions
+<ul>
+<li>Weights = coef of Observed outcome ~ prediction from each CL</li>
+</ul></li>
+</ul>
+</div>
+<div id="steps" class="section level3" number="6.5.2">
+<h3><span class="header-section-number">6.5.2</span> Steps</h3>
+<p>Refer to <a href="https://ehsanx.github.io/TMLEworkshop/g-computation-using-ml.html#g-comp-using-superlearner">this tutorial</a> for steps and examples!</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="prediction-from-binary-outcome.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="unsupervised-learning.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ehsanx/into2ML/edit/master/6supervised.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Intro2ML.pdf", "Intro2ML.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
