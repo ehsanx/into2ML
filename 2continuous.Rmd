@@ -1,5 +1,9 @@
 # Prediction from continuous outcome
 
+```{block, type='rmdcomment'}
+In this chapter, we will talk about Regression that deals with prediction of continuous outcomes. We will use multiple linear regression to build the first prediction mode.
+```
+
 ```{r setup02, include=FALSE}
 require(tableone)
 require(Publish)
@@ -48,6 +52,11 @@ adj.fit1
 
 ### Design Matrix
 
+
+- Notations
+  - n is number of observations 
+  - p is number of covariates
+
 Expands factors to a set of dummy variables.
 
 ```{r}
@@ -78,8 +87,15 @@ plot(obs.y,pred.y1)
 lines(lowess(obs.y,pred.y1), col = "red")
 ```
 
-
 ## Measuring prediction error
+
+```{block, type='rmdcomment'}
+**Prediction error** measures how well the model can predict the outcome for new data that were **not** used in developing the prediction model.
+
+- Bias reduced for models with more variables
+- Unimportant variables lead to noise / variability
+- Bias variance trade-off / need penalization
+```
 
 ### R2
 
@@ -133,3 +149,34 @@ adjR2 <- 1-(1-R.2)*((n-1)/(n-p))
 adjR2
 ```
 
+## Overfitting and Optimism
+
+```{block, type='rmdcomment'}
+- Model usually performs very well in the empirical data where the model was fitted in the same data (optimistic)
+- Model performs poorly in the new data (generalization is not as good)
+```
+
+### Causes
+
+- Model determined by data at hand without expert opinion
+- Too many model parameters ($age$, $age^2$, $age^3$) / predictors
+- Too small dataset (training) / data too noisy
+
+### Consequences
+
+- Overestimation of effects of predictors
+- Reduction in model performance in new observations
+
+### Proposed solutions
+
+We generally use procedures such as 
+
+- Internal validation
+  - sample splitting
+  - cross-validation
+  - bootstrap
+- External validation
+  - Temporal
+  - Geographical
+  - Different data source to calculate same variable
+  - Different disease

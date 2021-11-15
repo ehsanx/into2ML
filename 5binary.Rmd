@@ -1,5 +1,9 @@
 # Prediction from binary outcome
 
+```{block, type='rmdcomment'}
+In this chapter, we will talk about Regression that deals with prediction of binary outcomes. We will use logistic regression to build the first prediction mode.
+```
+
 ```{r setup05, include=FALSE}
 require(Publish)
 ```
@@ -12,11 +16,28 @@ ObsData <- readRDS(file = "data/rhcAnalytic.RDS")
 
 ## Outcome levels (factor) 
 
+- Label
+  - Possible values of outcome
+
 ```{r}
 levels(ObsData$Death)=c("No","Yes") # this is useful for caret
 # ref: https://tinyurl.com/caretbin
 class(ObsData$Death)
 table(ObsData$Death)
+```
+
+## Measuring prediction error
+
+```{block, type='rmdcomment'}
+- Brier score
+  - Brier score 0 means perfect prediction, and 
+  - close to zero means better prediction, 
+  - 1 being the worst prediction. 
+  - Less accurate forecasts get higher score in Brier score.
+- AUC
+  - The area under a ROC curve is called as a c statistics. 
+  - c being 0.5 means random prediction and 
+  - 1 indicates perfect prediction
 ```
 
 ### Prediction for death
@@ -40,6 +61,7 @@ baselinevars
 out.formula2 <- as.formula(paste("Death~ ", 
                                paste(baselinevars, 
                                      collapse = "+")))
+saveRDS(out.formula2, file = "data/form2.RDS")
 fit2 <- glm(out.formula2, data = ObsData, 
             family = binomial(link = "logit"))
 require(Publish)
@@ -76,6 +98,8 @@ BrierScore(fit2)
 
 ## Cross-validation using caret
 
+### Basic setup
+
 ```{r cvbin, cache= TRUE}
 # Using Caret package
 set.seed(504)
@@ -91,9 +115,50 @@ fit.cv.bin<-train(out.formula2, trControl = ctrl,
               family = binomial(),
               metric="ROC")
 fit.cv.bin
-# extract results from each test data 
+```
+
+
+### Extract results from each test data 
+
+```{r cvbin2, cache= TRUE}
 summary.res <- fit.cv.bin$resample
 summary.res
 mean(fit.cv.bin$resample$ROC)
 sd(fit.cv.bin$resample$ROC)
+```
+
+### More options
+
+```{r cvbincs, cache= TRUE}
+ctrl<-trainControl(method = "cv", number = 5, 
+                   classProbs = TRUE,
+                   summaryFunction = twoClassSummary)
+fit.cv.bin<-train(out.formula2, trControl = ctrl,
+               data = ObsData, method = "glm",
+              family = binomial(),
+              metric="ROC",
+              preProc = c("center", "scale"))
+fit.cv.bin
+```
+
+## Variable selection
+
+We can also use stepwise regression that uses AIC as a criterion.
+
+```{r cvbinaic, cache= TRUE, results = 'hide', warning=FALSE, message=FALSE, error=FALSE}
+set.seed(504)
+ctrl<-trainControl(method = "cv", number = 5, 
+                   classProbs = TRUE,
+                   summaryFunction = twoClassSummary)
+fit.cv.bin.aic<-train(out.formula2, trControl = ctrl,
+               data = ObsData, method = "glmStepAIC",
+               direction ="backward",
+              family = binomial(),
+              metric="ROC")
+```
+
+
+```{r cvbinaic2, cache= TRUE}
+fit.cv.bin.aic
+summary(fit.cv.bin.aic)
 ```

@@ -24,7 +24,7 @@
 <meta name="author" content="Ehsan Karim" />
 
 
-<meta name="date" content="2021-11-13" />
+<meta name="date" content="2021-11-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="cross-validation.html"/>
-<link rel="next" href="final-words.html"/>
+<link rel="next" href="supervised-learning.html"/>
 <script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -210,6 +210,7 @@ div.csl-indent {
 <li class="chapter" data-level="1.4.1" data-path="rhc-data-description.html"><a href="rhc-data-description.html#dimension-and-summary"><i class="fa fa-check"></i><b>1.4.1</b> Dimension and summary</a></li>
 <li class="chapter" data-level="1.4.2" data-path="rhc-data-description.html"><a href="rhc-data-description.html#more-comprehensive-summary"><i class="fa fa-check"></i><b>1.4.2</b> More comprehensive summary</a></li>
 </ul></li>
+<li class="chapter" data-level="1.5" data-path="rhc-data-description.html"><a href="rhc-data-description.html#predictive-vs.-causal-models"><i class="fa fa-check"></i><b>1.5</b> Predictive vs. causal models</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html"><i class="fa fa-check"></i><b>2</b> Prediction from continuous outcome</a>
 <ul>
@@ -226,6 +227,12 @@ div.csl-indent {
 <li class="chapter" data-level="2.5.1" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#r2"><i class="fa fa-check"></i><b>2.5.1</b> R2</a></li>
 <li class="chapter" data-level="2.5.2" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#rmse"><i class="fa fa-check"></i><b>2.5.2</b> RMSE</a></li>
 <li class="chapter" data-level="2.5.3" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#adj-r2"><i class="fa fa-check"></i><b>2.5.3</b> Adj R2</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#overfitting-and-optimism"><i class="fa fa-check"></i><b>2.6</b> Overfitting and Optimism</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#causes"><i class="fa fa-check"></i><b>2.6.1</b> Causes</a></li>
+<li class="chapter" data-level="2.6.2" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#consequences"><i class="fa fa-check"></i><b>2.6.2</b> Consequences</a></li>
+<li class="chapter" data-level="2.6.3" data-path="prediction-from-continuous-outcome.html"><a href="prediction-from-continuous-outcome.html#proposed-solutions"><i class="fa fa-check"></i><b>2.6.3</b> Proposed solutions</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="data-spliting.html"><a href="data-spliting.html"><i class="fa fa-check"></i><b>3</b> Data spliting</a>
@@ -251,22 +258,63 @@ div.csl-indent {
 <li class="chapter" data-level="5" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html"><i class="fa fa-check"></i><b>5</b> Prediction from binary outcome</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#read-previously-saved-data-3"><i class="fa fa-check"></i><b>5.1</b> Read previously saved data</a></li>
-<li class="chapter" data-level="5.2" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#outcome-levels-factor"><i class="fa fa-check"></i><b>5.2</b> Outcome levels (factor)</a>
+<li class="chapter" data-level="5.2" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#outcome-levels-factor"><i class="fa fa-check"></i><b>5.2</b> Outcome levels (factor)</a></li>
+<li class="chapter" data-level="5.3" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#measuring-prediction-error-1"><i class="fa fa-check"></i><b>5.3</b> Measuring prediction error</a>
 <ul>
-<li class="chapter" data-level="5.2.1" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#prediction-for-death"><i class="fa fa-check"></i><b>5.2.1</b> Prediction for death</a></li>
+<li class="chapter" data-level="5.3.1" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#prediction-for-death"><i class="fa fa-check"></i><b>5.3.1</b> Prediction for death</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#variables-1"><i class="fa fa-check"></i><b>5.3</b> Variables</a></li>
-<li class="chapter" data-level="5.4" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#model-1"><i class="fa fa-check"></i><b>5.4</b> Model</a></li>
-<li class="chapter" data-level="5.5" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#measuring-prediction-error-1"><i class="fa fa-check"></i><b>5.5</b> Measuring prediction error</a>
+<li class="chapter" data-level="5.4" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#variables-1"><i class="fa fa-check"></i><b>5.4</b> Variables</a></li>
+<li class="chapter" data-level="5.5" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#model-1"><i class="fa fa-check"></i><b>5.5</b> Model</a></li>
+<li class="chapter" data-level="5.6" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#measuring-prediction-error-2"><i class="fa fa-check"></i><b>5.6</b> Measuring prediction error</a>
 <ul>
-<li class="chapter" data-level="5.5.1" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#auc"><i class="fa fa-check"></i><b>5.5.1</b> AUC</a></li>
-<li class="chapter" data-level="5.5.2" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#brier-score"><i class="fa fa-check"></i><b>5.5.2</b> Brier Score</a></li>
+<li class="chapter" data-level="5.6.1" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#auc"><i class="fa fa-check"></i><b>5.6.1</b> AUC</a></li>
+<li class="chapter" data-level="5.6.2" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#brier-score"><i class="fa fa-check"></i><b>5.6.2</b> Brier Score</a></li>
 </ul></li>
-<li class="chapter" data-level="5.6" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#cross-validation-using-caret"><i class="fa fa-check"></i><b>5.6</b> Cross-validation using caret</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a>
+<li class="chapter" data-level="5.7" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#cross-validation-using-caret"><i class="fa fa-check"></i><b>5.7</b> Cross-validation using caret</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="final-words.html"><a href="final-words.html#section"><i class="fa fa-check"></i><b>6.1</b> Section</a></li>
+<li class="chapter" data-level="5.7.1" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#basic-setup"><i class="fa fa-check"></i><b>5.7.1</b> Basic setup</a></li>
+<li class="chapter" data-level="5.7.2" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#extract-results-from-each-test-data"><i class="fa fa-check"></i><b>5.7.2</b> Extract results from each test data</a></li>
+<li class="chapter" data-level="5.7.3" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#more-options"><i class="fa fa-check"></i><b>5.7.3</b> More options</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="prediction-from-binary-outcome.html"><a href="prediction-from-binary-outcome.html#variable-selection"><i class="fa fa-check"></i><b>5.8</b> Variable selection</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="supervised-learning.html"><a href="supervised-learning.html"><i class="fa fa-check"></i><b>6</b> Supervised Learning</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="supervised-learning.html"><a href="supervised-learning.html#read-previously-saved-data-4"><i class="fa fa-check"></i><b>6.1</b> Read previously saved data</a></li>
+<li class="chapter" data-level="6.2" data-path="supervised-learning.html"><a href="supervised-learning.html#continuous-outcome"><i class="fa fa-check"></i><b>6.2</b> Continuous outcome</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="supervised-learning.html"><a href="supervised-learning.html#cross-validation-lasso"><i class="fa fa-check"></i><b>6.2.1</b> Cross-validation LASSO</a></li>
+<li class="chapter" data-level="6.2.2" data-path="supervised-learning.html"><a href="supervised-learning.html#cross-validation-ridge"><i class="fa fa-check"></i><b>6.2.2</b> Cross-validation Ridge</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="supervised-learning.html"><a href="supervised-learning.html#binary-outcome"><i class="fa fa-check"></i><b>6.3</b> Binary outcome</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="supervised-learning.html"><a href="supervised-learning.html#cross-validation-lasso-1"><i class="fa fa-check"></i><b>6.3.1</b> Cross-validation LASSO</a></li>
+<li class="chapter" data-level="6.3.2" data-path="supervised-learning.html"><a href="supervised-learning.html#cross-validation-ridge-1"><i class="fa fa-check"></i><b>6.3.2</b> Cross-validation Ridge</a></li>
+<li class="chapter" data-level="6.3.3" data-path="supervised-learning.html"><a href="supervised-learning.html#cross-validation-elastic-net"><i class="fa fa-check"></i><b>6.3.3</b> Cross-validation Elastic net</a></li>
+<li class="chapter" data-level="6.3.4" data-path="supervised-learning.html"><a href="supervised-learning.html#decision-tree"><i class="fa fa-check"></i><b>6.3.4</b> Decision tree</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="supervised-learning.html"><a href="supervised-learning.html#ensemble-methods-type-i"><i class="fa fa-check"></i><b>6.4</b> Ensemble methods (Type I)</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="supervised-learning.html"><a href="supervised-learning.html#cross-validation-bagging"><i class="fa fa-check"></i><b>6.4.1</b> Cross-validation bagging</a></li>
+<li class="chapter" data-level="6.4.2" data-path="supervised-learning.html"><a href="supervised-learning.html#cross-validation-boosting"><i class="fa fa-check"></i><b>6.4.2</b> Cross-validation boosting</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="supervised-learning.html"><a href="supervised-learning.html#ensemble-methods-type-i-1"><i class="fa fa-check"></i><b>6.5</b> Ensemble methods (Type I)</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="supervised-learning.html"><a href="supervised-learning.html#super-learner"><i class="fa fa-check"></i><b>6.5.1</b> Super Learner</a></li>
+<li class="chapter" data-level="6.5.2" data-path="supervised-learning.html"><a href="supervised-learning.html#steps"><i class="fa fa-check"></i><b>6.5.2</b> Steps</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html"><i class="fa fa-check"></i><b>7</b> Unsupervised Learning</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#k-means"><i class="fa fa-check"></i><b>7.1</b> K-means</a></li>
+<li class="chapter" data-level="7.2" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#read-previously-saved-data-5"><i class="fa fa-check"></i><b>7.2</b> Read previously saved data</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#example-1"><i class="fa fa-check"></i><b>7.2.1</b> Example 1</a></li>
+<li class="chapter" data-level="7.2.2" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#example-2"><i class="fa fa-check"></i><b>7.2.2</b> Example 2</a></li>
+<li class="chapter" data-level="7.2.3" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#example-with-many-variables"><i class="fa fa-check"></i><b>7.2.3</b> Example with many variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#optimal-number-of-clusters"><i class="fa fa-check"></i><b>7.3</b> Optimal number of clusters</a></li>
+<li class="chapter" data-level="7.4" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#discussion"><i class="fa fa-check"></i><b>7.4</b> Discussion</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -291,22 +339,71 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="prediction-from-binary-outcome" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Prediction from binary outcome</h1>
+<div class="rmdcomment">
+<p>
+In this chapter, we will talk about Regression that deals with prediction of binary outcomes. We will use logistic regression to build the first prediction mode.
+</p>
+</div>
 <div id="read-previously-saved-data-3" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Read previously saved data</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="prediction-from-binary-outcome.html#cb1-1" aria-hidden="true" tabindex="-1"></a>ObsData <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/rhcAnalytic.RDS&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="prediction-from-binary-outcome.html#cb114-1" aria-hidden="true" tabindex="-1"></a>ObsData <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/rhcAnalytic.RDS&quot;</span>)</span></code></pre></div>
 </div>
 <div id="outcome-levels-factor" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Outcome levels (factor)</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="prediction-from-binary-outcome.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ObsData<span class="sc">$</span>Death)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;No&quot;</span>,<span class="st">&quot;Yes&quot;</span>) <span class="co"># this is useful for caret</span></span>
-<span id="cb2-2"><a href="prediction-from-binary-outcome.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ref: https://tinyurl.com/caretbin</span></span>
-<span id="cb2-3"><a href="prediction-from-binary-outcome.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(ObsData<span class="sc">$</span>Death)</span></code></pre></div>
+<ul>
+<li>Label
+<ul>
+<li>Possible values of outcome</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="prediction-from-binary-outcome.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ObsData<span class="sc">$</span>Death)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;No&quot;</span>,<span class="st">&quot;Yes&quot;</span>) <span class="co"># this is useful for caret</span></span>
+<span id="cb115-2"><a href="prediction-from-binary-outcome.html#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ref: https://tinyurl.com/caretbin</span></span>
+<span id="cb115-3"><a href="prediction-from-binary-outcome.html#cb115-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(ObsData<span class="sc">$</span>Death)</span></code></pre></div>
 <pre><code>## [1] &quot;factor&quot;</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="prediction-from-binary-outcome.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ObsData<span class="sc">$</span>Death)</span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="prediction-from-binary-outcome.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ObsData<span class="sc">$</span>Death)</span></code></pre></div>
 <pre><code>## 
 ##   No  Yes 
 ## 2013 3722</code></pre>
-<div id="prediction-for-death" class="section level3" number="5.2.1">
-<h3><span class="header-section-number">5.2.1</span> Prediction for death</h3>
+</div>
+<div id="measuring-prediction-error-1" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Measuring prediction error</h2>
+<div class="rmdcomment">
+<ul>
+<li>
+Brier score
+<ul>
+<li>
+Brier score 0 means perfect prediction, and
+</li>
+<li>
+close to zero means better prediction,
+</li>
+<li>
+1 being the worst prediction.
+</li>
+<li>
+Less accurate forecasts get higher score in Brier score.
+</li>
+</ul>
+</li>
+<li>
+AUC
+<ul>
+<li>
+The area under a ROC curve is called as a c statistics.
+</li>
+<li>
+c being 0.5 means random prediction and
+</li>
+<li>
+1 indicates perfect prediction
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="prediction-for-death" class="section level3" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> Prediction for death</h3>
 <div class="rmdcomment">
 <p>
 In this section, we show the regression fitting when outcome is binary (death).
@@ -314,11 +411,11 @@ In this section, we show the regression fitting when outcome is binary (death).
 </div>
 </div>
 </div>
-<div id="variables-1" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Variables</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="prediction-from-binary-outcome.html#cb6-1" aria-hidden="true" tabindex="-1"></a>baselinevars <span class="ot">&lt;-</span> <span class="fu">names</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(ObsData, </span>
-<span id="cb6-2"><a href="prediction-from-binary-outcome.html#cb6-2" aria-hidden="true" tabindex="-1"></a>                         <span class="sc">!</span><span class="fu">c</span>(Length.of.Stay,Death)))</span>
-<span id="cb6-3"><a href="prediction-from-binary-outcome.html#cb6-3" aria-hidden="true" tabindex="-1"></a>baselinevars</span></code></pre></div>
+<div id="variables-1" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Variables</h2>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="prediction-from-binary-outcome.html#cb119-1" aria-hidden="true" tabindex="-1"></a>baselinevars <span class="ot">&lt;-</span> <span class="fu">names</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(ObsData, </span>
+<span id="cb119-2"><a href="prediction-from-binary-outcome.html#cb119-2" aria-hidden="true" tabindex="-1"></a>                         <span class="sc">!</span><span class="fu">c</span>(Length.of.Stay,Death)))</span>
+<span id="cb119-3"><a href="prediction-from-binary-outcome.html#cb119-3" aria-hidden="true" tabindex="-1"></a>baselinevars</span></code></pre></div>
 <pre><code>##  [1] &quot;Disease.category&quot;      &quot;Cancer&quot;                &quot;Cardiovascular&quot;       
 ##  [4] &quot;Congestive.HF&quot;         &quot;Dementia&quot;              &quot;Psychiatric&quot;          
 ##  [7] &quot;Pulmonary&quot;             &quot;Renal&quot;                 &quot;Hepatic&quot;              
@@ -337,17 +434,18 @@ In this section, we show the regression fitting when outcome is binary (death).
 ## [46] &quot;Trauma.Diag&quot;           &quot;Orthopedic.Diag&quot;       &quot;race&quot;                 
 ## [49] &quot;income&quot;                &quot;RHC.use&quot;</code></pre>
 </div>
-<div id="model-1" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Model</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="prediction-from-binary-outcome.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># adjust covariates</span></span>
-<span id="cb8-2"><a href="prediction-from-binary-outcome.html#cb8-2" aria-hidden="true" tabindex="-1"></a>out.formula2 <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste</span>(<span class="st">&quot;Death~ &quot;</span>, </span>
-<span id="cb8-3"><a href="prediction-from-binary-outcome.html#cb8-3" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste</span>(baselinevars, </span>
-<span id="cb8-4"><a href="prediction-from-binary-outcome.html#cb8-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">collapse =</span> <span class="st">&quot;+&quot;</span>)))</span>
-<span id="cb8-5"><a href="prediction-from-binary-outcome.html#cb8-5" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(out.formula2, <span class="at">data =</span> ObsData, </span>
-<span id="cb8-6"><a href="prediction-from-binary-outcome.html#cb8-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>))</span>
-<span id="cb8-7"><a href="prediction-from-binary-outcome.html#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(Publish)</span>
-<span id="cb8-8"><a href="prediction-from-binary-outcome.html#cb8-8" aria-hidden="true" tabindex="-1"></a>adj.fit2 <span class="ot">&lt;-</span> <span class="fu">publish</span>(fit2, <span class="at">digits=</span><span class="dv">1</span>)<span class="sc">$</span>regressionTable</span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="prediction-from-binary-outcome.html#cb9-1" aria-hidden="true" tabindex="-1"></a>out.formula2</span></code></pre></div>
+<div id="model-1" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> Model</h2>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="prediction-from-binary-outcome.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="co"># adjust covariates</span></span>
+<span id="cb121-2"><a href="prediction-from-binary-outcome.html#cb121-2" aria-hidden="true" tabindex="-1"></a>out.formula2 <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste</span>(<span class="st">&quot;Death~ &quot;</span>, </span>
+<span id="cb121-3"><a href="prediction-from-binary-outcome.html#cb121-3" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste</span>(baselinevars, </span>
+<span id="cb121-4"><a href="prediction-from-binary-outcome.html#cb121-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">collapse =</span> <span class="st">&quot;+&quot;</span>)))</span>
+<span id="cb121-5"><a href="prediction-from-binary-outcome.html#cb121-5" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(out.formula2, <span class="at">file =</span> <span class="st">&quot;data/form2.RDS&quot;</span>)</span>
+<span id="cb121-6"><a href="prediction-from-binary-outcome.html#cb121-6" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(out.formula2, <span class="at">data =</span> ObsData, </span>
+<span id="cb121-7"><a href="prediction-from-binary-outcome.html#cb121-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>))</span>
+<span id="cb121-8"><a href="prediction-from-binary-outcome.html#cb121-8" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(Publish)</span>
+<span id="cb121-9"><a href="prediction-from-binary-outcome.html#cb121-9" aria-hidden="true" tabindex="-1"></a>adj.fit2 <span class="ot">&lt;-</span> <span class="fu">publish</span>(fit2, <span class="at">digits=</span><span class="dv">1</span>)<span class="sc">$</span>regressionTable</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="prediction-from-binary-outcome.html#cb122-1" aria-hidden="true" tabindex="-1"></a>out.formula2</span></code></pre></div>
 <pre><code>## Death ~ Disease.category + Cancer + Cardiovascular + Congestive.HF + 
 ##     Dementia + Psychiatric + Pulmonary + Renal + Hepatic + GI.Bleed + 
 ##     Tumor + Immunosupperssion + Transfer.hx + MI + age + sex + 
@@ -359,7 +457,7 @@ In this section, we show the regression fitting when outcome is binary (death).
 ##     Gastrointestinal.Diag + Renal.Diag + Metabolic.Diag + Hematologic.Diag + 
 ##     Sepsis.Diag + Trauma.Diag + Orthopedic.Diag + race + income + 
 ##     RHC.use</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="prediction-from-binary-outcome.html#cb11-1" aria-hidden="true" tabindex="-1"></a>adj.fit2</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="prediction-from-binary-outcome.html#cb124-1" aria-hidden="true" tabindex="-1"></a>adj.fit2</span></code></pre></div>
 <pre><code>##                 Variable               Units OddsRatio      CI.95 p-value
 ## 1       Disease.category                 ARF       Ref                   
 ## 2                                        CHF       1.0  [0.8;1.4]     0.8
@@ -455,60 +553,53 @@ In this section, we show the regression fitting when outcome is binary (death).
 ## 92                                Under $11k       1.2  [1.0;1.4]    &lt;0.1
 ## 93               RHC.use                           1.4  [1.2;1.6]    &lt;0.1</code></pre>
 </div>
-<div id="measuring-prediction-error-1" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> Measuring prediction error</h2>
-<div id="auc" class="section level3" number="5.5.1">
-<h3><span class="header-section-number">5.5.1</span> AUC</h3>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="prediction-from-binary-outcome.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(pROC)</span></code></pre></div>
-<pre><code>## Loading required package: pROC</code></pre>
-<pre><code>## Type &#39;citation(&quot;pROC&quot;)&#39; for a citation.</code></pre>
-<pre><code>## 
-## Attaching package: &#39;pROC&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     cov, smooth, var</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="prediction-from-binary-outcome.html#cb18-1" aria-hidden="true" tabindex="-1"></a>obs.y2<span class="ot">&lt;-</span>ObsData<span class="sc">$</span>Death</span>
-<span id="cb18-2"><a href="prediction-from-binary-outcome.html#cb18-2" aria-hidden="true" tabindex="-1"></a>pred.y2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit2, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
-<span id="cb18-3"><a href="prediction-from-binary-outcome.html#cb18-3" aria-hidden="true" tabindex="-1"></a>rocobj <span class="ot">&lt;-</span> <span class="fu">roc</span>(obs.y2, pred.y2)</span></code></pre></div>
+<div id="measuring-prediction-error-2" class="section level2" number="5.6">
+<h2><span class="header-section-number">5.6</span> Measuring prediction error</h2>
+<div id="auc" class="section level3" number="5.6.1">
+<h3><span class="header-section-number">5.6.1</span> AUC</h3>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="prediction-from-binary-outcome.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(pROC)</span>
+<span id="cb126-2"><a href="prediction-from-binary-outcome.html#cb126-2" aria-hidden="true" tabindex="-1"></a>obs.y2<span class="ot">&lt;-</span>ObsData<span class="sc">$</span>Death</span>
+<span id="cb126-3"><a href="prediction-from-binary-outcome.html#cb126-3" aria-hidden="true" tabindex="-1"></a>pred.y2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit2, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb126-4"><a href="prediction-from-binary-outcome.html#cb126-4" aria-hidden="true" tabindex="-1"></a>rocobj <span class="ot">&lt;-</span> <span class="fu">roc</span>(obs.y2, pred.y2)</span></code></pre></div>
 <pre><code>## Setting levels: control = No, case = Yes</code></pre>
 <pre><code>## Setting direction: controls &lt; cases</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="prediction-from-binary-outcome.html#cb21-1" aria-hidden="true" tabindex="-1"></a>rocobj</span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="prediction-from-binary-outcome.html#cb129-1" aria-hidden="true" tabindex="-1"></a>rocobj</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## roc.default(response = obs.y2, predictor = pred.y2)
 ## 
 ## Data: pred.y2 in 2013 controls (obs.y2 No) &lt; 3722 cases (obs.y2 Yes).
 ## Area under the curve: 0.7682</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="prediction-from-binary-outcome.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rocobj)</span></code></pre></div>
-<p><img src="Intro2ML_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="prediction-from-binary-outcome.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">auc</span>(rocobj)</span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="prediction-from-binary-outcome.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rocobj)</span></code></pre></div>
+<p><img src="Intro2ML_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="prediction-from-binary-outcome.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">auc</span>(rocobj)</span></code></pre></div>
 <pre><code>## Area under the curve: 0.7682</code></pre>
 </div>
-<div id="brier-score" class="section level3" number="5.5.2">
-<h3><span class="header-section-number">5.5.2</span> Brier Score</h3>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="prediction-from-binary-outcome.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(DescTools)</span></code></pre></div>
-<pre><code>## Loading required package: DescTools</code></pre>
-<pre><code>## Warning: package &#39;DescTools&#39; was built under R version 4.1.1</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="prediction-from-binary-outcome.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">BrierScore</span>(fit2)</span></code></pre></div>
+<div id="brier-score" class="section level3" number="5.6.2">
+<h3><span class="header-section-number">5.6.2</span> Brier Score</h3>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="prediction-from-binary-outcome.html#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(DescTools)</span>
+<span id="cb134-2"><a href="prediction-from-binary-outcome.html#cb134-2" aria-hidden="true" tabindex="-1"></a><span class="fu">BrierScore</span>(fit2)</span></code></pre></div>
 <pre><code>## [1] 0.1812502</code></pre>
 </div>
 </div>
-<div id="cross-validation-using-caret" class="section level2" number="5.6">
-<h2><span class="header-section-number">5.6</span> Cross-validation using caret</h2>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="prediction-from-binary-outcome.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using Caret package</span></span>
-<span id="cb31-2"><a href="prediction-from-binary-outcome.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">504</span>)</span>
-<span id="cb31-3"><a href="prediction-from-binary-outcome.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># make a 5-fold CV</span></span>
-<span id="cb31-4"><a href="prediction-from-binary-outcome.html#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(caret)</span>
-<span id="cb31-5"><a href="prediction-from-binary-outcome.html#cb31-5" aria-hidden="true" tabindex="-1"></a>ctrl<span class="ot">&lt;-</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>, </span>
-<span id="cb31-6"><a href="prediction-from-binary-outcome.html#cb31-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">classProbs =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb31-7"><a href="prediction-from-binary-outcome.html#cb31-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">summaryFunction =</span> twoClassSummary)</span>
-<span id="cb31-8"><a href="prediction-from-binary-outcome.html#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model with formula = out.formula2</span></span>
-<span id="cb31-9"><a href="prediction-from-binary-outcome.html#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="co"># use training method glm (have to specify family)</span></span>
-<span id="cb31-10"><a href="prediction-from-binary-outcome.html#cb31-10" aria-hidden="true" tabindex="-1"></a>fit.cv.bin<span class="ot">&lt;-</span><span class="fu">train</span>(out.formula2, <span class="at">trControl =</span> ctrl,</span>
-<span id="cb31-11"><a href="prediction-from-binary-outcome.html#cb31-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> ObsData, <span class="at">method =</span> <span class="st">&quot;glm&quot;</span>,</span>
-<span id="cb31-12"><a href="prediction-from-binary-outcome.html#cb31-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> <span class="fu">binomial</span>(),</span>
-<span id="cb31-13"><a href="prediction-from-binary-outcome.html#cb31-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">metric=</span><span class="st">&quot;ROC&quot;</span>)</span>
-<span id="cb31-14"><a href="prediction-from-binary-outcome.html#cb31-14" aria-hidden="true" tabindex="-1"></a>fit.cv.bin</span></code></pre></div>
+<div id="cross-validation-using-caret" class="section level2" number="5.7">
+<h2><span class="header-section-number">5.7</span> Cross-validation using caret</h2>
+<div id="basic-setup" class="section level3" number="5.7.1">
+<h3><span class="header-section-number">5.7.1</span> Basic setup</h3>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="prediction-from-binary-outcome.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using Caret package</span></span>
+<span id="cb136-2"><a href="prediction-from-binary-outcome.html#cb136-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">504</span>)</span>
+<span id="cb136-3"><a href="prediction-from-binary-outcome.html#cb136-3" aria-hidden="true" tabindex="-1"></a><span class="co"># make a 5-fold CV</span></span>
+<span id="cb136-4"><a href="prediction-from-binary-outcome.html#cb136-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(caret)</span>
+<span id="cb136-5"><a href="prediction-from-binary-outcome.html#cb136-5" aria-hidden="true" tabindex="-1"></a>ctrl<span class="ot">&lt;-</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>, </span>
+<span id="cb136-6"><a href="prediction-from-binary-outcome.html#cb136-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">classProbs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb136-7"><a href="prediction-from-binary-outcome.html#cb136-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">summaryFunction =</span> twoClassSummary)</span>
+<span id="cb136-8"><a href="prediction-from-binary-outcome.html#cb136-8" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model with formula = out.formula2</span></span>
+<span id="cb136-9"><a href="prediction-from-binary-outcome.html#cb136-9" aria-hidden="true" tabindex="-1"></a><span class="co"># use training method glm (have to specify family)</span></span>
+<span id="cb136-10"><a href="prediction-from-binary-outcome.html#cb136-10" aria-hidden="true" tabindex="-1"></a>fit.cv.bin<span class="ot">&lt;-</span><span class="fu">train</span>(out.formula2, <span class="at">trControl =</span> ctrl,</span>
+<span id="cb136-11"><a href="prediction-from-binary-outcome.html#cb136-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> ObsData, <span class="at">method =</span> <span class="st">&quot;glm&quot;</span>,</span>
+<span id="cb136-12"><a href="prediction-from-binary-outcome.html#cb136-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> <span class="fu">binomial</span>(),</span>
+<span id="cb136-13"><a href="prediction-from-binary-outcome.html#cb136-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">metric=</span><span class="st">&quot;ROC&quot;</span>)</span>
+<span id="cb136-14"><a href="prediction-from-binary-outcome.html#cb136-14" aria-hidden="true" tabindex="-1"></a>fit.cv.bin</span></code></pre></div>
 <pre><code>## Generalized Linear Model 
 ## 
 ## 5735 samples
@@ -522,19 +613,174 @@ In this section, we show the regression fitting when outcome is binary (death).
 ## 
 ##   ROC        Sens       Spec     
 ##   0.7545115  0.4659618  0.8535653</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="prediction-from-binary-outcome.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract results from each test data </span></span>
-<span id="cb33-2"><a href="prediction-from-binary-outcome.html#cb33-2" aria-hidden="true" tabindex="-1"></a>summary.res <span class="ot">&lt;-</span> fit.cv.bin<span class="sc">$</span>resample</span>
-<span id="cb33-3"><a href="prediction-from-binary-outcome.html#cb33-3" aria-hidden="true" tabindex="-1"></a>summary.res</span></code></pre></div>
+</div>
+<div id="extract-results-from-each-test-data" class="section level3" number="5.7.2">
+<h3><span class="header-section-number">5.7.2</span> Extract results from each test data</h3>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="prediction-from-binary-outcome.html#cb138-1" aria-hidden="true" tabindex="-1"></a>summary.res <span class="ot">&lt;-</span> fit.cv.bin<span class="sc">$</span>resample</span>
+<span id="cb138-2"><a href="prediction-from-binary-outcome.html#cb138-2" aria-hidden="true" tabindex="-1"></a>summary.res</span></code></pre></div>
 <pre><code>##         ROC      Sens      Spec Resample
 ## 1 0.7444835 0.4739454 0.8630872    Fold1
 ## 2 0.7544836 0.4502488 0.8561828    Fold2
 ## 3 0.7786734 0.4739454 0.8738255    Fold3
 ## 4 0.7350679 0.4626866 0.8373656    Fold4
 ## 5 0.7598488 0.4689826 0.8373656    Fold5</code></pre>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="prediction-from-binary-outcome.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(fit.cv.bin<span class="sc">$</span>resample<span class="sc">$</span>ROC)</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="prediction-from-binary-outcome.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(fit.cv.bin<span class="sc">$</span>resample<span class="sc">$</span>ROC)</span></code></pre></div>
 <pre><code>## [1] 0.7545115</code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="prediction-from-binary-outcome.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(fit.cv.bin<span class="sc">$</span>resample<span class="sc">$</span>ROC)</span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="prediction-from-binary-outcome.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(fit.cv.bin<span class="sc">$</span>resample<span class="sc">$</span>ROC)</span></code></pre></div>
 <pre><code>## [1] 0.01651437</code></pre>
+</div>
+<div id="more-options" class="section level3" number="5.7.3">
+<h3><span class="header-section-number">5.7.3</span> More options</h3>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="prediction-from-binary-outcome.html#cb144-1" aria-hidden="true" tabindex="-1"></a>ctrl<span class="ot">&lt;-</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>, </span>
+<span id="cb144-2"><a href="prediction-from-binary-outcome.html#cb144-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">classProbs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb144-3"><a href="prediction-from-binary-outcome.html#cb144-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">summaryFunction =</span> twoClassSummary)</span>
+<span id="cb144-4"><a href="prediction-from-binary-outcome.html#cb144-4" aria-hidden="true" tabindex="-1"></a>fit.cv.bin<span class="ot">&lt;-</span><span class="fu">train</span>(out.formula2, <span class="at">trControl =</span> ctrl,</span>
+<span id="cb144-5"><a href="prediction-from-binary-outcome.html#cb144-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> ObsData, <span class="at">method =</span> <span class="st">&quot;glm&quot;</span>,</span>
+<span id="cb144-6"><a href="prediction-from-binary-outcome.html#cb144-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> <span class="fu">binomial</span>(),</span>
+<span id="cb144-7"><a href="prediction-from-binary-outcome.html#cb144-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">metric=</span><span class="st">&quot;ROC&quot;</span>,</span>
+<span id="cb144-8"><a href="prediction-from-binary-outcome.html#cb144-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">preProc =</span> <span class="fu">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>))</span>
+<span id="cb144-9"><a href="prediction-from-binary-outcome.html#cb144-9" aria-hidden="true" tabindex="-1"></a>fit.cv.bin</span></code></pre></div>
+<pre><code>## Generalized Linear Model 
+## 
+## 5735 samples
+##   50 predictor
+##    2 classes: &#39;No&#39;, &#39;Yes&#39; 
+## 
+## Pre-processing: centered (63), scaled (63) 
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 4588, 4589, 4587, 4588, 4588 
+## Resampling results:
+## 
+##   ROC        Sens       Spec     
+##   0.7548047  0.4629717  0.8530367</code></pre>
+</div>
+</div>
+<div id="variable-selection" class="section level2" number="5.8">
+<h2><span class="header-section-number">5.8</span> Variable selection</h2>
+<p>We can also use stepwise regression that uses AIC as a criterion.</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="prediction-from-binary-outcome.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">504</span>)</span>
+<span id="cb146-2"><a href="prediction-from-binary-outcome.html#cb146-2" aria-hidden="true" tabindex="-1"></a>ctrl<span class="ot">&lt;-</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>, </span>
+<span id="cb146-3"><a href="prediction-from-binary-outcome.html#cb146-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">classProbs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb146-4"><a href="prediction-from-binary-outcome.html#cb146-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">summaryFunction =</span> twoClassSummary)</span>
+<span id="cb146-5"><a href="prediction-from-binary-outcome.html#cb146-5" aria-hidden="true" tabindex="-1"></a>fit.cv.bin.aic<span class="ot">&lt;-</span><span class="fu">train</span>(out.formula2, <span class="at">trControl =</span> ctrl,</span>
+<span id="cb146-6"><a href="prediction-from-binary-outcome.html#cb146-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> ObsData, <span class="at">method =</span> <span class="st">&quot;glmStepAIC&quot;</span>,</span>
+<span id="cb146-7"><a href="prediction-from-binary-outcome.html#cb146-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">direction =</span><span class="st">&quot;backward&quot;</span>,</span>
+<span id="cb146-8"><a href="prediction-from-binary-outcome.html#cb146-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">family =</span> <span class="fu">binomial</span>(),</span>
+<span id="cb146-9"><a href="prediction-from-binary-outcome.html#cb146-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">metric=</span><span class="st">&quot;ROC&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="prediction-from-binary-outcome.html#cb147-1" aria-hidden="true" tabindex="-1"></a>fit.cv.bin.aic</span></code></pre></div>
+<pre><code>## Generalized Linear Model with Stepwise Feature Selection 
+## 
+## 5735 samples
+##   50 predictor
+##    2 classes: &#39;No&#39;, &#39;Yes&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 4587, 4589, 4587, 4589, 4588 
+## Resampling results:
+## 
+##   ROC        Sens      Spec     
+##   0.7540424  0.464468  0.8562535</code></pre>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="prediction-from-binary-outcome.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.cv.bin.aic)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## NULL
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.8626  -0.9960   0.5052   0.8638   1.9578  
+## 
+## Coefficients:
+##                                          Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)                             1.0783624  0.7822168   1.379 0.168019
+## Disease.categoryOther                   0.4495099  0.0919860   4.887 1.03e-06
+## `CancerLocalized (Yes)`                 1.8942512  0.5501880   3.443 0.000575
+## CancerMetastatic                        3.2703316  0.5858715   5.582 2.38e-08
+## Cardiovascular1                         0.2386749  0.0939617   2.540 0.011081
+## Congestive.HF1                          0.4539010  0.0971624   4.672 2.99e-06
+## Dementia1                               0.2380213  0.1162903   2.047 0.040679
+## Hepatic1                                0.3593093  0.1541762   2.331 0.019779
+## Tumor1                                 -1.2455123  0.5542624  -2.247 0.024630
+## Immunosupperssion1                      0.2174294  0.0730803   2.975 0.002928
+## Transfer.hx1                           -0.1849029  0.0945679  -1.955 0.050555
+## `age[50,60)`                            0.3621248  0.0984288   3.679 0.000234
+## `age[60,70)`                            0.6941924  0.0968434   7.168 7.60e-13
+## `age[70,80)`                            0.6804939  0.1126637   6.040 1.54e-09
+## `age[80, Inf)`                          0.9833851  0.1410563   6.972 3.13e-12
+## sexFemale                              -0.2805950  0.0653527  -4.294 1.76e-05
+## DASIndex                               -0.0429272  0.0062191  -6.902 5.11e-12
+## APACHE.score                            0.0174907  0.0020017   8.738  &lt; 2e-16
+## Glasgow.Coma.Score                      0.0093657  0.0012563   7.455 9.00e-14
+## WBC                                     0.0044518  0.0030090   1.479 0.139009
+## Temperature                            -0.0524703  0.0192757  -2.722 0.006487
+## PaO2vs.FIO2                             0.0004741  0.0003054   1.552 0.120548
+## Hematocrit                             -0.0154796  0.0041593  -3.722 0.000198
+## Bilirubin                               0.0313087  0.0094004   3.331 0.000867
+## Weight                                 -0.0031548  0.0011213  -2.813 0.004902
+## DNR.statusYes                           0.9347360  0.1326924   7.044 1.86e-12
+## Medical.insuranceMedicare               0.4764895  0.1257582   3.789 0.000151
+## `Medical.insuranceMedicare &amp; Medicaid`  0.3364916  0.1584757   2.123 0.033729
+## `Medical.insuranceNo insurance`         0.3711345  0.1568820   2.366 0.017996
+## Medical.insurancePrivate                0.2632637  0.1139805   2.310 0.020903
+## `Medical.insurancePrivate &amp; Medicare`   0.2819715  0.1313101   2.147 0.031764
+## Respiratory.DiagYes                     0.1393974  0.0769026   1.813 0.069886
+## Cardiovascular.DiagYes                  0.1804967  0.0836679   2.157 0.030982
+## Neurological.DiagYes                    0.4320266  0.1189357   3.632 0.000281
+## Gastrointestinal.DiagYes                0.2819563  0.1092206   2.582 0.009836
+## Hematologic.DiagYes                     0.9734424  0.1651363   5.895 3.75e-09
+## Sepsis.DiagYes                          0.1539651  0.0943235   1.632 0.102614
+## `incomeUnder $11k`                      0.2151437  0.0689392   3.121 0.001804
+## RHC.use                                 0.3552053  0.0713632   4.977 6.44e-07
+##                                           
+## (Intercept)                               
+## Disease.categoryOther                  ***
+## `CancerLocalized (Yes)`                ***
+## CancerMetastatic                       ***
+## Cardiovascular1                        *  
+## Congestive.HF1                         ***
+## Dementia1                              *  
+## Hepatic1                               *  
+## Tumor1                                 *  
+## Immunosupperssion1                     ** 
+## Transfer.hx1                           .  
+## `age[50,60)`                           ***
+## `age[60,70)`                           ***
+## `age[70,80)`                           ***
+## `age[80, Inf)`                         ***
+## sexFemale                              ***
+## DASIndex                               ***
+## APACHE.score                           ***
+## Glasgow.Coma.Score                     ***
+## WBC                                       
+## Temperature                            ** 
+## PaO2vs.FIO2                               
+## Hematocrit                             ***
+## Bilirubin                              ***
+## Weight                                 ** 
+## DNR.statusYes                          ***
+## Medical.insuranceMedicare              ***
+## `Medical.insuranceMedicare &amp; Medicaid` *  
+## `Medical.insuranceNo insurance`        *  
+## Medical.insurancePrivate               *  
+## `Medical.insurancePrivate &amp; Medicare`  *  
+## Respiratory.DiagYes                    .  
+## Cardiovascular.DiagYes                 *  
+## Neurological.DiagYes                   ***
+## Gastrointestinal.DiagYes               ** 
+## Hematologic.DiagYes                    ***
+## Sepsis.DiagYes                            
+## `incomeUnder $11k`                     ** 
+## RHC.use                                ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 7433.3  on 5734  degrees of freedom
+## Residual deviance: 6198.0  on 5696  degrees of freedom
+## AIC: 6276
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
 
 </div>
 </div>
@@ -544,7 +790,7 @@ In this section, we show the regression fitting when outcome is binary (death).
         </div>
       </div>
 <a href="cross-validation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="final-words.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="supervised-learning.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -595,6 +841,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

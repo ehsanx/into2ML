@@ -18,7 +18,8 @@ knitr::include_graphics("images/tts.jpg")
 # Using a seed to randomize in a reproducible way 
 set.seed(123)
 require(caret)
-split<-createDataPartition(y = ObsData$Length.of.Stay, p = 0.7, list = FALSE)
+split<-createDataPartition(y = ObsData$Length.of.Stay, 
+                           p = 0.7, list = FALSE)
 str(split)
 dim(split)
 dim(ObsData)*.7 # approximate train data
@@ -73,9 +74,15 @@ perform <- function(new.data,
 
 ## Extract performance measures
 ```{r}
-perform(new.data=train.data,y.name = "Length.of.Stay",model.fit=fit.train1)
-perform(new.data=test.data,y.name = "Length.of.Stay",model.fit=fit.train1)
-perform(new.data=ObsData,y.name = "Length.of.Stay",model.fit=fit.train1)
+perform(new.data=train.data,
+        y.name = "Length.of.Stay",
+        model.fit=fit.train1)
+perform(new.data=test.data,
+        y.name = "Length.of.Stay",
+        model.fit=fit.train1)
+perform(new.data=ObsData,
+        y.name = "Length.of.Stay",
+        model.fit=fit.train1)
 
 ```
 

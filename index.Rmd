@@ -49,16 +49,19 @@ This document is a very basic introduction to machine learning.
 
 ## Pre-requisites {-}
 
-The prerequisites are knowledge of multiple regression analysis and basic probability. Software demonstrations and codes will be provided in R, although proficiency in R is not required for understanding the concepts.
+- The prerequisites are knowledge of multiple regression analysis and basic probability. Software demonstrations and codes will be provided in R, although proficiency in R is not required for understanding the concepts.
+- Watch the tutorial video [![tutorial video](https://img.youtube.com/vi/NkGLxUe3MKs/maxresdefault.jpg)](https://youtu.be/NkGLxUe3MKs)
 
 ## Key references {-}
 
-- Kuhn, Max, and Kjell Johnson. Applied predictive modeling. New York: Springer, 2013.
+- Bi, Q., Goodman, K. E., Kaminsky, J., & Lessler, J. (2019). What is machine learning? A primer for the epidemiologist. American journal of epidemiology, 188(12), 2222-2239.
+-  Kuhn M., Johnson K. (2013) [chapter 4] Over-Fitting and Model Tuning. In: Applied Predictive Modeling. Springer, New York, NY
 - James, G., Witten, D., Hastie, T., & Tibshirani, R. (2021). An introduction to statistical learning (2nd ed.). New York: springer.
+- Vittinghoff, E., Glidden, D. V., Shiboski, S. C., & McCulloch, C. E. (2011) [chapter 10] "Predictor Selection". In: Regression methods in biostatistics: linear, logistic, survival, and repeated measures models. Springer. 
 
 ## Version history {-}
 
-Version 1.0 was created for course MEDI 504A, delivered on 2021 W.
+Version 1.1 was created for course MEDI 504A 001 Emerging Topics in Experimental Medicine - EMRG TOP EXP MED, delivered on 2021W1. Some of the materials were initially prepared for Continuing Professional Development course, [UBC Department of Medicine CPD event](https://medicine.med.ubc.ca/datascience/), November 3, 2020.
 
 Feel free to [reach out](https://ehsank.com/) for any comments, corrections, suggestions.
 
