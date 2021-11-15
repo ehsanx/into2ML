@@ -298,7 +298,7 @@ div.csl-indent {
 <li class="chapter" data-level="6.4.1" data-path="supervised-learning.html"><a href="supervised-learning.html#cross-validation-bagging"><i class="fa fa-check"></i><b>6.4.1</b> Cross-validation bagging</a></li>
 <li class="chapter" data-level="6.4.2" data-path="supervised-learning.html"><a href="supervised-learning.html#cross-validation-boosting"><i class="fa fa-check"></i><b>6.4.2</b> Cross-validation boosting</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="supervised-learning.html"><a href="supervised-learning.html#ensemble-methods-type-i-1"><i class="fa fa-check"></i><b>6.5</b> Ensemble methods (Type I)</a>
+<li class="chapter" data-level="6.5" data-path="supervised-learning.html"><a href="supervised-learning.html#ensemble-methods-type-ii"><i class="fa fa-check"></i><b>6.5</b> Ensemble methods (Type II)</a>
 <ul>
 <li class="chapter" data-level="6.5.1" data-path="supervised-learning.html"><a href="supervised-learning.html#super-learner"><i class="fa fa-check"></i><b>6.5.1</b> Super Learner</a></li>
 <li class="chapter" data-level="6.5.2" data-path="supervised-learning.html"><a href="supervised-learning.html#steps"><i class="fa fa-check"></i><b>6.5.2</b> Steps</a></li>
@@ -370,42 +370,42 @@ high intra-class similarity: observation from the same cluster would be similar
 </div>
 <div id="read-previously-saved-data-5" class="section level2" number="7.2">
 <h2><span class="header-section-number">7.2</span> Read previously saved data</h2>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="unsupervised-learning.html#cb203-1" aria-hidden="true" tabindex="-1"></a>ObsData <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/rhcAnalytic.RDS&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="unsupervised-learning.html#cb216-1" aria-hidden="true" tabindex="-1"></a>ObsData <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/rhcAnalytic.RDS&quot;</span>)</span></code></pre></div>
 <div id="example-1" class="section level3" number="7.2.1">
 <h3><span class="header-section-number">7.2.1</span> Example 1</h3>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="unsupervised-learning.html#cb204-1" aria-hidden="true" tabindex="-1"></a>datax0 <span class="ot">&lt;-</span> ObsData[<span class="fu">c</span>(<span class="st">&quot;Heart.rate&quot;</span>, <span class="st">&quot;edu&quot;</span>)]</span>
-<span id="cb204-2"><a href="unsupervised-learning.html#cb204-2" aria-hidden="true" tabindex="-1"></a>kres0 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(datax0, <span class="at">centers =</span> <span class="dv">2</span>, <span class="at">nstart =</span> <span class="dv">10</span>)</span>
-<span id="cb204-3"><a href="unsupervised-learning.html#cb204-3" aria-hidden="true" tabindex="-1"></a>kres0<span class="sc">$</span>centers</span></code></pre></div>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="unsupervised-learning.html#cb217-1" aria-hidden="true" tabindex="-1"></a>datax0 <span class="ot">&lt;-</span> ObsData[<span class="fu">c</span>(<span class="st">&quot;Heart.rate&quot;</span>, <span class="st">&quot;edu&quot;</span>)]</span>
+<span id="cb217-2"><a href="unsupervised-learning.html#cb217-2" aria-hidden="true" tabindex="-1"></a>kres0 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(datax0, <span class="at">centers =</span> <span class="dv">2</span>, <span class="at">nstart =</span> <span class="dv">10</span>)</span>
+<span id="cb217-3"><a href="unsupervised-learning.html#cb217-3" aria-hidden="true" tabindex="-1"></a>kres0<span class="sc">$</span>centers</span></code></pre></div>
 <pre><code>##   Heart.rate      edu
 ## 1   54.55138 11.44494
 ## 2  134.96277 11.75466</code></pre>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="unsupervised-learning.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(datax0, <span class="at">col =</span> kres0<span class="sc">$</span>cluster, <span class="at">main =</span> kres0<span class="sc">$</span>tot.withinss)</span></code></pre></div>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="unsupervised-learning.html#cb219-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(datax0, <span class="at">col =</span> kres0<span class="sc">$</span>cluster, <span class="at">main =</span> kres0<span class="sc">$</span>tot.withinss)</span></code></pre></div>
 <p><img src="Intro2ML_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
 </div>
 <div id="example-2" class="section level3" number="7.2.2">
 <h3><span class="header-section-number">7.2.2</span> Example 2</h3>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="unsupervised-learning.html#cb207-1" aria-hidden="true" tabindex="-1"></a>datax0 <span class="ot">&lt;-</span> ObsData[<span class="fu">c</span>(<span class="st">&quot;blood.pressure&quot;</span>, <span class="st">&quot;Heart.rate&quot;</span>, </span>
-<span id="cb207-2"><a href="unsupervised-learning.html#cb207-2" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Respiratory.rate&quot;</span>)]</span>
-<span id="cb207-3"><a href="unsupervised-learning.html#cb207-3" aria-hidden="true" tabindex="-1"></a>kres0 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(datax0, <span class="at">centers =</span> <span class="dv">2</span>, <span class="at">nstart =</span> <span class="dv">10</span>)</span>
-<span id="cb207-4"><a href="unsupervised-learning.html#cb207-4" aria-hidden="true" tabindex="-1"></a>kres0<span class="sc">$</span>centers</span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="unsupervised-learning.html#cb220-1" aria-hidden="true" tabindex="-1"></a>datax0 <span class="ot">&lt;-</span> ObsData[<span class="fu">c</span>(<span class="st">&quot;blood.pressure&quot;</span>, <span class="st">&quot;Heart.rate&quot;</span>, </span>
+<span id="cb220-2"><a href="unsupervised-learning.html#cb220-2" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Respiratory.rate&quot;</span>)]</span>
+<span id="cb220-3"><a href="unsupervised-learning.html#cb220-3" aria-hidden="true" tabindex="-1"></a>kres0 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(datax0, <span class="at">centers =</span> <span class="dv">2</span>, <span class="at">nstart =</span> <span class="dv">10</span>)</span>
+<span id="cb220-4"><a href="unsupervised-learning.html#cb220-4" aria-hidden="true" tabindex="-1"></a>kres0<span class="sc">$</span>centers</span></code></pre></div>
 <pre><code>##   blood.pressure Heart.rate Respiratory.rate
 ## 1       80.10812  135.08956         29.85267
 ## 2       73.71684   54.95789         22.76723</code></pre>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="unsupervised-learning.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(datax0, <span class="at">col =</span> kres0<span class="sc">$</span>cluster, <span class="at">main =</span> kres0<span class="sc">$</span>tot.withinss)</span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="unsupervised-learning.html#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(datax0, <span class="at">col =</span> kres0<span class="sc">$</span>cluster, <span class="at">main =</span> kres0<span class="sc">$</span>tot.withinss)</span></code></pre></div>
 <p><img src="Intro2ML_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
 </div>
 <div id="example-with-many-variables" class="section level3" number="7.2.3">
 <h3><span class="header-section-number">7.2.3</span> Example with many variables</h3>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="unsupervised-learning.html#cb210-1" aria-hidden="true" tabindex="-1"></a>datax <span class="ot">&lt;-</span> ObsData[<span class="fu">c</span>(<span class="st">&quot;edu&quot;</span>, <span class="st">&quot;blood.pressure&quot;</span>, <span class="st">&quot;Heart.rate&quot;</span>, </span>
-<span id="cb210-2"><a href="unsupervised-learning.html#cb210-2" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;Respiratory.rate&quot;</span> , <span class="st">&quot;Temperature&quot;</span>,</span>
-<span id="cb210-3"><a href="unsupervised-learning.html#cb210-3" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;PH&quot;</span>, <span class="st">&quot;Weight&quot;</span>, <span class="st">&quot;Length.of.Stay&quot;</span>)]</span></code></pre></div>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="unsupervised-learning.html#cb211-1" aria-hidden="true" tabindex="-1"></a>kres <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(datax, <span class="at">centers =</span> <span class="dv">3</span>)</span>
-<span id="cb211-2"><a href="unsupervised-learning.html#cb211-2" aria-hidden="true" tabindex="-1"></a><span class="co">#kres</span></span>
-<span id="cb211-3"><a href="unsupervised-learning.html#cb211-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(kres<span class="sc">$</span>cluster)</span></code></pre></div>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="unsupervised-learning.html#cb223-1" aria-hidden="true" tabindex="-1"></a>datax <span class="ot">&lt;-</span> ObsData[<span class="fu">c</span>(<span class="st">&quot;edu&quot;</span>, <span class="st">&quot;blood.pressure&quot;</span>, <span class="st">&quot;Heart.rate&quot;</span>, </span>
+<span id="cb223-2"><a href="unsupervised-learning.html#cb223-2" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;Respiratory.rate&quot;</span> , <span class="st">&quot;Temperature&quot;</span>,</span>
+<span id="cb223-3"><a href="unsupervised-learning.html#cb223-3" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;PH&quot;</span>, <span class="st">&quot;Weight&quot;</span>, <span class="st">&quot;Length.of.Stay&quot;</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="unsupervised-learning.html#cb224-1" aria-hidden="true" tabindex="-1"></a>kres <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(datax, <span class="at">centers =</span> <span class="dv">3</span>)</span>
+<span id="cb224-2"><a href="unsupervised-learning.html#cb224-2" aria-hidden="true" tabindex="-1"></a><span class="co">#kres</span></span>
+<span id="cb224-3"><a href="unsupervised-learning.html#cb224-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(kres<span class="sc">$</span>cluster)</span></code></pre></div>
 <pre><code>## [1] 1 1 1 3 1 2</code></pre>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="unsupervised-learning.html#cb213-1" aria-hidden="true" tabindex="-1"></a>kres<span class="sc">$</span>size</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="unsupervised-learning.html#cb226-1" aria-hidden="true" tabindex="-1"></a>kres<span class="sc">$</span>size</span></code></pre></div>
 <pre><code>## [1] 2793 1688 1254</code></pre>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="unsupervised-learning.html#cb215-1" aria-hidden="true" tabindex="-1"></a>kres<span class="sc">$</span>centers</span></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="unsupervised-learning.html#cb228-1" aria-hidden="true" tabindex="-1"></a>kres<span class="sc">$</span>centers</span></code></pre></div>
 <pre><code>##        edu blood.pressure Heart.rate Respiratory.rate Temperature       PH
 ## 1 11.85833       54.26924  136.37451         29.76119    37.85078 7.385249
 ## 2 11.54214      128.33886  126.12026         29.36611    37.68129 7.401027
@@ -414,7 +414,7 @@ high intra-class similarity: observation from the same cluster would be similar
 ## 1 68.63384       23.42356
 ## 2 66.68351       20.68128
 ## 3 67.57291       18.58931</code></pre>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="unsupervised-learning.html#cb217-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(datax, <span class="at">by =</span> <span class="fu">list</span>(<span class="at">cluster =</span> kres<span class="sc">$</span>cluster), mean)</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="unsupervised-learning.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(datax, <span class="at">by =</span> <span class="fu">list</span>(<span class="at">cluster =</span> kres<span class="sc">$</span>cluster), mean)</span></code></pre></div>
 <pre><code>##   cluster      edu blood.pressure Heart.rate Respiratory.rate Temperature
 ## 1       1 11.85833       54.26924  136.37451         29.76119    37.85078
 ## 2       2 11.54214      128.33886  126.12026         29.36611    37.68129
@@ -423,7 +423,7 @@ high intra-class similarity: observation from the same cluster would be similar
 ## 1 7.385249 68.63384       23.42356
 ## 2 7.401027 66.68351       20.68128
 ## 3 7.378482 67.57291       18.58931</code></pre>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="unsupervised-learning.html#cb219-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(datax, <span class="at">by =</span> <span class="fu">list</span>(<span class="at">cluster =</span> kres<span class="sc">$</span>cluster), sd)</span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="unsupervised-learning.html#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(datax, <span class="at">by =</span> <span class="fu">list</span>(<span class="at">cluster =</span> kres<span class="sc">$</span>cluster), sd)</span></code></pre></div>
 <pre><code>##   cluster      edu blood.pressure Heart.rate Respiratory.rate Temperature
 ## 1       1 3.162485       11.93763   23.13140         13.67791    1.781692
 ## 2       2 3.091605       18.58070   27.68369         14.08169    1.610746
@@ -436,9 +436,9 @@ high intra-class similarity: observation from the same cluster would be similar
 </div>
 <div id="optimal-number-of-clusters" class="section level2" number="7.3">
 <h2><span class="header-section-number">7.3</span> Optimal number of clusters</h2>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="unsupervised-learning.html#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(factoextra)</span>
-<span id="cb221-2"><a href="unsupervised-learning.html#cb221-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(datax, kmeans, <span class="at">method =</span> <span class="st">&quot;wss&quot;</span>)<span class="sc">+</span></span>
-<span id="cb221-3"><a href="unsupervised-learning.html#cb221-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">3</span>,<span class="at">linetype=</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="unsupervised-learning.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(factoextra)</span>
+<span id="cb234-2"><a href="unsupervised-learning.html#cb234-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(datax, kmeans, <span class="at">method =</span> <span class="st">&quot;wss&quot;</span>)<span class="sc">+</span></span>
+<span id="cb234-3"><a href="unsupervised-learning.html#cb234-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">3</span>,<span class="at">linetype=</span><span class="dv">3</span>)</span></code></pre></div>
 <p><img src="Intro2ML_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
 <p>Here the vertical line is chosen based on elbow method (<a href="https://en.wikipedia.org/wiki/Elbow_method_(clustering)">ref</a>).</p>
 </div>

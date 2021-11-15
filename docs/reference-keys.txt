@@ -75,7 +75,7 @@ ensemble-methods-type-i
 cross-validation-bagging
 bagging-variable-importance
 cross-validation-boosting
-ensemble-methods-type-i-1
+ensemble-methods-type-ii
 super-learner
 steps
 unsupervised-learning

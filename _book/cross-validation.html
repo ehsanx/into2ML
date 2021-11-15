@@ -298,7 +298,7 @@ div.csl-indent {
 <li class="chapter" data-level="6.4.1" data-path="supervised-learning.html"><a href="supervised-learning.html#cross-validation-bagging"><i class="fa fa-check"></i><b>6.4.1</b> Cross-validation bagging</a></li>
 <li class="chapter" data-level="6.4.2" data-path="supervised-learning.html"><a href="supervised-learning.html#cross-validation-boosting"><i class="fa fa-check"></i><b>6.4.2</b> Cross-validation boosting</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="supervised-learning.html"><a href="supervised-learning.html#ensemble-methods-type-i-1"><i class="fa fa-check"></i><b>6.5</b> Ensemble methods (Type I)</a>
+<li class="chapter" data-level="6.5" data-path="supervised-learning.html"><a href="supervised-learning.html#ensemble-methods-type-ii"><i class="fa fa-check"></i><b>6.5</b> Ensemble methods (Type II)</a>
 <ul>
 <li class="chapter" data-level="6.5.1" data-path="supervised-learning.html"><a href="supervised-learning.html#super-learner"><i class="fa fa-check"></i><b>6.5.1</b> Super Learner</a></li>
 <li class="chapter" data-level="6.5.2" data-path="supervised-learning.html"><a href="supervised-learning.html#steps"><i class="fa fa-check"></i><b>6.5.2</b> Steps</a></li>
@@ -341,43 +341,43 @@ div.csl-indent {
 <h1><span class="header-section-number">Chapter 4</span> Cross-validation</h1>
 <div id="read-previously-saved-data-2" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Read previously saved data</h2>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="cross-validation.html#cb75-1" aria-hidden="true" tabindex="-1"></a>ObsData <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/rhcAnalytic.RDS&quot;</span>)</span>
-<span id="cb75-2"><a href="cross-validation.html#cb75-2" aria-hidden="true" tabindex="-1"></a>out.formula1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/form1.RDS&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="cross-validation.html#cb78-1" aria-hidden="true" tabindex="-1"></a>ObsData <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/rhcAnalytic.RDS&quot;</span>)</span>
+<span id="cb78-2"><a href="cross-validation.html#cb78-2" aria-hidden="true" tabindex="-1"></a>out.formula1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/form1.RDS&quot;</span>)</span></code></pre></div>
 </div>
 <div id="k-fold-cross-vaildation" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> k-fold cross-vaildation</h2>
 <p><a href="https://en.wikipedia.org/wiki/Cross-validation_(statistics)">ref</a></p>
 <p><img src="images/kf.png" width="90%" /></p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="cross-validation.html#cb76-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">=</span> <span class="dv">5</span></span>
-<span id="cb76-2"><a href="cross-validation.html#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ObsData)</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="cross-validation.html#cb79-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">=</span> <span class="dv">5</span></span>
+<span id="cb79-2"><a href="cross-validation.html#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ObsData)</span></code></pre></div>
 <pre><code>## [1] 5735   52</code></pre>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="cross-validation.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">567</span>)</span>
-<span id="cb78-2"><a href="cross-validation.html#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create folds (based on outcome)</span></span>
-<span id="cb78-3"><a href="cross-validation.html#cb78-3" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">createFolds</span>(ObsData<span class="sc">$</span>Length.of.Stay, <span class="at">k =</span> k, </span>
-<span id="cb78-4"><a href="cross-validation.html#cb78-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">list =</span> <span class="cn">TRUE</span>, <span class="at">returnTrain =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb78-5"><a href="cross-validation.html#cb78-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mode</span>(folds)</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="cross-validation.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">567</span>)</span>
+<span id="cb81-2"><a href="cross-validation.html#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create folds (based on outcome)</span></span>
+<span id="cb81-3"><a href="cross-validation.html#cb81-3" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">createFolds</span>(ObsData<span class="sc">$</span>Length.of.Stay, <span class="at">k =</span> k, </span>
+<span id="cb81-4"><a href="cross-validation.html#cb81-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">list =</span> <span class="cn">TRUE</span>, <span class="at">returnTrain =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb81-5"><a href="cross-validation.html#cb81-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mode</span>(folds)</span></code></pre></div>
 <pre><code>## [1] &quot;list&quot;</code></pre>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="cross-validation.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ObsData)<span class="sc">*</span><span class="dv">4</span><span class="sc">/</span><span class="dv">5</span> <span class="co"># approximate training data size</span></span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="cross-validation.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ObsData)<span class="sc">*</span><span class="dv">4</span><span class="sc">/</span><span class="dv">5</span> <span class="co"># approximate training data size</span></span></code></pre></div>
 <pre><code>## [1] 4588.0   41.6</code></pre>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="cross-validation.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ObsData)<span class="sc">/</span><span class="dv">5</span>  <span class="co"># approximate test data size</span></span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="cross-validation.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ObsData)<span class="sc">/</span><span class="dv">5</span>  <span class="co"># approximate test data size</span></span></code></pre></div>
 <pre><code>## [1] 1147.0   10.4</code></pre>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="cross-validation.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(folds[[<span class="dv">1</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="cross-validation.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(folds[[<span class="dv">1</span>]])</span></code></pre></div>
 <pre><code>## [1] 4588</code></pre>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="cross-validation.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(folds[[<span class="dv">5</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="cross-validation.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(folds[[<span class="dv">5</span>]])</span></code></pre></div>
 <pre><code>## [1] 4587</code></pre>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="cross-validation.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(folds[[<span class="dv">1</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="cross-validation.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(folds[[<span class="dv">1</span>]])</span></code></pre></div>
 <pre><code>##  int [1:4588] 1 2 4 6 7 8 9 10 11 13 ...</code></pre>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="cross-validation.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(folds[[<span class="dv">5</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="cross-validation.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(folds[[<span class="dv">5</span>]])</span></code></pre></div>
 <pre><code>##  int [1:4587] 1 3 5 6 7 8 10 11 12 13 ...</code></pre>
 <div id="calculation-for-fold-1" class="section level3" number="4.2.1">
 <h3><span class="header-section-number">4.2.1</span> Calculation for Fold 1</h3>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="cross-validation.html#cb92-1" aria-hidden="true" tabindex="-1"></a>fold.index <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb92-2"><a href="cross-validation.html#cb92-2" aria-hidden="true" tabindex="-1"></a>fold1.train.ids <span class="ot">&lt;-</span> folds[[fold.index]]</span>
-<span id="cb92-3"><a href="cross-validation.html#cb92-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(fold1.train.ids)</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="cross-validation.html#cb95-1" aria-hidden="true" tabindex="-1"></a>fold.index <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb95-2"><a href="cross-validation.html#cb95-2" aria-hidden="true" tabindex="-1"></a>fold1.train.ids <span class="ot">&lt;-</span> folds[[fold.index]]</span>
+<span id="cb95-3"><a href="cross-validation.html#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(fold1.train.ids)</span></code></pre></div>
 <pre><code>## [1] 1 2 4 6 7 8</code></pre>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="cross-validation.html#cb94-1" aria-hidden="true" tabindex="-1"></a>fold1.train <span class="ot">&lt;-</span> ObsData[fold1.train.ids,]</span>
-<span id="cb94-2"><a href="cross-validation.html#cb94-2" aria-hidden="true" tabindex="-1"></a>fold1.test <span class="ot">&lt;-</span> ObsData[<span class="sc">-</span>fold1.train.ids,]</span>
-<span id="cb94-3"><a href="cross-validation.html#cb94-3" aria-hidden="true" tabindex="-1"></a>out.formula1</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="cross-validation.html#cb97-1" aria-hidden="true" tabindex="-1"></a>fold1.train <span class="ot">&lt;-</span> ObsData[fold1.train.ids,]</span>
+<span id="cb97-2"><a href="cross-validation.html#cb97-2" aria-hidden="true" tabindex="-1"></a>fold1.test <span class="ot">&lt;-</span> ObsData[<span class="sc">-</span>fold1.train.ids,]</span>
+<span id="cb97-3"><a href="cross-validation.html#cb97-3" aria-hidden="true" tabindex="-1"></a>out.formula1</span></code></pre></div>
 <pre><code>## Length.of.Stay ~ Disease.category + Cancer + Cardiovascular + 
 ##     Congestive.HF + Dementia + Psychiatric + Pulmonary + Renal + 
 ##     Hepatic + GI.Bleed + Tumor + Immunosupperssion + Transfer.hx + 
@@ -389,29 +389,29 @@ div.csl-indent {
 ##     Gastrointestinal.Diag + Renal.Diag + Metabolic.Diag + Hematologic.Diag + 
 ##     Sepsis.Diag + Trauma.Diag + Orthopedic.Diag + race + income + 
 ##     RHC.use</code></pre>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="cross-validation.html#cb96-1" aria-hidden="true" tabindex="-1"></a>model.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(out.formula1, <span class="at">data =</span> fold1.train)</span>
-<span id="cb96-2"><a href="cross-validation.html#cb96-2" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model.fit, </span>
-<span id="cb96-3"><a href="cross-validation.html#cb96-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">newdata =</span> fold1.test)</span>
-<span id="cb96-4"><a href="cross-validation.html#cb96-4" aria-hidden="true" tabindex="-1"></a><span class="fu">perform</span>(<span class="at">new.data=</span>fold1.test,</span>
-<span id="cb96-5"><a href="cross-validation.html#cb96-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">y.name =</span> <span class="st">&quot;Length.of.Stay&quot;</span>,</span>
-<span id="cb96-6"><a href="cross-validation.html#cb96-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">model.fit=</span>model.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="cross-validation.html#cb99-1" aria-hidden="true" tabindex="-1"></a>model.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(out.formula1, <span class="at">data =</span> fold1.train)</span>
+<span id="cb99-2"><a href="cross-validation.html#cb99-2" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model.fit, </span>
+<span id="cb99-3"><a href="cross-validation.html#cb99-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">newdata =</span> fold1.test)</span>
+<span id="cb99-4"><a href="cross-validation.html#cb99-4" aria-hidden="true" tabindex="-1"></a><span class="fu">perform</span>(<span class="at">new.data=</span>fold1.test,</span>
+<span id="cb99-5"><a href="cross-validation.html#cb99-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">y.name =</span> <span class="st">&quot;Length.of.Stay&quot;</span>,</span>
+<span id="cb99-6"><a href="cross-validation.html#cb99-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">model.fit=</span>model.fit)</span></code></pre></div>
 <pre><code>##         n  p    R2  adjR2  RMSE
 ## [1,] 1147 64 0.051 -0.004 24.86</code></pre>
 </div>
 <div id="calculation-for-fold-2" class="section level3" number="4.2.2">
 <h3><span class="header-section-number">4.2.2</span> Calculation for Fold 2</h3>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="cross-validation.html#cb98-1" aria-hidden="true" tabindex="-1"></a>fold.index <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb98-2"><a href="cross-validation.html#cb98-2" aria-hidden="true" tabindex="-1"></a>fold1.train.ids <span class="ot">&lt;-</span> folds[[fold.index]]</span>
-<span id="cb98-3"><a href="cross-validation.html#cb98-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(fold1.train.ids)</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="cross-validation.html#cb101-1" aria-hidden="true" tabindex="-1"></a>fold.index <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb101-2"><a href="cross-validation.html#cb101-2" aria-hidden="true" tabindex="-1"></a>fold1.train.ids <span class="ot">&lt;-</span> folds[[fold.index]]</span>
+<span id="cb101-3"><a href="cross-validation.html#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(fold1.train.ids)</span></code></pre></div>
 <pre><code>## [1] 2 3 4 5 6 7</code></pre>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="cross-validation.html#cb100-1" aria-hidden="true" tabindex="-1"></a>fold1.train <span class="ot">&lt;-</span> ObsData[fold1.train.ids,]</span>
-<span id="cb100-2"><a href="cross-validation.html#cb100-2" aria-hidden="true" tabindex="-1"></a>fold1.test <span class="ot">&lt;-</span> ObsData[<span class="sc">-</span>fold1.train.ids,]</span>
-<span id="cb100-3"><a href="cross-validation.html#cb100-3" aria-hidden="true" tabindex="-1"></a>model.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(out.formula1, <span class="at">data =</span> fold1.train)</span>
-<span id="cb100-4"><a href="cross-validation.html#cb100-4" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model.fit, </span>
-<span id="cb100-5"><a href="cross-validation.html#cb100-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">newdata =</span> fold1.test)</span>
-<span id="cb100-6"><a href="cross-validation.html#cb100-6" aria-hidden="true" tabindex="-1"></a><span class="fu">perform</span>(<span class="at">new.data=</span>fold1.test,</span>
-<span id="cb100-7"><a href="cross-validation.html#cb100-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">y.name =</span> <span class="st">&quot;Length.of.Stay&quot;</span>,</span>
-<span id="cb100-8"><a href="cross-validation.html#cb100-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">model.fit=</span>model.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="cross-validation.html#cb103-1" aria-hidden="true" tabindex="-1"></a>fold1.train <span class="ot">&lt;-</span> ObsData[fold1.train.ids,]</span>
+<span id="cb103-2"><a href="cross-validation.html#cb103-2" aria-hidden="true" tabindex="-1"></a>fold1.test <span class="ot">&lt;-</span> ObsData[<span class="sc">-</span>fold1.train.ids,]</span>
+<span id="cb103-3"><a href="cross-validation.html#cb103-3" aria-hidden="true" tabindex="-1"></a>model.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(out.formula1, <span class="at">data =</span> fold1.train)</span>
+<span id="cb103-4"><a href="cross-validation.html#cb103-4" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model.fit, </span>
+<span id="cb103-5"><a href="cross-validation.html#cb103-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">newdata =</span> fold1.test)</span>
+<span id="cb103-6"><a href="cross-validation.html#cb103-6" aria-hidden="true" tabindex="-1"></a><span class="fu">perform</span>(<span class="at">new.data=</span>fold1.test,</span>
+<span id="cb103-7"><a href="cross-validation.html#cb103-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">y.name =</span> <span class="st">&quot;Length.of.Stay&quot;</span>,</span>
+<span id="cb103-8"><a href="cross-validation.html#cb103-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">model.fit=</span>model.fit)</span></code></pre></div>
 <pre><code>##         n  p    R2 adjR2   RMSE
 ## [1,] 1147 64 0.066 0.011 24.714</code></pre>
 </div>
@@ -419,15 +419,15 @@ div.csl-indent {
 <div id="using-caret-package-to-automate" class="section level2" number="4.3">
 <h2><span class="header-section-number">4.3</span> Using caret package to automate</h2>
 <p><a href="https://topepo.github.io/caret/model-training-and-tuning.html">ref</a></p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="cross-validation.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using Caret package</span></span>
-<span id="cb102-2"><a href="cross-validation.html#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">504</span>)</span>
-<span id="cb102-3"><a href="cross-validation.html#cb102-3" aria-hidden="true" tabindex="-1"></a><span class="co"># make a 5-fold CV</span></span>
-<span id="cb102-4"><a href="cross-validation.html#cb102-4" aria-hidden="true" tabindex="-1"></a>ctrl<span class="ot">&lt;-</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>,<span class="at">number =</span> <span class="dv">5</span>)</span>
-<span id="cb102-5"><a href="cross-validation.html#cb102-5" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model with formula = out.formula1</span></span>
-<span id="cb102-6"><a href="cross-validation.html#cb102-6" aria-hidden="true" tabindex="-1"></a><span class="co"># use training method lm</span></span>
-<span id="cb102-7"><a href="cross-validation.html#cb102-7" aria-hidden="true" tabindex="-1"></a>fit.cv<span class="ot">&lt;-</span><span class="fu">train</span>(out.formula1, <span class="at">trControl =</span> ctrl,</span>
-<span id="cb102-8"><a href="cross-validation.html#cb102-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> ObsData, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>)</span>
-<span id="cb102-9"><a href="cross-validation.html#cb102-9" aria-hidden="true" tabindex="-1"></a>fit.cv</span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="cross-validation.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using Caret package</span></span>
+<span id="cb105-2"><a href="cross-validation.html#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">504</span>)</span>
+<span id="cb105-3"><a href="cross-validation.html#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="co"># make a 5-fold CV</span></span>
+<span id="cb105-4"><a href="cross-validation.html#cb105-4" aria-hidden="true" tabindex="-1"></a>ctrl<span class="ot">&lt;-</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>,<span class="at">number =</span> <span class="dv">5</span>)</span>
+<span id="cb105-5"><a href="cross-validation.html#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model with formula = out.formula1</span></span>
+<span id="cb105-6"><a href="cross-validation.html#cb105-6" aria-hidden="true" tabindex="-1"></a><span class="co"># use training method lm</span></span>
+<span id="cb105-7"><a href="cross-validation.html#cb105-7" aria-hidden="true" tabindex="-1"></a>fit.cv<span class="ot">&lt;-</span><span class="fu">train</span>(out.formula1, <span class="at">trControl =</span> ctrl,</span>
+<span id="cb105-8"><a href="cross-validation.html#cb105-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> ObsData, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>)</span>
+<span id="cb105-9"><a href="cross-validation.html#cb105-9" aria-hidden="true" tabindex="-1"></a>fit.cv</span></code></pre></div>
 <pre><code>## Linear Regression 
 ## 
 ## 5735 samples
@@ -442,22 +442,22 @@ div.csl-indent {
 ##   25.05478  0.05980578  15.19515
 ## 
 ## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="cross-validation.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract results from each test data </span></span>
-<span id="cb104-2"><a href="cross-validation.html#cb104-2" aria-hidden="true" tabindex="-1"></a>summary.res <span class="ot">&lt;-</span> fit.cv<span class="sc">$</span>resample</span>
-<span id="cb104-3"><a href="cross-validation.html#cb104-3" aria-hidden="true" tabindex="-1"></a>summary.res</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="cross-validation.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract results from each test data </span></span>
+<span id="cb107-2"><a href="cross-validation.html#cb107-2" aria-hidden="true" tabindex="-1"></a>summary.res <span class="ot">&lt;-</span> fit.cv<span class="sc">$</span>resample</span>
+<span id="cb107-3"><a href="cross-validation.html#cb107-3" aria-hidden="true" tabindex="-1"></a>summary.res</span></code></pre></div>
 <pre><code>##       RMSE   Rsquared      MAE Resample
 ## 1 22.45199 0.06463766 14.52080    Fold1
 ## 2 27.05869 0.06799916 15.29290    Fold2
 ## 3 27.65794 0.06034484 15.51895    Fold3
 ## 4 24.55357 0.03892546 15.47073    Fold4
 ## 5 23.55174 0.06712180 15.17238    Fold5</code></pre>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="cross-validation.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(fit.cv<span class="sc">$</span>resample<span class="sc">$</span>Rsquared)</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="cross-validation.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(fit.cv<span class="sc">$</span>resample<span class="sc">$</span>Rsquared)</span></code></pre></div>
 <pre><code>## [1] 0.05980578</code></pre>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="cross-validation.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(fit.cv<span class="sc">$</span>resample<span class="sc">$</span>Rsquared)</span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="cross-validation.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(fit.cv<span class="sc">$</span>resample<span class="sc">$</span>Rsquared)</span></code></pre></div>
 <pre><code>## [1] 0.01204451</code></pre>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="cross-validation.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(fit.cv<span class="sc">$</span>resample<span class="sc">$</span>RMSE)</span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="cross-validation.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(fit.cv<span class="sc">$</span>resample<span class="sc">$</span>RMSE)</span></code></pre></div>
 <pre><code>## [1] 25.05478</code></pre>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="cross-validation.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(fit.cv<span class="sc">$</span>resample<span class="sc">$</span>RMSE)</span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="cross-validation.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(fit.cv<span class="sc">$</span>resample<span class="sc">$</span>RMSE)</span></code></pre></div>
 <pre><code>## [1] 2.240366</code></pre>
 
 </div>
