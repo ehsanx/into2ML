@@ -47,6 +47,12 @@ This document is a very basic introduction to machine learning.
 - Over-Fitting, Measuring Performance and Model Tuning
   - Overall steps
 
+## Philosophy  {-}
+
+**Code-first** philosophy is adopted for this tutorial; demonstrating the **analyses through one real data analysis** problem used in the literature. 
+
+- This tutorial is not theory-focused, nor utilizes simulated data to explain the ideas. Given the focus on implementation, theory is beyond the scope of this tutorial. 
+
 ## Pre-requisites {-}
 
 - The prerequisites are knowledge of multiple regression analysis and basic probability. Software demonstrations and codes will be provided in R, although proficiency in R is not required for understanding the concepts.
