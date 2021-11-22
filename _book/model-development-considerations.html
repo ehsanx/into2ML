@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Cross-validation | Understanding the Basics and Usage of Machine Learning in Medical Literature</title>
+  <title>Chapter 8 Model Development Considerations | Understanding the Basics and Usage of Machine Learning in Medical Literature</title>
   <meta name="description" content="Intro to R." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Cross-validation | Understanding the Basics and Usage of Machine Learning in Medical Literature" />
+  <meta property="og:title" content="Chapter 8 Model Development Considerations | Understanding the Basics and Usage of Machine Learning in Medical Literature" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ehsanx/intro2ML" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Cross-validation | Understanding the Basics and Usage of Machine Learning in Medical Literature" />
+  <meta name="twitter:title" content="Chapter 8 Model Development Considerations | Understanding the Basics and Usage of Machine Learning in Medical Literature" />
   
   <meta name="twitter:description" content="Intro to R." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="data-spliting.html"/>
-<link rel="next" href="prediction-from-binary-outcome.html"/>
+<link rel="prev" href="unsupervised-learning.html"/>
+<link rel="next" href="model-validation-considerations.html"/>
 <script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -365,129 +365,129 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="cross-validation" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Cross-validation</h1>
-<div id="read-previously-saved-data-2" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Read previously saved data</h2>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="cross-validation.html#cb78-1" aria-hidden="true" tabindex="-1"></a>ObsData <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/rhcAnalytic.RDS&quot;</span>)</span>
-<span id="cb78-2"><a href="cross-validation.html#cb78-2" aria-hidden="true" tabindex="-1"></a>out.formula1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/form1.RDS&quot;</span>)</span></code></pre></div>
+<div id="model-development-considerations" class="section level1" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Model Development Considerations</h1>
+<div id="why-machine-learning" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Why Machine learning?</h2>
+<p>Let us assume that our aim is to build a clinical diagnostic tool or risk prediction model.</p>
+<ul>
+<li>As we have seen earlier, <strong>parametric</strong> (linear or logistic) regression models are capable of producing prediction models.
+<ul>
+<li>relies on expert knowledge to select covariates</li>
+<li>Parsimony vs better prediction</li>
+</ul></li>
+<li>There are different <strong>Machine Learning</strong> (ML) methods that can deal with
+<ul>
+<li><u>multicollinearity</u> (e.g., LASSO)</li>
+<li><u>model-specification</u>: interaction term, polynomial or other complex functional form (e.g., tree-based)</li>
+<li>potentially better predictive ability by utilizing <u>many learners</u> (e.g., super learner)
+<ul>
+<li>parametric methods are efficient, but analyst exactly needs to know the model-specification to get the best results</li>
+<li>nonparameteric methods are not as efficient, but less restrictive</li>
+<li>some data adaptive methods are good at transforming the data and find optimal model-specification</li>
+<li>super learner can combine the predictive ability of different type of learners (parametric vs. not)</li>
+</ul></li>
+<li>ability to handle <u>variety of data</u> (e.g., image)</li>
+<li>ability to handle <u>larger amount of data</u> (e.g., large health admin data; high dimensional data) in identifying variables that are risk factors for the outcome that may not be easily identified by the subject area experts (e.g., may offer new knowledge)</li>
+</ul></li>
+</ul>
+<div class="rmdcomment">
+<p>
+Analyst should be absolutely clear why they are using a ML method. Contrary to popular belief, ML method may not always provide better results!
+</p>
 </div>
-<div id="k-fold-cross-vaildation" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> k-fold cross-vaildation</h2>
-<p><a href="https://en.wikipedia.org/wiki/Cross-validation_(statistics)">ref</a></p>
-<p><img src="images/kf.png" width="90%" /></p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="cross-validation.html#cb79-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">=</span> <span class="dv">5</span></span>
-<span id="cb79-2"><a href="cross-validation.html#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ObsData)</span></code></pre></div>
-<pre><code>## [1] 5735   52</code></pre>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="cross-validation.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">567</span>)</span>
-<span id="cb81-2"><a href="cross-validation.html#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create folds (based on outcome)</span></span>
-<span id="cb81-3"><a href="cross-validation.html#cb81-3" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">createFolds</span>(ObsData<span class="sc">$</span>Length.of.Stay, <span class="at">k =</span> k, </span>
-<span id="cb81-4"><a href="cross-validation.html#cb81-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">list =</span> <span class="cn">TRUE</span>, <span class="at">returnTrain =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb81-5"><a href="cross-validation.html#cb81-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mode</span>(folds)</span></code></pre></div>
-<pre><code>## [1] &quot;list&quot;</code></pre>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="cross-validation.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ObsData)<span class="sc">*</span><span class="dv">4</span><span class="sc">/</span><span class="dv">5</span> <span class="co"># approximate training data size</span></span></code></pre></div>
-<pre><code>## [1] 4588.0   41.6</code></pre>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="cross-validation.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ObsData)<span class="sc">/</span><span class="dv">5</span>  <span class="co"># approximate test data size</span></span></code></pre></div>
-<pre><code>## [1] 1147.0   10.4</code></pre>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="cross-validation.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(folds[[<span class="dv">1</span>]])</span></code></pre></div>
-<pre><code>## [1] 4588</code></pre>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="cross-validation.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(folds[[<span class="dv">5</span>]])</span></code></pre></div>
-<pre><code>## [1] 4587</code></pre>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="cross-validation.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(folds[[<span class="dv">1</span>]])</span></code></pre></div>
-<pre><code>##  int [1:4588] 1 2 4 6 7 8 9 10 11 13 ...</code></pre>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="cross-validation.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(folds[[<span class="dv">5</span>]])</span></code></pre></div>
-<pre><code>##  int [1:4587] 1 3 5 6 7 8 10 11 12 13 ...</code></pre>
-<div id="calculation-for-fold-1" class="section level3" number="4.2.1">
-<h3><span class="header-section-number">4.2.1</span> Calculation for Fold 1</h3>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="cross-validation.html#cb95-1" aria-hidden="true" tabindex="-1"></a>fold.index <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb95-2"><a href="cross-validation.html#cb95-2" aria-hidden="true" tabindex="-1"></a>fold1.train.ids <span class="ot">&lt;-</span> folds[[fold.index]]</span>
-<span id="cb95-3"><a href="cross-validation.html#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(fold1.train.ids)</span></code></pre></div>
-<pre><code>## [1] 1 2 4 6 7 8</code></pre>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="cross-validation.html#cb97-1" aria-hidden="true" tabindex="-1"></a>fold1.train <span class="ot">&lt;-</span> ObsData[fold1.train.ids,]</span>
-<span id="cb97-2"><a href="cross-validation.html#cb97-2" aria-hidden="true" tabindex="-1"></a>fold1.test <span class="ot">&lt;-</span> ObsData[<span class="sc">-</span>fold1.train.ids,]</span>
-<span id="cb97-3"><a href="cross-validation.html#cb97-3" aria-hidden="true" tabindex="-1"></a>out.formula1</span></code></pre></div>
-<pre><code>## Length.of.Stay ~ Disease.category + Cancer + Cardiovascular + 
-##     Congestive.HF + Dementia + Psychiatric + Pulmonary + Renal + 
-##     Hepatic + GI.Bleed + Tumor + Immunosupperssion + Transfer.hx + 
-##     MI + age + sex + edu + DASIndex + APACHE.score + Glasgow.Coma.Score + 
-##     blood.pressure + WBC + Heart.rate + Respiratory.rate + Temperature + 
-##     PaO2vs.FIO2 + Albumin + Hematocrit + Bilirubin + Creatinine + 
-##     Sodium + Potassium + PaCo2 + PH + Weight + DNR.status + Medical.insurance + 
-##     Respiratory.Diag + Cardiovascular.Diag + Neurological.Diag + 
-##     Gastrointestinal.Diag + Renal.Diag + Metabolic.Diag + Hematologic.Diag + 
-##     Sepsis.Diag + Trauma.Diag + Orthopedic.Diag + race + income + 
-##     RHC.use</code></pre>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="cross-validation.html#cb99-1" aria-hidden="true" tabindex="-1"></a>model.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(out.formula1, <span class="at">data =</span> fold1.train)</span>
-<span id="cb99-2"><a href="cross-validation.html#cb99-2" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model.fit, </span>
-<span id="cb99-3"><a href="cross-validation.html#cb99-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">newdata =</span> fold1.test)</span>
-<span id="cb99-4"><a href="cross-validation.html#cb99-4" aria-hidden="true" tabindex="-1"></a><span class="fu">perform</span>(<span class="at">new.data=</span>fold1.test,</span>
-<span id="cb99-5"><a href="cross-validation.html#cb99-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">y.name =</span> <span class="st">&quot;Length.of.Stay&quot;</span>,</span>
-<span id="cb99-6"><a href="cross-validation.html#cb99-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">model.fit=</span>model.fit)</span></code></pre></div>
-<pre><code>##         n  p    R2  adjR2  RMSE
-## [1,] 1147 64 0.051 -0.004 24.86</code></pre>
-</div>
-<div id="calculation-for-fold-2" class="section level3" number="4.2.2">
-<h3><span class="header-section-number">4.2.2</span> Calculation for Fold 2</h3>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="cross-validation.html#cb101-1" aria-hidden="true" tabindex="-1"></a>fold.index <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb101-2"><a href="cross-validation.html#cb101-2" aria-hidden="true" tabindex="-1"></a>fold1.train.ids <span class="ot">&lt;-</span> folds[[fold.index]]</span>
-<span id="cb101-3"><a href="cross-validation.html#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(fold1.train.ids)</span></code></pre></div>
-<pre><code>## [1] 2 3 4 5 6 7</code></pre>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="cross-validation.html#cb103-1" aria-hidden="true" tabindex="-1"></a>fold1.train <span class="ot">&lt;-</span> ObsData[fold1.train.ids,]</span>
-<span id="cb103-2"><a href="cross-validation.html#cb103-2" aria-hidden="true" tabindex="-1"></a>fold1.test <span class="ot">&lt;-</span> ObsData[<span class="sc">-</span>fold1.train.ids,]</span>
-<span id="cb103-3"><a href="cross-validation.html#cb103-3" aria-hidden="true" tabindex="-1"></a>model.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(out.formula1, <span class="at">data =</span> fold1.train)</span>
-<span id="cb103-4"><a href="cross-validation.html#cb103-4" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model.fit, </span>
-<span id="cb103-5"><a href="cross-validation.html#cb103-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">newdata =</span> fold1.test)</span>
-<span id="cb103-6"><a href="cross-validation.html#cb103-6" aria-hidden="true" tabindex="-1"></a><span class="fu">perform</span>(<span class="at">new.data=</span>fold1.test,</span>
-<span id="cb103-7"><a href="cross-validation.html#cb103-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">y.name =</span> <span class="st">&quot;Length.of.Stay&quot;</span>,</span>
-<span id="cb103-8"><a href="cross-validation.html#cb103-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">model.fit=</span>model.fit)</span></code></pre></div>
-<pre><code>##         n  p    R2 adjR2   RMSE
-## [1,] 1147 64 0.066 0.011 24.714</code></pre>
-</div>
-</div>
-<div id="using-caret-package-to-automate" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Using caret package to automate</h2>
-<p><a href="https://topepo.github.io/caret/model-training-and-tuning.html">ref</a></p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="cross-validation.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using Caret package</span></span>
-<span id="cb105-2"><a href="cross-validation.html#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">504</span>)</span>
-<span id="cb105-3"><a href="cross-validation.html#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="co"># make a 5-fold CV</span></span>
-<span id="cb105-4"><a href="cross-validation.html#cb105-4" aria-hidden="true" tabindex="-1"></a>ctrl<span class="ot">&lt;-</span><span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>,<span class="at">number =</span> <span class="dv">5</span>)</span>
-<span id="cb105-5"><a href="cross-validation.html#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model with formula = out.formula1</span></span>
-<span id="cb105-6"><a href="cross-validation.html#cb105-6" aria-hidden="true" tabindex="-1"></a><span class="co"># use training method lm</span></span>
-<span id="cb105-7"><a href="cross-validation.html#cb105-7" aria-hidden="true" tabindex="-1"></a>fit.cv<span class="ot">&lt;-</span><span class="fu">train</span>(out.formula1, <span class="at">trControl =</span> ctrl,</span>
-<span id="cb105-8"><a href="cross-validation.html#cb105-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> ObsData, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>)</span>
-<span id="cb105-9"><a href="cross-validation.html#cb105-9" aria-hidden="true" tabindex="-1"></a>fit.cv</span></code></pre></div>
-<pre><code>## Linear Regression 
-## 
-## 5735 samples
-##   50 predictor
-## 
-## No pre-processing
-## Resampling: Cross-Validated (5 fold) 
-## Summary of sample sizes: 4588, 4588, 4587, 4589, 4588 
-## Resampling results:
-## 
-##   RMSE      Rsquared    MAE     
-##   25.05478  0.05980578  15.19515
-## 
-## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="cross-validation.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract results from each test data </span></span>
-<span id="cb107-2"><a href="cross-validation.html#cb107-2" aria-hidden="true" tabindex="-1"></a>summary.res <span class="ot">&lt;-</span> fit.cv<span class="sc">$</span>resample</span>
-<span id="cb107-3"><a href="cross-validation.html#cb107-3" aria-hidden="true" tabindex="-1"></a>summary.res</span></code></pre></div>
-<pre><code>##       RMSE   Rsquared      MAE Resample
-## 1 22.45199 0.06463766 14.52080    Fold1
-## 2 27.05869 0.06799916 15.29290    Fold2
-## 3 27.65794 0.06034484 15.51895    Fold3
-## 4 24.55357 0.03892546 15.47073    Fold4
-## 5 23.55174 0.06712180 15.17238    Fold5</code></pre>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="cross-validation.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(fit.cv<span class="sc">$</span>resample<span class="sc">$</span>Rsquared)</span></code></pre></div>
-<pre><code>## [1] 0.05980578</code></pre>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="cross-validation.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(fit.cv<span class="sc">$</span>resample<span class="sc">$</span>Rsquared)</span></code></pre></div>
-<pre><code>## [1] 0.01204451</code></pre>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="cross-validation.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(fit.cv<span class="sc">$</span>resample<span class="sc">$</span>RMSE)</span></code></pre></div>
-<pre><code>## [1] 25.05478</code></pre>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="cross-validation.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(fit.cv<span class="sc">$</span>resample<span class="sc">$</span>RMSE)</span></code></pre></div>
-<pre><code>## [1] 2.240366</code></pre>
+<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">REMINDER: A systematic review shows no performance benefit of <a href="https://twitter.com/hashtag/machinelearning?src=hash&amp;ref_src=twsrc%5Etfw">#machinelearning</a> over logistic regression for clinical prediction models (<a href="https://t.co/NA54aJoKHc">https://t.co/NA54aJoKHc</a>)<br><br>-&gt; &quot;Improvements in methodology and reporting are needed&quot;<a href="https://twitter.com/hashtag/keepitreal?src=hash&amp;ref_src=twsrc%5Etfw">#keepitreal</a> <a href="https://twitter.com/hashtag/dontbelievethehype?src=hash&amp;ref_src=twsrc%5Etfw">#dontbelievethehype</a> <a href="https://twitter.com/hashtag/mlwtitter?src=hash&amp;ref_src=twsrc%5Etfw">#mlwtitter</a> <a href="https://twitter.com/hashtag/statstwitter?src=hash&amp;ref_src=twsrc%5Etfw">#statstwitter</a> <a href="https://t.co/NYZheoU5ZS">pic.twitter.com/NYZheoU5ZS</a></p>&mdash; Gary Collins 🇪🇺 (@GSCollins) <a href="https://twitter.com/GSCollins/status/1455175041440694286?ref_src=twsrc%5Etfw">November 1, 2021</a></blockquote>
 
+</div>
+<div id="data-pre-processing" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Data pre-processing</h2>
+<p>Centering will make the mean of variables 0. Scaling the variables will produce a common standard deviation (1). Often these help in bringing numerical stability. Continuous variables may require some transformation to remove skewness or outlier issues of the data.</p>
+<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">Dichotomising continuous measurements (also known as throwing away precious information - that someone has consented for you to use) is still disappointingly common today. <br><br>Many papers on this, but a good starting point is   <br>-&gt; <a href="https://t.co/dEU7etTkaR">https://t.co/dEU7etTkaR</a><a href="https://twitter.com/hashtag/statstwitter?src=hash&amp;ref_src=twsrc%5Etfw">#statstwitter</a> <a href="https://twitter.com/hashtag/epitwitter?src=hash&amp;ref_src=twsrc%5Etfw">#epitwitter</a> <a href="https://t.co/UaC84LNFFd">pic.twitter.com/UaC84LNFFd</a></p>&mdash; Gary Collins 🇪🇺 (@GSCollins) <a href="https://twitter.com/GSCollins/status/1458405599880822787?ref_src=twsrc%5Etfw">November 10, 2021</a></blockquote>
+
+</div>
+<div id="missing-data-considerations" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Missing data considerations</h2>
+<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">&quot;Missing data is poorly handled and reported in prediction model studies using <a href="https://twitter.com/hashtag/machinelearning?src=hash&amp;ref_src=twsrc%5Etfw">#machinelearning</a>: a literature review&quot; --&gt; <a href="https://t.co/8qXU5GTy9F">https://t.co/8qXU5GTy9F</a><br><br>Looks like this will feed into and inform <a href="https://twitter.com/TRIPODStatement?ref_src=twsrc%5Etfw">@TRIPODStatement</a>-AI --&gt; <a href="https://t.co/a1oFJRj4k4">https://t.co/a1oFJRj4k4</a><a href="https://twitter.com/hashtag/mltwitter?src=hash&amp;ref_src=twsrc%5Etfw">#mltwitter</a> <a href="https://twitter.com/hashtag/statstwitter?src=hash&amp;ref_src=twsrc%5Etfw">#statstwitter</a> <a href="https://twitter.com/hashtag/ML4HC?src=hash&amp;ref_src=twsrc%5Etfw">#ML4HC</a> <a href="https://t.co/BHJ6DIzrGg">pic.twitter.com/BHJ6DIzrGg</a></p>&mdash; Gary Collins 🇪🇺 (@GSCollins) <a href="https://twitter.com/GSCollins/status/1461266045356883968?ref_src=twsrc%5Etfw">November 18, 2021</a></blockquote>
+
+<p>The <a href="https://www.sciencedirect.com/science/article/pii/S0895435621003759">paper</a> reports and recommends (emphasis added):</p>
+<ul>
+<li>“Although many types of machine learning methods offer built-in capabilities for handling missing values, these strategies are rarely used. Instead, most ML-based prediction model studies resort to <strong>complete case analysis</strong> or <strong>mean imputation</strong>.”</li>
+<li>“The handling and reporting of missing data in prediction model studies should be improved. A general recommendation to avoid bias is to use <strong>multiple imputation</strong>. It is also possible to consider machine learning methods with <strong>built-in capabilities for handling missing data</strong> (e.g., decision trees with surrogate splits, use of pattern submodels, or incorporation of autoencoders).”</li>
+</ul>
+<div class="rmdcomment">
+<p>
+This course is not going to discuss much about missing data analyses, but if you are interested, you can see my video lectures (series of 8 are relevant for missing data) from my other course <a href="https://www.youtube.com/watch?v=Wnw5sssW8LI&amp;list=PL2yD6frXhFob_Mvfg21Y01t_yu1aC9NnP&amp;index=32">here</a>. For relevant software, see this <a href="https://www.jstatsoft.org/index.php/jss/article/view/v045i03/550">article</a>.
+</p>
+</div>
+</div>
+<div id="data-hungry-methods" class="section level2" number="8.4">
+<h2><span class="header-section-number">8.4</span> Data hungry methods</h2>
+<ul>
+<li>Regression methods require at least 10 <strong>events per variable</strong> (EPV)</li>
+</ul>
+<div class="rmdcomment">
+<p>
+<a href="https://en.wikipedia.org/wiki/One_in_ten_rule">EPV</a>: " … the one in ten rule is a rule of thumb for how many predictor parameters can be estimated from data when doing regression analysis … while keeping the risk of overfitting low. The rule states that <strong>one predictive variable</strong> can be studied for <strong>every ten events</strong>."
+</p>
+</div>
+<ul>
+<li>Single ML methods may require as 50-200 EPV (depending on which method is chosen). See Chapter 3 of <span class="citation"><a href="#ref-steyerberg2019clinical" role="doc-biblioref">Steyerberg and others</a> (<a href="#ref-steyerberg2019clinical" role="doc-biblioref">2019</a>)</span></li>
+<li>Often simpler models are chosen when sample size is not high.</li>
+<li>Variable selection via LASSO may be helpful to reduce noisy variables from the model.</li>
+</ul>
+</div>
+<div id="model-tuning" class="section level2" number="8.5">
+<h2><span class="header-section-number">8.5</span> Model tuning</h2>
+<div class="rmdcomment">
+<p>
+Hyperparameters are the parameters that are determined by the analysts, and stays the same during the learning process. Often it is the case that analysts do not know which hyperparameter selection will provide better results, and the analyst may need to do a manual search (based on best guesses) or grid search to find out the best set of hyperparameter.
+</p>
+<p>
+For logistic regression, one example of hyperparameter could be <a href="https://stats.stackexchange.com/questions/178492/which-optimization-algorithm-is-used-in-glm-function-in-r">optimization algorithm</a> for fitting the model:
+</p>
+<ul>
+<li>
+Newton–Raphson
+</li>
+<li>
+Fisher Scoring or Iteratively Reweighted Least Squares (IRLS)
+</li>
+<li>
+Hybrid (start with IRLS for initialization purposes, and then Newton–Raphson)
+</li>
+</ul>
+</div>
+<p><img src="images/data.png" width="50%" style="display: block; margin: auto;" /></p>
+<ul>
+<li><p>Part of the reason these methods may require more time to fit is because of existence of many parameters needing to be optimized to obtain better accuracy of the training model. These are usually known as <strong>hyperparameters</strong>, and the search process is known as <strong>hyperparameter tuning</strong>.</p></li>
+<li><p>Usually training and tuning datasets are used to tune the model for finding better hyperparameters.</p></li>
+<li><p>To enhance reproducibility, <u>cross-validation</u> could also be used in the training and tuning process.</p></li>
+</ul>
+<div class="rmdcomment">
+<p>
+Validation set and tuning set should be different. If the validation set was used for tuning, then the trained model can still be subject to overfitting.
+</p>
+</div>
+</div>
+<div id="time-resource-requirements" class="section level2" number="8.6">
+<h2><span class="header-section-number">8.6</span> Time resource requirements</h2>
+<ul>
+<li><p>Some methods are inherently based on repeated fitting of the <strong>same candidate learner</strong> or model in different data (Type - I).</p></li>
+<li><p>Ensemble learning combines predictive ability of <strong>many candidate learners</strong> on the same data. Need to be careful which candidate learner are selected (Type - II; needs variety).</p></li>
+</ul>
+<p>Both of these scenarios may require significantly more time. Also, even some single candidate learners could be time intensive (e.g., deep learning with many layer).</p>
+<div class="rmdcomment">
+<p>
+It is a good idea to report the computing time.
+</p>
+</div>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-steyerberg2019clinical" class="csl-entry">
+Steyerberg, Ewout W, and others. 2019. <em>Clinical Prediction Models</em>. Springer.
 </div>
 </div>
             </section>
@@ -495,8 +495,8 @@ div.csl-indent {
           </div>
         </div>
       </div>
-<a href="data-spliting.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="prediction-from-binary-outcome.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="unsupervised-learning.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-validation-considerations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -528,7 +528,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ehsanx/into2ML/edit/master/04cv.Rmd",
+"link": "https://github.com/ehsanx/into2ML/edit/master/08dev.Rmd",
 "text": "Edit"
 },
 "history": {

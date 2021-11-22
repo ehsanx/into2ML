@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Prediction from binary outcome | Introduction to Machine Learning</title>
+  <title>Chapter 5 Prediction from binary outcome | Understanding the Basics and Usage of Machine Learning in Medical Literature</title>
   <meta name="description" content="Intro to R." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Prediction from binary outcome | Introduction to Machine Learning" />
+  <meta property="og:title" content="Chapter 5 Prediction from binary outcome | Understanding the Basics and Usage of Machine Learning in Medical Literature" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ehsanx/intro2ML" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Prediction from binary outcome | Introduction to Machine Learning" />
+  <meta name="twitter:title" content="Chapter 5 Prediction from binary outcome | Understanding the Basics and Usage of Machine Learning in Medical Literature" />
   
   <meta name="twitter:description" content="Intro to R." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Ehsan Karim" />
 
 
-<meta name="date" content="2021-11-14" />
+<meta name="date" content="2021-11-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,7 @@
 
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/twitter-widget-0.0.1/widgets.js"></script>
 <script type="text/javascript">
 
 // toggle visibility of R source blocks in R Markdown output
@@ -188,9 +189,9 @@ div.csl-indent {
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#goal"><i class="fa fa-check"></i>Goal</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#philosophy"><i class="fa fa-check"></i>Philosophy</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#pre-requisites"><i class="fa fa-check"></i>Pre-requisites</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#key-references"><i class="fa fa-check"></i>Key references</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#version-history"><i class="fa fa-check"></i>Version history</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributor-list"><i class="fa fa-check"></i>Contributor list</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#key-references"><i class="fa fa-check"></i>Key References</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#version-history"><i class="fa fa-check"></i>Version History</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributor-list"><i class="fa fa-check"></i>Contributor List</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i>License</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="rhc-data-description.html"><a href="rhc-data-description.html"><i class="fa fa-check"></i><b>1</b> RHC data description</a>
@@ -317,6 +318,32 @@ div.csl-indent {
 <li class="chapter" data-level="7.3" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#optimal-number-of-clusters"><i class="fa fa-check"></i><b>7.3</b> Optimal number of clusters</a></li>
 <li class="chapter" data-level="7.4" data-path="unsupervised-learning.html"><a href="unsupervised-learning.html#discussion"><i class="fa fa-check"></i><b>7.4</b> Discussion</a></li>
 </ul></li>
+<li class="chapter" data-level="8" data-path="model-development-considerations.html"><a href="model-development-considerations.html"><i class="fa fa-check"></i><b>8</b> Model Development Considerations</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="model-development-considerations.html"><a href="model-development-considerations.html#why-machine-learning"><i class="fa fa-check"></i><b>8.1</b> Why Machine learning?</a></li>
+<li class="chapter" data-level="8.2" data-path="model-development-considerations.html"><a href="model-development-considerations.html#data-pre-processing"><i class="fa fa-check"></i><b>8.2</b> Data pre-processing</a></li>
+<li class="chapter" data-level="8.3" data-path="model-development-considerations.html"><a href="model-development-considerations.html#missing-data-considerations"><i class="fa fa-check"></i><b>8.3</b> Missing data considerations</a></li>
+<li class="chapter" data-level="8.4" data-path="model-development-considerations.html"><a href="model-development-considerations.html#data-hungry-methods"><i class="fa fa-check"></i><b>8.4</b> Data hungry methods</a></li>
+<li class="chapter" data-level="8.5" data-path="model-development-considerations.html"><a href="model-development-considerations.html#model-tuning"><i class="fa fa-check"></i><b>8.5</b> Model tuning</a></li>
+<li class="chapter" data-level="8.6" data-path="model-development-considerations.html"><a href="model-development-considerations.html#time-resource-requirements"><i class="fa fa-check"></i><b>8.6</b> Time resource requirements</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="model-validation-considerations.html"><a href="model-validation-considerations.html"><i class="fa fa-check"></i><b>9</b> Model Validation Considerations</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="model-validation-considerations.html"><a href="model-validation-considerations.html#reliability-of-outcome-labels"><i class="fa fa-check"></i><b>9.1</b> Reliability of outcome labels</a></li>
+<li class="chapter" data-level="9.2" data-path="model-validation-considerations.html"><a href="model-validation-considerations.html#robustness-of-the-results"><i class="fa fa-check"></i><b>9.2</b> Robustness of the results</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="clinical-implication.html"><a href="clinical-implication.html"><i class="fa fa-check"></i><b>10</b> Clinical Implication</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="clinical-implication.html"><a href="clinical-implication.html#ml-in-clinical-settings"><i class="fa fa-check"></i><b>10.1</b> ML in clinical settings</a></li>
+<li class="chapter" data-level="10.2" data-path="clinical-implication.html"><a href="clinical-implication.html#model-updating"><i class="fa fa-check"></i><b>10.2</b> Model updating</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="critical-appraisal.html"><a href="critical-appraisal.html"><i class="fa fa-check"></i><b>11</b> Critical Appraisal</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="critical-appraisal.html"><a href="critical-appraisal.html#existing-guidelines"><i class="fa fa-check"></i><b>11.1</b> Existing guidelines</a></li>
+<li class="chapter" data-level="11.2" data-path="critical-appraisal.html"><a href="critical-appraisal.html#key-considerations"><i class="fa fa-check"></i><b>11.2</b> Key considerations</a></li>
+<li class="chapter" data-level="11.3" data-path="critical-appraisal.html"><a href="critical-appraisal.html#example"><i class="fa fa-check"></i><b>11.3</b> Example</a></li>
+<li class="chapter" data-level="11.4" data-path="critical-appraisal.html"><a href="critical-appraisal.html#exercise"><i class="fa fa-check"></i><b>11.4</b> Exercise</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://ehsank.com/" target="blank">Contact</a></li>
@@ -330,7 +357,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Machine Learning</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Understanding the Basics and Usage of Machine Learning in Medical Literature</a>
           </h1>
         </div>
 
@@ -837,7 +864,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ehsanx/into2ML/edit/master/5binary.Rmd",
+"link": "https://github.com/ehsanx/into2ML/edit/master/05binary.Rmd",
 "text": "Edit"
 },
 "history": {
