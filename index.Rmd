@@ -1,5 +1,5 @@
 --- 
-title: "Understanding the Basics and Usage of Machine Learning in Medical Literature"
+title: "Understanding Basics and Usage of Machine Learning in Medical Literature"
 author: "Ehsan Karim"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -99,5 +99,5 @@ The online version of this book is licensed under the [Creative Commons Attribut
 ```{block, type='rmdcomment'}
 **How to cite**
 
-Karim, ME (2021) "Understanding the Basics and Usage of Machine Learning in Medical Literature", URL: [ehsanx.github.io/intro2ML/](https://ehsanx.github.io/intro2ML/), (v1.1). 
+Karim, ME (2021) "Understanding Basics and Usage of Machine Learning in Medical Literature", URL: [ehsanx.github.io/intro2ML/](https://ehsanx.github.io/intro2ML/), (v1.1). 
 ```
