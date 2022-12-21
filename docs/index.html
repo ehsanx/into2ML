@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Understanding Basics and Usage of Machine Learning in Medical Literature</title>
   <meta name="description" content="Intro to R." />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Understanding Basics and Usage of Machine Learning in Medical Literature" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Intro to R." />
   <meta name="github-repo" content="ehsanx/intro2ML" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Ehsan Karim" />
 
 
-<meta name="date" content="2021-11-22" />
+<meta name="date" content="2022-12-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 
 <link rel="next" href="rhc-data-description.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/twitter-widget-0.0.1/widgets.js"></script>
 <script type="text/javascript">
 
@@ -118,7 +117,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -131,7 +130,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -368,13 +367,13 @@ div.csl-indent {
 <div id="header">
 <h1 class="title">Understanding Basics and Usage of Machine Learning in Medical Literature</h1>
 <p class="author"><em>Ehsan Karim</em></p>
-<p class="date" style="margin-top: 1.5em;"><em>2021-11-22</em></p>
+<p class="date"><em>2022-12-21</em></p>
 </div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
+<div id="preface" class="section level1 unnumbered hasAnchor">
+<h1>Preface<a href="index.html#preface" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>This document is a very basic introduction to machine learning for Medicine.</p>
-<div id="goal" class="section level2 unnumbered">
-<h2>Goal</h2>
+<div id="goal" class="section level2 unnumbered hasAnchor">
+<h2>Goal<a href="index.html#goal" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li>Part I: Basics
 <ul>
@@ -397,41 +396,42 @@ div.csl-indent {
 </ul></li>
 </ul>
 </div>
-<div id="philosophy" class="section level2 unnumbered">
-<h2>Philosophy</h2>
+<div id="philosophy" class="section level2 unnumbered hasAnchor">
+<h2>Philosophy<a href="index.html#philosophy" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Code-first</strong> philosophy is adopted for this tutorial; demonstrating the <strong>analyses through one real data analysis</strong> problem used in the literature.</p>
 <ul>
 <li>This tutorial is not theory-focused, nor utilizes simulated data to explain the ideas. Given the focus on implementation, theory is beyond the scope of this tutorial.</li>
 </ul>
 </div>
-<div id="pre-requisites" class="section level2 unnumbered">
-<h2>Pre-requisites</h2>
+<div id="pre-requisites" class="section level2 unnumbered hasAnchor">
+<h2>Pre-requisites<a href="index.html#pre-requisites" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li>The prerequisites are knowledge of multiple regression analysis and basic probability. Software demonstrations and codes will be provided in R, although proficiency in R is not required for understanding the concepts.</li>
 <li>Watch the tutorial video <a href="https://youtu.be/NkGLxUe3MKs"><img src="https://img.youtube.com/vi/NkGLxUe3MKs/maxresdefault.jpg" alt="tutorial video" /></a></li>
 </ul>
 </div>
-<div id="key-references" class="section level2 unnumbered">
-<h2>Key References</h2>
+<div id="key-references" class="section level2 unnumbered hasAnchor">
+<h2>Key References<a href="index.html#key-references" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
-<li>Bi, Q., Goodman, K. E., Kaminsky, J., &amp; Lessler, J. (2019). What is machine learning? A primer for the epidemiologist. American journal of epidemiology, 188(12), 2222-2239.</li>
-<li>Liu, Y., Chen, P. H. C., Krause, J., &amp; Peng, L. (2019). How to read articles that use machine learning: users’ guides to the medical literature. Jama, 322(18), 1806-1816.</li>
-<li>Kuhn M., Johnson K. (2013) [chapter 4] Over-Fitting and Model Tuning. In: Applied Predictive Modeling. Springer, New York, NY</li>
+<li><p>Watch the reference video <a href="https://youtu.be/T713OdjNzgk"><img src="https://img.youtube.com/vi/T713OdjNzgk/maxresdefault.jpg" alt="introductory video" /></a></p></li>
+<li><p>Bi, Q., Goodman, K. E., Kaminsky, J., &amp; Lessler, J. (2019). What is machine learning? A primer for the epidemiologist. American journal of epidemiology, 188(12), 2222-2239.</p></li>
+<li><p>Liu, Y., Chen, P. H. C., Krause, J., &amp; Peng, L. (2019). How to read articles that use machine learning: users’ guides to the medical literature. Jama, 322(18), 1806-1816.</p></li>
+<li><p>Kuhn M., Johnson K. (2013) [chapter 4] Over-Fitting and Model Tuning. In: Applied Predictive Modeling. Springer, New York, NY</p></li>
 </ul>
 <p>Additional useful references:</p>
 <ul>
 <li>James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2021). An introduction to statistical learning (2nd ed.). New York: springer.</li>
-<li>Vittinghoff, E., Glidden, D. V., Shiboski, S. C., &amp; McCulloch, C. E. (2011) [chapter 10] “Predictor Selection.” In: Regression methods in biostatistics: linear, logistic, survival, and repeated measures models. Springer.</li>
+<li>Vittinghoff, E., Glidden, D. V., Shiboski, S. C., &amp; McCulloch, C. E. (2011) [chapter 10] “Predictor Selection”. In: Regression methods in biostatistics: linear, logistic, survival, and repeated measures models. Springer.</li>
 <li>Steyerberg, Ewout W. Clinical prediction models (2nd ed.). Springer International Publishing, 2019.</li>
 </ul>
 </div>
-<div id="version-history" class="section level2 unnumbered">
-<h2>Version History</h2>
+<div id="version-history" class="section level2 unnumbered hasAnchor">
+<h2>Version History<a href="index.html#version-history" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Version 1.1 was created for course MEDI 504A 001 Emerging Topics in Experimental Medicine - EMRG TOP EXP MED, delivered on 2021W1. Some of the materials were initially prepared for Continuing Professional Development course, <a href="https://medicine.med.ubc.ca/datascience/">UBC Department of Medicine CPD event</a>, November 3, 2020.</p>
 <p>Feel free to <a href="https://ehsank.com/">reach out</a> for any comments, corrections, suggestions.</p>
 </div>
-<div id="contributor-list" class="section level2 unnumbered">
-<h2>Contributor List</h2>
+<div id="contributor-list" class="section level2 unnumbered hasAnchor">
+<h2>Contributor List<a href="index.html#contributor-list" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <table>
 <tbody>
 <tr class="odd">
@@ -441,8 +441,8 @@ div.csl-indent {
 </tbody>
 </table>
 </div>
-<div id="license" class="section level2 unnumbered">
-<h2>License</h2>
+<div id="license" class="section level2 unnumbered hasAnchor">
+<h2>License<a href="index.html#license" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><img src="images/by-nc-sa.png" width="25%" /></p>
 <p>The online version of this book is licensed under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0</a> International License. You may share, adapt the content and may distribute your contributions under the same license (CC BY-NC-SA 4.0), but you have to give appropriate credit, and cannot use material for the commercial purposes.</p>
 <div class="rmdcomment">
@@ -450,7 +450,10 @@ div.csl-indent {
 <strong>How to cite</strong>
 </p>
 <p>
-Karim, ME (2021) “Understanding Basics and Usage of Machine Learning in Medical Literature,” URL: <a href="https://ehsanx.github.io/intro2ML/">ehsanx.github.io/intro2ML/</a>, (v1.1).
+Karim, ME (2021) “Understanding Basics and Usage of Machine Learning
+in Medical Literature”, URL: <a
+href="https://ehsanx.github.io/into2ML/">ehsanx.github.io/into2ML/</a>,
+(v1.1).
 </p>
 </div>
 
@@ -466,7 +469,6 @@ Karim, ME (2021) “Understanding Basics and Usage of Machine Learning in Medica
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -506,6 +508,10 @@ gitbook.start({
 "text": null
 },
 "download": ["Intro2ML.pdf", "Intro2ML.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
@@ -519,7 +525,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
