@@ -1,14 +1,17 @@
 # Prediction from continuous outcome
 
 ```{block, type='rmdcomment'}
-In this chapter, we will talk about Regression that deals with prediction of continuous outcomes. We will use multiple linear regression to build the first prediction mode.
+In this chapter, we will talk about Regression that deals with prediction of continuous outcomes. We will use multiple linear regression to build the first prediction model.
 ```
+
+- Watch the video describing this chapter [![video](https://img.youtube.com/vi/TmrG2ZbeJoY/maxresdefault.jpg)](https://youtu.be/TmrG2ZbeJoY)
 
 ```{r setup02, include=FALSE}
 require(tableone)
 require(Publish)
 require(MatchIt)
 require(cobalt)
+require(ggplot2)
 require(caret)
 ```
 
@@ -117,7 +120,7 @@ SST
 R.2 <- 1- SSE/SST
 R.2
 require(caret)
-R2(pred.y1, obs.y)
+caret::R2(pred.y1, obs.y)
 ```
 
 ### RMSE
@@ -132,7 +135,7 @@ knitr::include_graphics("images/rmse.png")
 # Find RMSE
 Rmse <- sqrt(SSE/(n-p)) 
 Rmse
-RMSE(pred.y1, obs.y)
+caret::RMSE(pred.y1, obs.y)
 ```
 
 ### Adj R2

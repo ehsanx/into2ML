@@ -1,5 +1,13 @@
 # Critical Appraisal
 
+```{block, type='rmdcomment'}
+In this chapter, we will talk about how to critically appraise an article analyzing data using machine learning methods.
+```
+
+- Watch the video describing this chapter [![video](https://img.youtube.com/vi/Y4q2kKNcOSo/maxresdefault.jpg)](https://youtu.be/Y4q2kKNcOSo)
+
+
+
 ```{r setup11, include=FALSE}
 require(Publish)
 ```

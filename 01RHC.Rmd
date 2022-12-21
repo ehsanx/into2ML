@@ -5,7 +5,14 @@ require(tableone)
 require(Publish)
 require(MatchIt)
 require(cobalt)
+require(ggplot2)
 ```
+
+```{block, type='rmdcomment'}
+In this chapter, we will describe the example dataset.
+```
+
+- Watch the video describing this chapter [![video](https://img.youtube.com/vi/P37_A7sFTVY/maxresdefault.jpg)](https://youtu.be/P37_A7sFTVY)
 
 
 @connors1996effectiveness published an article in [JAMA](https://jamanetwork.com/journals/jama). The article is about managing or guiding therapy for the critically ill patients in the intensive care unit.  

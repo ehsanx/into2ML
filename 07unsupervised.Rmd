@@ -1,5 +1,12 @@
 # Unsupervised Learning
 
+```{block, type='rmdcomment'}
+In this chapter, we will talk about unsupervised learning.
+```
+
+- Watch the video describing this chapter [![video](https://img.youtube.com/vi/xhjcfvWDZVk/maxresdefault.jpg)](https://youtu.be/xhjcfvWDZVk)
+
+
 ```{r setup07, include=FALSE}
 require(Publish)
 ```

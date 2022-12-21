@@ -1,8 +1,11 @@
 # Prediction from binary outcome
 
 ```{block, type='rmdcomment'}
-In this chapter, we will talk about Regression that deals with prediction of binary outcomes. We will use logistic regression to build the first prediction mode.
+In this chapter, we will talk about Regression that deals with prediction of binary outcomes. We will use logistic regression to build the first prediction model.
 ```
+
+- Watch the video describing this chapter [![video](https://img.youtube.com/vi/YPOP82Wxfy8/maxresdefault.jpg)](https://youtu.be/YPOP82Wxfy8)
+
 
 ```{r setup05, include=FALSE}
 require(Publish)

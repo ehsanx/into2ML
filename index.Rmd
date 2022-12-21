@@ -66,6 +66,8 @@ This document is a very basic introduction to machine learning for Medicine.
 
 ## Key References {-}
 
+- Watch the reference video [![introductory video](https://img.youtube.com/vi/T713OdjNzgk/maxresdefault.jpg)](https://youtu.be/T713OdjNzgk)
+
 - Bi, Q., Goodman, K. E., Kaminsky, J., & Lessler, J. (2019). What is machine learning? A primer for the epidemiologist. American journal of epidemiology, 188(12), 2222-2239.
 - Liu, Y., Chen, P. H. C., Krause, J., & Peng, L. (2019). How to read articles that use machine learning: users’ guides to the medical literature. Jama, 322(18), 1806-1816.
 -  Kuhn M., Johnson K. (2013) [chapter 4] Over-Fitting and Model Tuning. In: Applied Predictive Modeling. Springer, New York, NY
@@ -99,5 +101,5 @@ The online version of this book is licensed under the [Creative Commons Attribut
 ```{block, type='rmdcomment'}
 **How to cite**
 
-Karim, ME (2021) "Understanding Basics and Usage of Machine Learning in Medical Literature", URL: [ehsanx.github.io/intro2ML/](https://ehsanx.github.io/intro2ML/), (v1.1). 
+Karim, ME (2021) "Understanding Basics and Usage of Machine Learning in Medical Literature", URL: [ehsanx.github.io/into2ML/](https://ehsanx.github.io/into2ML/), (v1.1). 
 ```

@@ -1,5 +1,12 @@
 # Data spliting
 
+```{block, type='rmdcomment'}
+In this chapter, we will describe the ideas of internal validation.
+```
+
+- Watch the video describing this chapter [![video](https://img.youtube.com/vi/PdrjcM_dTlw/maxresdefault.jpg)](https://youtu.be/PdrjcM_dTlw)
+
+
 ## Read previously saved data
 
 ```{r}

@@ -1,5 +1,12 @@
 # Cross-validation
 
+```{block, type='rmdcomment'}
+In this chapter, we will describe the ideas of cross-validation.
+```
+
+- Watch the video describing this chapter [![video](https://img.youtube.com/vi/BSDrIrSxqFU/maxresdefault.jpg)](https://youtu.be/BSDrIrSxqFU)
+
+
 ```{r setup04, include=FALSE}
 require(Publish)
 require(caret)

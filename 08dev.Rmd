@@ -1,5 +1,12 @@
 # Model Development Considerations
 
+```{block, type='rmdcomment'}
+In this chapter, we will talk about considerations for choosing a machine learning method.
+```
+
+- Watch the video describing this chapter [![video](https://img.youtube.com/vi/RP3I8m3hIX8/maxresdefault.jpg)](https://youtu.be/RP3I8m3hIX8)
+
+
 ```{r setup08, include=FALSE}
 require(Publish)
 ```

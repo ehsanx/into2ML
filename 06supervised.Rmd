@@ -4,6 +4,10 @@
 In this chapter, we will move beyond statistical regression, and introduce some of the popular machine learning methods. 
 ```
 
+- Watch the video describing this chapter - I [![video 1](https://img.youtube.com/vi/lzr8GOq_Ph0/maxresdefault.jpg)](https://youtu.be/lzr8GOq_Ph0)
+- Watch the video describing this chapters -II [![video 2](https://img.youtube.com/vi/Q59yffGr8qI/maxresdefault.jpg)](https://youtu.be/Q59yffGr8qI)
+
+
 ```{r setup06, include=FALSE}
 require(Publish)
 require(rpart)
