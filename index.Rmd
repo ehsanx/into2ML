@@ -101,5 +101,5 @@ The online version of this book is licensed under the [Creative Commons Attribut
 ```{block, type='rmdcomment'}
 **How to cite**
 
-Karim, ME (2021) "Understanding Basics and Usage of Machine Learning in Medical Literature", URL: [ehsanx.github.io/into2ML/](https://ehsanx.github.io/into2ML/), (v1.1). 
+Karim, ME (2022) "Understanding Basics and Usage of Machine Learning in Medical Literature", URL: [ehsanx.github.io/into2ML/](https://ehsanx.github.io/into2ML/), (v1.2). 
 ```
